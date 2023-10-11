@@ -1,0 +1,19 @@
+{% extends "ActivityEvents/layout.html" %}
+{% load static %}
+{% block body %}
+<section class="h-full w-full flex flex-col items-center p-8 pl-9 pr-9 ">
+    <div class="flex flex-col w-full h-full justify-center items-center   ">
+        <img class="w-[9.5rem] h-[2.5rem]" src="{% static 'ActivityEvents/hub200logo.png' %}" />
+
+        <img class="xl:w-[28rem] xl:h-[28rem] lg:w-[25rem] lg:h-[25rem] md:w-[20rem] md:h-[20rem]" alt='ewrwe' src="{% static 'ActivityEvents\error404photo.png' %}" />
+        <h1 class="text-[#1D5589] xl:text-[2rem] lg:text-[1.8rem] md:text-[1.4rem]">404 error page or file not found</h1>
+        <p class='xl:text-[1.2rem] lg:text-[1rem] md:text-[0.8rem] mt-[1rem]'>The link is broken or the page has been moved, Try these pages instead:</p>
+        <ul class="flex flex-row justify-center items-center mt-[2rem] ml-[2rem] ">
+            {% for link in navigationlinks %}
+            <li><a class='xl:text-[1.1rem] lg:text-[1rem] md:text-[0.8rem] mr-[1.5rem] font-semibold no-underline 'href="{% url link.href %}">{{link.text}}</a></li>
+            {% endfor %}
+        <ul>
+    </div>
+</section>
+
+{% endblock %}

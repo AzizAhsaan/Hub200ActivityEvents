@@ -1,0 +1,421 @@
+{% extends "ActivityEvents/layout.html" %}
+{% load static %}
+{% block body %}
+<style>
+
+/* Submit Button Animation */
+
+
+#buttonwrapper {
+    display: block;
+    width: 100%;
+    height: 3rem;
+  font-size:21px;
+  letter-spacing:6px;
+  color:white;
+  overflow: visible;
+  margin-top: 5rem;
+}
+
+.submit, .loader, .loader-wrapper{
+  position:absolute;
+  left:0;
+  right:0;
+  margin:0 auto;
+}
+
+.submit {
+  z-index:2;
+
+  background: #66b5ff; 
+  display:block;
+  border-radius: 15rem;
+  text-align:center;
+  color:rgba(255,255,255,1);
+  text-decoration:none;
+  transition: all 0.5s ease, line-height 0s ease, color 0.4s ease, filter 0.2s ease;
+}
+
+#buttonwrapper::selection, .submit::selection {
+  background: transparent;
+}
+
+
+
+
+.submit:before {
+  content:"";
+  z-index:-2;
+  width:100%;
+  height:100%;
+  background: #66b5ff; 
+  display:block;
+  border-radius:50%;
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:0.8;
+  transform:scale(0.9) translateY(15px);
+  filter:blur(45px);
+  transition:all 0.2s ease;
+}
+
+.submit:after {
+  content:"";
+  z-index:-4;
+  width:100%;
+  height:100%;
+  background: #66b5ff; 
+  display:block;
+  border-radius:50%;
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:0;
+  transform:scale(1);
+}
+
+.submit:hover:before {
+  transform:scale(0.9) translateY(5px);
+  filter:blur(40px);
+}
+
+.submit:active {
+  line-height:460%;
+  filter:brightness(0.95);
+  transition:all 0s;
+}
+
+.checked .submit:before {
+  top:0px;
+  opacity:0;
+}
+
+.checked .submit:after {
+    animation: submit-after-anim 0.5s 2.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.checked {
+   -webkit-filter: url("#goo");
+   filter: url("#goo");
+}
+
+.white {
+  background-color: #ffffff;
+  box-shadow: 40px 47px 49px 40px rgba(0, 0, 0, 0.1);
+}
+
+.blue {
+  background-color: #0084ff;
+  }
+
+.blue2 {
+  background-color: #7aa5cd;
+  box-shadow: 1px 3px 5px 1px rgba(0, 0, 0, 0.1);
+  transform:scale(0.2) rotate(30deg) translate(0px);
+}
+
+.checked .blue {
+  animation: loader-anim-blue 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.checked .white  {
+  animation: loader-anim-white 2s 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.checked .blue2 {
+   animation: loader-anim-blue2 2s 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.loader {
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  opacity:0;
+  z-index:1;
+}
+
+.checked .loader {
+  opacity:1;
+}
+
+.checked .loader-wrapper {
+  animation: wrapper-loader-anim 2.2s linear;
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  transform:scale(0)
+}
+
+.checked .submit {
+  height:70px;
+  width:70px;
+  border-radius: 50%;
+  color:rgba(255,255,255,0);
+  background: #66b5ff;
+  animation: submit-anim 2s  cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+
+
+.check-wrapper {
+  position:absolute;
+  left:0;
+  right:0;
+  margin:0 auto;
+  width:95px;
+  height:95px;
+  z-index:-1;
+  opacity:1;
+}
+
+.check-wrapper svg {
+  margin-top:20px;
+  margin-left: 24px;
+}
+
+.check{fill:none;
+  stroke:#ffffff;
+  stroke-width:10;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:10;
+ stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  z-index:-1;
+  }
+
+.checked .check-wrapper {
+  z-index:3;
+}
+
+.checked .check {
+  animation: check 2s 2.2s ease forwards;
+}
+
+
+@keyframes loader-anim-blue {
+    0% {transform:scale(0.2) rotate(0deg) translate(220px, 0px); }
+  100% {transform:scale(0.2) rotate(1100deg) translate(300px, 0px);}
+}
+
+@keyframes loader-anim-white {
+     0% {transform:scale(0.2) rotate(0deg) translate(300px, 0px); }
+  100% {transform:scale(0.2) rotate(1100deg) translate(220px, 0px);}
+}
+
+@keyframes loader-anim-blue2 {
+  0%,70% {transform:scale(0.2) rotate(30deg) translate(0px); }
+  85% {transform:scale(0.2) rotate(30deg) translate(-300px);}
+  100% {transform:scale(0.2) rotate(30deg) translate(0px); }
+}
+
+@keyframes wrapper-loader-anim {
+    0% { transform: scale(0) translateY(0px); }
+    10% { transform: scale(1) translateY(20px); }
+    50% { transform: scale(1.2) translateY(10px); }
+    90% { transform: scale(1) translateY(-10px); }
+    100% { transform: scale(0) translateY(0px); }
+}
+
+@keyframes submit-after-anim {
+  0% {transform:scale(1); opacity:0.3 }
+   100% {transform:scale(2); opacity:0 }
+}
+
+@keyframes submit-anim {
+    0% {transform:scale(1) }
+      5%, 95% {transform:scale(0.7) }
+  100% {transform:scale(1)}
+}
+
+@keyframes check {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+
+
+
+/*  Gender radio button */
+
+
+  input[type="radio"] {
+        -webkit-appearance: none;
+        -moz-appearance: none; 
+        appearance: none;
+    }
+
+    input[type="radio"][id="male"]:checked + label.male-label {
+    background-color: #2c93f4; 
+    color: #ffffff;
+    fill: white;
+  }
+
+  input[type="radio"][id="female"]:checked + label.female-label {
+    background-color: #ff69b4; 
+    color: #ffffff;
+    fill: white;
+  }
+  input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: black !important;
+}
+.required .placeholderlabel:after {
+    content:"  *";
+    color: red;
+  }
+  </style>
+
+<section class="h-full w-full flex flex-col items-center justify-center  mb-[1rem] mt-[1rem]">
+  {% if user.is_authenticated %}
+
+    <div class="xl:h-[62rem] lg:h-[62rem] md:h-[62rem] min-[320px]:h-[62rem] xl:w-[80rem] lg:w-[62rem] md:w-[45rem] flex flex-col items-center justify-center  mb-[4rem] mt-[3rem] xl:border-[0.2rem] lg:border-[0.2rem] md:border-[0.0rem] min-[320px]:border-[0.0rem] border-[#E8F5FF]">
+
+      <div  class="w-full  flex flex-row h-full justify-center items-center xl:bg-[#E8F5FF] lg:bg-[#E8F5FF] md:bg-white min-[320px]:bg-white ">
+            <div class="w-4/12 h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center  ">
+               <div class="w-full h-full flex flex-col justify-center items-center ">
+                <h1 class="xl:text-[2.5rem] lg:text-[2.1rem] md:text-[2rem] mb-[1rem] font-medium text-[#5F5F5F]">Registration Form</h1>
+                <p class="xl:text-[1rem] lg:text-[0.8rem] md:text-[1.7rem] min-[320px]:text-[0.7rem]  ml-[1rem] font-normal text-center text-[#5F5F5F] ">After completing the registration process, we will be sending a message to your email and we will inform you with date of the event, location and more details!</p>
+                   <img class="xl:w-[28rem] xl:h-[26rem] lg:w-[26rem] lg:h-[24rem] md:w-[25rem] md:h-[23rem]" src="{% static 'ActivityEvents/Goodteampana.png' %}" alt="">
+               </div>
+            </div>
+            <form id="registerform" action="{% url 'registrations'  %}" method="POST"   enctype="multipart/form-data" class="xl:w-8/12 lg:w-8/12 md:w-full min-[320px]:w-full h-full flex flex-col items-center justify-center relative mb-[2rem]">
+                {% csrf_token %}
+                <h1 class="md:text-[2rem] min-[320px]:text-[1.2rem] mb-[1rem] font-medium text-[#5F5F5F] xl:hidden lg:hidden md:block min-[320px]:block">Registration Form</h1>
+                <p class="md:text-[1rem] min-[320px]:text-[0.65rem] ml-[1rem] font-normal text-center text-[#5F5F5F] xl:hidden lg:hidden md:block min-[320px]:block">After completing the registration process, we will be sending a message to your email and we will inform you with date of the event, location and more details!</p>
+                  <div class="xl:w-[45rem] lg:w-[40rem] md:w-[40rem] min-[320px]:w-[19rem] h-full flex flex-col bg-white drop-shadow-lg rounded-xl  mt-[2rem] items-center h-full border-[0.01rem]  border-[#50A8F5]">
+                  <div class='xl:w-[40rem] lg:w-[37rem] md:w-[33rem] min-[320px]:w-[18rem]  h-[7rem] mt-[2rem] flex flex-row xl:justify-between lg:justify-between md:justify-between min-[320px]:justify-center '>
+                    <div class="inputdivparent required" >
+                        <input value="{{user.username}}" name="UsernameRegistration" id="UsernameRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem] min-[320px]:h-[3.1rem]" type="text" required>
+                        <label class="placeholderlabel"   for="UsernameRegistration">Username</label>
+                        <div class="error"></div>
+
+                    </div>
+                    <div class="inputdivparent required xl:ml-[4rem] lg:ml-[4rem] md:ml-[4rem] min-[320px]:ml-[0.5rem]" >
+                      <input value="{{user.phone_number}}" name="PhonenumberRegistration" id="PhonenumberRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem] min-[320px]:h-[3.1rem]" type="tel" required>
+                      <label class="placeholderlabel"   for="PhonenumberRegistration">Phone Number</label>
+                      <div class="error"></div>
+
+                  </div>
+               </div>
+  
+               <div class='xl:w-[40rem] lg:w-[37rem] md:w-[33rem] min-[320px]:w-[18rem]  h-[7rem] mt-[2rem] flex flex-row xl:justify-between lg:justify-between md:justify-between min-[320px]:justify-center '>
+                  <div class="inputdivparent required " >
+                      <input value="{{user.email}}" name="EmailRegistration" id="EmailRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem] min-[320px]:h-[3.1rem]" type="email" required>
+                      <label class="placeholderlabel"   for="EmailRegistration">Email</label>
+                      <div class="error"></div>
+
+                  </div>
+                  <div class="inputdivparent required  xl:ml-[4rem] lg:ml-[4rem] md:ml-[4rem] min-[320px]:ml-[0.5rem] " >
+                      <input name="DateofbirthRegistration" id="DateofbirthRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem] min-[320px]:h-[3.1rem] " type="date" required>
+                      <label class="placeholderlabel"   for="DateofbirthRegistration">Date of birth</label>
+                      <div class="error"></div>
+
+                </div>
+             </div>
+  
+             <div class='xl:w-[40rem] lg:w-[37rem] md:w-[33rem] min-[320px]:w-[18rem]  h-[7rem] mt-[2rem] flex flex-row xl:justify-between lg:justify-between md:justify-between min-[320px]:justify-center '>
+              <div class="inputdivparent" >
+                <select id="LocationRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem] min-[320px]:h-[3.1rem] " name="LocationRegistration"  >
+                  <option value="baghdad">baghdad</option>
+                  <option value="baghdad">Basra</option>
+                  <option value="baghdad">Mosul</option>
+                  <option value="baghdad">Najaf</option>
+                </select>
+                  <label class="placeholderlabel"   for="EmailRegistration">Location</label>
+                  <div class="error"></div>
+
+              </div>
+              <div class="inputdivparent xl:ml-[4rem] lg:ml-[4rem] md:ml-[4rem] min-[320px]:ml-[0.5rem]" >
+                  <select name="EventsRegistration" id="EventsRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem] min-[320px]:h-[3.1rem]" >
+                    {% for event in all_events %}
+                    <option value="{{event.id}}">{{event.title}}</option>
+                    {% endfor %}
+                  </select>
+                  <label class="placeholderlabel"   for="EventsRegistration">Events</label>
+                  <div class="error"></div>
+
+            </div>
+         </div>
+  
+  
+  
+         <fieldset class="flex justify-center items-center" data-role="choose_gender">
+          <legend>Choose your gender:</legend>
+          <div class="mr-[1rem]">
+              <input id="male" type="radio" name="gender"  checked>
+              <label class="male-label xl:h-[3.8rem] xl:w-[3.8rem] lg:h-[3.1rem] lg:w-[3.5rem] md:h-[3.0rem] md:w-[3.0rem] min-[320px]:h-[3.3rem] min-[320px]:w-[3.3rem]  rounded-full flex flex-col justify-center items-center relative bg-[#E3F3FF] transition duration-150" for="male">
+                <box-icon name='male-sign'></box-icon>
+                  <span class="xl:text-[0.8rem] lg:text-[0.8rem] md:text-[0.7rem] min-[320px]:text-[0.6rem] font-medium">Male</span>
+              </label>
+          </div>
+          
+          <div class="ml-[1rem]">
+              <input type="radio" name="gender" id="female">
+              <label class="female-label xl:h-[3.8rem] xl:w-[3.8rem] lg:h-[3.1rem] lg:w-[3.5rem] md:h-[3.0rem] md:w-[3.0rem] min-[320px]:h-[3.3rem] min-[320px]:w-[3.3rem]  rounded-full flex flex-col justify-center items-center relative bg-[#E3F3FF] transition duration-150" for="female">
+                <box-icon name='female-sign'></box-icon>
+                <span class="xl:text-[0.8rem] lg:text-[0.8rem] md:text-[0.7rem] min-[320px]:text-[0.6rem] font-medium">Female</span>
+              </label>
+          </div>    
+      </fieldset>
+  
+      <div class='xl:w-[40rem] lg:w-[36.5rem] md:w-[32.5rem] h-[3rem]  flex flex-row justify-between xl:mb-[5rem] lg:mb-[4rem] md:mb-[3rem] min-[320px]:mb-[3rem] '>
+          <div class="inputdivparent" >
+              <textarea id="GuestsRegistration"  class="inputsclass xl:w-[40rem] xl:h-[5rem] lg:w-[36rem] lg:h-[4rem] md:w-[32.5rem] md:h-[4rem] min-[320px]:w-[18rem] min-[320px]:h-[4rem] " name="GuestsRegistration" cols="80" rows="15"></textarea>
+              <label class="placeholderlabel"   for="GuestsRegistration">Guests</label>
+              <p class="text-[#5F5F5F] xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.5rem]">If you are willing to bring Family or Friends with you, write their names.</p>
+          </div>
+     </div>
+  
+  
+     <div class='xl:w-[40rem] lg:w-[36.5rem] md:w-[32.5rem] h-[2.5rem]   flex flex-row justify-between mt-[0.2rem] '>
+      <div class="inputdivparent" >
+          <textarea id="CommentRegistration"  class="inputsclass xl:w-[40rem] xl:h-[5rem] lg:w-[36rem] lg:h-[4rem] md:w-[32.5rem] md:h-[4rem] min-[320px]:w-[18rem] min-[320px]:h-[4rem] " name="CommentRegistration" id="" cols="62" rows="18"></textarea>
+          <label class="placeholderlabel"   for="CommentRegistration">Comment</label>
+          <p class="text-[#5F5F5F] xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.5rem]" >if you have any comments share it to us!</p>
+      </div>
+  </div>
+  
+  <div id="buttonwrapper">
+      <button  type="submit" class="submit xl:w-[10rem] xl:h-[2.7rem] lg:w-[10rem] lg:h-[3rem] md:w-[9rem] md:h-[2.7rem] min-[320px]:w-[9rem] min-[320px]:h-[2.8rem]" >Register</button>
+         <div class="loader-wrapper">
+         <span class="loader white"></span>
+         <span class="loader blue"></span>
+         </div>
+        <span class="loader blue2"></span>
+         
+     <div class="check-wrapper">
+    <svg class="xl:mt-[20px] xl:ml-[24px] lg:mt-[16px] lg:ml-[20px] md:mt-[13px] md:ml-[17px]" version="1.1"width="50px" height="26px" viewBox="0 0 64.5 37.4">
+    <polyline class="check" points="5,13 21.8,32.4 59.5,5 "/>
+    </svg>
+     </div>
+      
+     </div>
+  
+                </div>
+              </form>
+
+    
+        </div>
+        {% else %}
+        <div class="xl:h-[33rem] lg:h-[30rem] md:h-[29rem] xl:w-[65rem] lg:w-[58rem] md:w-[40rem] min-[320px]:w-[18.5rem] flex flex-col items-center   mb-[4rem] mt-[1rem] border-[0.1rem] border-[#E8F5FF] p-[1rem]">
+          <img class="xl:w-[21rem] xl:h-[20rem]  lg:w-[20rem] lg:h-[18rem] md:w-[18rem] md:h-[17rem] min-[320px]:w-[12rem] min-[320px]:h-[11rem] mt-[1rem]" src="{% static 'ActivityEvents/Logincuate.png' %}" alt="">
+          <h1 class="mt-[0.6rem] xl:text-[1.4rem] lg:text-[1.2rem] md:text-[1rem] min-[320px]:text-[0.8rem] text-center" >To gain the ability to register for our <span class="text-[#50A8F5] xl:text-[1.5rem] lg:text-[1.4rem] md:text-[1.1rem]">Events</span> <br> you must be logged into the website.</h1>
+          <button class="xl:w-[11rem] xl:h-[3rem] lg:w-[9rem] lg:h-[2.6rem] md:w-[8rem] md:h-[2.6rem] min-[320px]:w-[8rem] min-[320px]:h-[2.6rem] xl:text-[1rem]  lg:text-[0.9rem] md:text-[0.8rem] mt-[1.5rem] text-white bg-[#71B3F1] rounded-[4rem] font-medium"><a href="{% url 'signin' %}">GetStarted Now</a></button>
+          </h1>
+        </div>
+
+
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

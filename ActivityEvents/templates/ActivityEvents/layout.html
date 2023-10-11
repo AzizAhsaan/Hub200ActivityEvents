@@ -1,0 +1,158 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <title>{% block title %}ActivityEvents{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'ActivityEvents/styless.css' %}">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script  src="{% static 'ActivityEvents/index.js' %}" type="text/javascript"></script>  
+        <script src="https://cdn.tailwindcss.com"></script>     
+        <script src="https://kit.fontawesome.com/ffe1fea523.js" crossorigin="anonymous"></script>
+        <link href="https://vjs.zencdn.net/7.19.2/video-js.css"rel="stylesheet" />
+        <script src="https://vjs.zencdn.net/7.19.2/video.min.js"></script>
+        <link href="https://unpkg.com/@videojs/themes@1/dist/city/index.css" rel="stylesheet">
+        <script src="https://unpkg.com/scrollreveal"></script>
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js" integrity="sha512-BdHyGtczsUoFcEma+MfXc71KJLv/cd+sUsUaYYf2mXpfG/PtBjNXsPo78+rxWjscxUYN2Qr2+DbeGGiJx81ifg==" crossorigin="anonymous"></script>
+
+
+
+        {% block script %}
+        {% endblock %}
+        <style> 
+        html,body{
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        .activelink{
+            color: #50A8F5 ;
+            text-decoration: none;
+        } 
+        ul li a{
+            color:#464747;
+        }
+        </style>
+    </head>
+    <body>
+        <header class=" fixed top-0 left-0 right-0 mx-auto p-2 px-5 w-[99%] h-[5rem] bg-[#E8F5FF] flex justify-between items-center z-50 drop-shadow-md	">
+            <img class="xl:w-[8rem] xl:h-[2rem] lg:w-[8rem] lg:h-[2rem] md:w-[7rem] md:h-[1.8rem] min-[320px]:w-[6rem] min-[320px]:h-[1.5rem]" src="{% static 'ActivityEvents/hub200logo.png' %}" />
+            <div class=" w-full h-[3rem]  xl:hidden lg:hidden md:flex min-[320px]:flex  flex-col items-end ">
+                <button onclick="changeicon()" id="burgericon" class="w-[2rem] h-[2rem] md:mr-[3.9rem] min-[320px]:mr-[2.5rem] ">
+                    <box-icon :size="iconSize" name='menu'></box-icon>
+                </button>
+                <div id="menubar" class="md:w-[9rem] md:h-[16rem]  min-[320px]:w-[6.5rem]  min-[320px]:h-[16rem] bg-white drop-shadow-lg rounded-[1rem] mt-[1.5rem] hidden	  ">
+                    <ul class="w-full h-full flex flex-col items-center mt-[0.1rem]">
+                        {% for link in navigationlinks %}
+                        <li class="md:mt-[0.5rem]  min-[320px]:mt-[0.15rem]"><a class='h-full md:text-[0.7rem]  min-[320px]:text-[0.6rem] leading-loose  font-semibold' href="{% url link.href %}" >{{link.text}}</a></li>
+                        {% endfor %}
+                    <ul>
+                        {% if user.is_authenticated %}
+                <div class="flex flex-col justify-center items-center md:mt-[0.6rem]  min-[320px]:mt-[0.4rem]">
+                    {% if user.photo %}
+                    <img class="md:w-[2rem] md:h-[2rem]  min-[320px]:w-[1.5rem]  min-[320px]:h-[1.5rem] rounded-full" src="{{user.photo.url}}" alt="">
+                    {% endif %}
+                    <h1 class="text-[0.8rem]  text-[#464747] font-medium">{{ user.username }}</h1>
+                
+                    <button class="md:w-[5.5rem] md:mt-[0.5rem]  min-[320px]:mt-[0.2rem] md:h-[1.6rem]  min-[320px]:w-[4.5rem]  min-[320px]:h-[1.1rem] md:text-[0.7rem]  min-[320px]:text-[0.5rem] text-white bg-[#71B3F1] rounded-[4rem] font-semibold hover:text-[#50A8F5] hover:bg-white"><a href="{% url 'logoutuser' %}">Logout</a></button>
+                </div>
+                {% else %}
+                <div>                
+                    <button class="md:w-[6rem] md:h-[2.6rem]  min-[320px]:w-[5rem]  min-[320px]:h-[1.7rem] xl:text-[0.8rem] lg:text-[0.7rem] md:text-[0.65rem]  min-[320px]:text-[0.5rem] mt-[2rem] text-white bg-[#71B3F1] rounded-[4rem] font-semibold hover:text-[#50A8F5] hover:bg-white px-[0.3rem]"><a href="{% url 'signin' %}">GetStarted Now</a></button>
+                </div>
+                {% endif %}
+                </div>
+            </div>
+            <nav class="xl:flex lg:flex md:hidden min-[320px]:hidden  flex-row justify-center items-center  ml-[3.5rem] ">
+                <ul class="flex flex-row justify-center items-center">
+                    {% for link in navigationlinks %}
+                    <li><a class='text-[0.8rem] mr-[1.5rem] font-semibold' href="{% url link.href %}" >{{link.text}}</a></li>
+                    {% endfor %}
+                    <ul>
+            </nav>
+
+            <div class="xl:flex lg:flex md:hidden min-[320px]:hidden">
+                {% if user.is_authenticated %}
+                <div class="flex flex-row justify-center items-center">
+                    {% if user.photo %}
+                    <img class="w-[2.8rem] h-[2.8rem] rounded-full" src="{{user.photo.url}}" alt="">
+                    {% endif %}
+                    <h1 class="text-[0.9rem]  ml-[1rem] text-[#464747] font-medium">{{ user.username }}</h1>
+                
+                    <button class="w-[7rem] h-[2.2rem] ml-[1rem] text-[0.7rem] text-white bg-[#71B3F1] rounded-[4rem] font-semibold hover:text-[#50A8F5] hover:bg-white"><a href="{% url 'logoutuser' %}">Logout</a></button>
+                </div>
+                {% else %}
+                <div>                
+                    <button class="w-[7rem] h-[2.2rem] text-[0.65rem] text-white bg-[#71B3F1] rounded-[4rem] font-semibold hover:text-[#50A8F5] hover:bg-white"><a href="{% url 'signin' %}">GetStarted Now</a></button>
+                </div>
+                {% endif %}
+            </div>
+
+
+
+        </header>
+        <main class="min-h-screen pt-[5rem]  box-border scroll-smooth overflow-x-hidden flex flex-col items-center">
+            <div id="toastbox" class="z-50"></div>
+
+            {% block body %}
+
+            {% endblock %}
+        </main>
+        <footer class="bg-[#E8F5FF] h-[17rem] flex flex-col  items-center ">
+            <img class="xl:w-[8rem] xl:h-[2rem] lg:w-[8rem] lg:h-[2rem] md:w-[7rem] md:h-[1.8rem] min-[320px]:w-[6rem] min-[320px]:h-[1.5rem] mt-[1rem]" src="{% static 'ActivityEvents/hub200logo.png' %}" />
+            <div class="flex flex-row justify-center items-center mt-[1rem] ml-[3rem]">
+                <ul class="flex flex-row justify-center items-center ">
+                    {% for link in navigationlinks %}
+                    <li><a class='xl:text-[1rem] xl:mr-[1.5rem] lg:text-[1rem] lg:mr-[1.5rem] md:text-[0.9rem] md:mr-[1.4rem] min-[320px]:text-[0.8rem] min-[320px]:mr-[0.5rem] font-semibold no-underline 'href="{% url link.href %}">{{link.text}}</a></li>
+                    {% endfor %}
+                <ul>
+                    <button onclick="scrollfunction('curved')" class="flex justify-center items-center xl:w-[3rem] xl:h-[3rem] lg:w-[3rem] lg:h-[3rem] md:w-[2rem] min-[320px]:h-[2rem] min-[320px]:w-[2rem] md:h-[2rem] xl:ml-[2rem] lg:ml-[2rem] md:ml-[2rem] min-[320px]:ml-[0.1rem] rounded-full bg-white rounded-[1.2rem]   text-[#464747] hover:text-white  font-medium "><box-icon type='solid' color="#464747" size="1.4rem" name='chevrons-up'></box-icon></button>
+            </div>
+            <div class='w-[30%] flex flex-row h-[4rem] mt-[1rem] justify-center  items-center'>
+                <div class="bg-white xl:w-[3rem] xl:h-[2.9rem] lg:w-[3rem] lg:h-[2.9rem] md:w-[3rem] md:h-[2.9rem]  min-[320px]:w-[3.2rem] min-[320px]:h-[2.5rem] rounded-full flex justify-center items-center"><a href="https://m.facebook.com/hub200.tiq/"><box-icon class="mt-[0.3rem]" size="2rem" color="#464747" type='logo' name='facebook'></box-icon></a></div>
+                <div class="bg-white xl:w-[3rem] xl:h-[2.9rem] lg:w-[3rem] lg:h-[2.9rem] md:w-[3rem] md:h-[2.9rem]  min-[320px]:w-[3.2rem] min-[320px]:h-[2.5rem] rounded-full ml-[1rem] flex justify-center items-center"><a href="https://www.instagram.com/hub200.tiq/"><box-icon class="mt-[0.3rem]" size="2rem" color="#464747" type='logo' name='instagram'></box-icon></a></div>
+            </div>
+            <div class="h-[1px] w-[15rem] bg-black"></div>
+            <p class='text-[0.7rem] mt-[0.4rem] text-[#5F5F5F] font-medium'>Contact email: +9647809563573</p>
+            <p class='text-[0.7rem] mt-[0.4rem] text-[#5F5F5F] font-medium'>PhoneNumber: info@computiq.tech</p>
+
+        </footer>
+    </body>
+    <script>
+        
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const screenwidth=window.innerWidth
+        var iconsize = '2.5rem';
+
+if (screenwidth > 450) {
+    iconsize = '3rem';
+}
+    document.querySelector('box-icon[name="menu"]').setAttribute('size', iconsize);
+        
+})
+function changeicon(){
+
+const burgericon = document.getElementById('burgericon');
+const menubar = document.getElementById('menubar');
+const boxIcon = burgericon.querySelector('box-icon');
+
+if (boxIcon.getAttribute('name') === 'menu') {
+    boxIcon.setAttribute('name', 'x-circle');
+    menubar.style.display = 'flex'; // Show the div
+} else {
+    boxIcon.setAttribute('name', 'menu');
+    menubar.style.display = 'none'; // Hide the div
+}
+
+}
+
+    </script>
+</html>

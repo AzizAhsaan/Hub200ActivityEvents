@@ -1,0 +1,900 @@
+{% extends "ActivityEvents/layout.html" %}
+
+{% block body %}
+<section>
+    <style>
+        :root {
+    --primary-clr: #7ab2e7;
+  }
+  .container{
+    position: relative;
+    width: 1200px;
+    min-height: 850px;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    padding: 5px;
+    color: #fff;
+    display: flex;
+  
+    border-radius: 10px;
+    background-color: #ABC5E4;
+  }
+  
+  .left{
+    width: 20%; 
+  }
+
+  .center {
+    width: 60%;
+    padding: 20px;
+  }
+  .calendar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #878895;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 4px 4px #ffffff96;
+
+    
+  }
+  .calendar .month {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  .calendar .month .prev,
+  .calendar .month .next {
+    cursor: pointer;
+  }
+  .calendar .month .prev:hover,
+  .calendar .month .next:hover {
+    color: #757575;
+  }
+  .calendar .weekdays {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  .weekdays div {
+    width: 14.28%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .calendar .days {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .calendar .days .day {
+    width: 14.28%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #757575;
+    border: 1px solid #f5f5f5;
+  }
+  .calendar .days .day:nth-child(7n + 1) {
+    border-left: 2px solid #f5f5f5;
+  }
+  .calendar .days .day:nth-child(7n) {
+    border-right: 2px solid #f5f5f5;
+  }
+  .calendar .days .day:nth-child(-n + 7) {
+    border-top: 2px solid #f5f5f5;
+  }
+  .calendar .days .day:nth-child(n + 29) {
+    border-bottom: 2px solid #f5f5f5;
+  }
+  
+  .calendar .days .day:not(.prev-date, .next-date):hover {
+    color: #ffffff;
+    background-color: var(--primary-clr);
+  }
+  .calendar .days .prev-date,
+  .calendar .days .next-date {
+    color: #b3b3b3;
+  }
+  .calendar .days .active {
+    position: relative;
+    font-size: 2rem;
+    color: #ffffff;
+    background-color: var(--primary-clr);
+  }
+  .calendar .days .active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 10px 2px var(--primary-clr);
+  }
+  .calendar .days .today {
+    font-size: 2rem;
+  }
+  .calendar .days .event {
+    position: relative;
+  }
+  .calendar .days .event::after {
+    content: "";
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    width: 80%;
+    height: 6px;
+    border-radius: 30px;
+    transform: translateX(-50%);
+    background-color: var(--primary-clr);
+  }
+  .calendar .days .day:hover.event::after {
+    background-color: #fff;
+  }
+  .calendar .days .active.event::after {
+    background-color: #fff;
+    bottom: 20%;
+  }
+  .calendar .days .active.event {
+    padding-bottom: 10px;
+  }
+  .calendar .goto-today {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    color: #757575;
+  }
+  .calendar .goto-today .goto {
+    display:flex;
+    flex-direction: row;
+    height: 5rem;
+    margin-top: 1rem;
+    position: relative;
+    align-items: center;
+  }
+
+  
+  .date-input{
+    margin-top: 1rem;
+    padding: 0.4rem 0.4rem 0.6rem 0.6rem;
+    border: 2px solid gray;
+    outline: none;
+    border-radius: 6px;
+}
+.date-input:is(:focus, :valid){
+    border: 2px solid #D2ECFF;
+}
+.placeholderlabel{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    color: gray;
+    left: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-top: 0.2rem;
+    transition: all 0.2s ease-in;
+}
+.date-input:is(:focus, :valid) + .placeholderlabel {
+    transform: translatey(calc(-1 * 0.8rem - 12px)) ;
+    font-size: 0.9rem;
+    color: #5eb1ff;
+    font-weight: 400;
+  }
+
+  .calendar .goto-today button {
+  padding: 0.4rem 1.8rem 0.6rem;
+  margin-top: 32px;
+  border: 2px solid #D2ECFF;
+  border-radius: 6px;
+  background-color: transparent;
+  cursor: pointer;
+  color: #757575;
+  text-align: center;
+}
+  .calendar .goto-today button:hover {
+    color: #fff;
+    background-color: var(--primary-clr);
+  }
+  .calendar .goto-today .goto button {
+    padding: 0.4rem 1.0rem 0.6rem;
+    margin-top:15px;
+    margin-left:15px;
+    border: 2px solid #D2ECFF;
+    border-radius: 6px;
+  }
+  .container .right {
+    position: relative;
+    width: 22%;
+    min-height: 100%;
+  }
+  
+  .left .today-date {
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-left: 0.6rem;
+  }
+  .left .today-date .event-day {
+    width: 100%;
+    font-size: 5rem;
+    font-weight: 600;
+  }
+  .left .today-date .event-date {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  .events {
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .events .event {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: #fff;
+  }
+  .event-image{
+    width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    border-radius: 1rem;
+    object-fit: cover;
+    
+  }
+  .events .event:nth-child(even) {
+    background: transparent;
+  }
+  .events .event .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .events .event .title .event-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  .events .event i {
+    color: #757575;
+    font-size: 0.5rem;
+  }
+  .events .event:hover i {
+    color: #fff;
+  }
+  .events .event .event-time {
+    margin-top:0.6rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+  }
+  .events .no-event {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  
+
+
+
+  
+  
+  @media screen and (max-width: 1000px) {
+    body {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .container {
+      min-height: 100vh;
+      flex-direction: column;
+      border-radius: 0;
+    }
+    .container .center {
+      width: 100%;
+      height: 100%;
+      padding: 20px 0;
+    }
+    .container .right {
+      width: 100%;
+      height: 100%;
+      padding: 20px 0;
+    }
+    .calendar::before,
+    .calendar::after {
+      top: 100%;
+      left: 50%;
+      width: 97%;
+      height: 12px;
+      border-radius: 0 0 5px 5px;
+      transform: translateX(-50%);
+    }
+    .calendar::before {
+      width: 94%;
+      top: calc(100% + 12px);
+    }
+    .events {
+      padding-bottom: 340px;
+    }
+  }
+  @media (max-width: 790px) {
+    .container{
+    position: relative;
+    width: 740px;
+    height: 2300px;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    padding: 5px;
+    color: #fff;
+    display: flex;
+  flex-direction: column;
+    border-radius: 10px;
+    background-color: #ABC5E4;
+  }
+
+  .calendar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #878895;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 4px 4px #ffffff96;
+
+    
+  }
+  .date-input{
+    margin-top: 1rem;
+    border: 2px solid gray;
+    width: 8rem;
+    height: 2rem;
+    outline: none;
+    border-radius: 6px;
+
+}
+.left .today-date .event-day {
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  .left .today-date .event-date {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+  }
+
+
+
+.placeholderlabel{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    color: gray;
+    left: 1rem;
+    padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+    margin-top: 0.2rem;
+    transition: all 0.2s ease-in;
+}
+
+
+    .calendar .month {
+      height: 105px;
+    }
+    .calendar .weekdays {
+      height: 80px;
+    }
+    .calendar .days .day {
+      height: 80px;
+      font-size: 1rem;
+    }
+    .calendar .days .day.active,
+    .calendar .days .day.today {
+      font-size: 1rem;
+    }
+    .right .today-date {
+      padding: 15px;
+    }
+  }
+
+
+    @media (max-width: 450px) {
+      .container{
+    position: relative;
+    width: 315px;
+    height: 2500px;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    padding: 5px;
+    color: #fff;
+    display: flex;
+    flex-direction: col;
+  
+    border-radius: 10px;
+    background-color: #ABC5E4;
+  }
+
+  .calendar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #878895;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 4px 4px #ffffff96;
+
+    
+  }
+  .date-input{
+    margin-top: 1rem;
+    border: 2px solid gray;
+    width: 8rem;
+    height: 2rem;
+    outline: none;
+    border-radius: 6px;
+
+}
+.left .today-date .event-day {
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  .left .today-date .event-date {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+  }
+
+
+
+.placeholderlabel{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    color: gray;
+    left: 1rem;
+    padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+    margin-top: 0.2rem;
+    transition: all 0.2s ease-in;
+}
+
+
+    .calendar .month {
+      height: 80px;
+    }
+    .calendar .weekdays {
+      height: 65px;
+    }
+    .calendar .days .day {
+      height: 65px;
+      font-size: 0.8rem;
+    }
+    .calendar .days .day.active,
+    .calendar .days .day.today {
+      font-size: 0.8rem;
+    }
+    .right .today-date {
+      padding: 10px;
+    }
+  }
+
+
+    </style>
+    <div class="container">
+        <div class="left">
+            <div class="today-date">
+                <div class="event-day"></div>
+                <div class="event-date"></div>
+              </div>
+        </div>
+        <div class="center">
+          <div class="calendar">
+            <div class="month">
+              <i class="fas fa-angle-left prev"></i>
+              <div class="date"></div>
+              <i class="fas fa-angle-right next"></i>
+            </div>
+            <div class="weekdays">
+              <div>Sun</div>
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+            <div class="days"></div>
+            <div class="goto-today">
+              <div class="goto">
+                <input type="text" class="date-input" />
+                <label class="placeholderlabel" for="date-input">mm/yyyy</label>
+                <button class="goto-btn xl:w-[3rem] xl:h-[2.6rem] lg:w-[3rem] lg:h-[2.6rem] md:w-[3rem] md:h-[2.6rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] flex justify-center items-center">Go</button>
+              </div>
+              <button class="today-btn xl:w-[3rem] xl:h-[2.6rem] lg:w-[3rem] lg:h-[2.6rem] md:w-[3rem] md:h-[2.6rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] flex justify-center items-center">Today</button>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+
+          <div class="events"></div>
+          <script>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+              // calendar events
+  const calendar = document.querySelector(".calendar"),
+    date = document.querySelector(".date"),
+    daysContainer = document.querySelector(".days"),
+    prev = document.querySelector(".prev"),
+    next = document.querySelector(".next"),
+    todayBtn = document.querySelector(".today-btn"),
+    gotoBtn = document.querySelector(".goto-btn"),
+    dateInput = document.querySelector(".date-input"),
+    eventDay = document.querySelector(".event-day"),
+    eventDate = document.querySelector(".event-date"),
+    eventsContainer = document.querySelector(".events"),
+    addEventBtn = document.querySelector(".add-event");
+  
+  let today = new Date();
+  let activeDay;
+  let month = today.getMonth();
+  let year = today.getFullYear();
+  
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let eventsArr = []
+
+  fetch('/get_events/')  // Replace with the actual URL of your Django view
+  .then(response => response.json())
+  .then(data => {
+    const eventsData = JSON.parse(data.events);
+
+    eventsData.forEach(event => {
+      const eventDate = new Date(event.fields.event_date);
+      const day = eventDate.getDate();
+      const month = eventDate.getMonth();
+      const year = eventDate.getFullYear();
+      console.log(event.fields.image)
+
+      // Create an object with the required structure for eventsArr
+      const eventObj = {
+        day,
+        month,
+        year,
+        events: [
+          {
+            title: event.fields.title,
+            time: event.fields.event_date,
+            image:'https://hub200activityeventsbucket.s3.amazonaws.com/' +event.fields.image
+          },
+          // Add other event properties as needed
+        ],
+      };
+          eventsArr.push(eventObj);
+      });
+
+      // Now eventsArr contains the data from your Django model
+      // You can use it as needed in your calendar code
+      initCalendar();
+      console.log(eventsArr);
+  })
+  .catch(error => {
+      console.error('Error fetching events:', error);
+  });
+
+
+  getEvents();
+  console.log(eventsArr);
+  
+  //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
+  function initCalendar() {
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const prevLastDay = new Date(year, month, 0);
+    const prevDays = prevLastDay.getDate();
+    const lastDate = lastDay.getDate();
+    const day = firstDay.getDay();
+    const nextDays = 7 - lastDay.getDay() - 1;
+  
+    date.innerHTML = months[month] + " " + year;
+  
+    let days = "";
+  
+    for (let x = day; x > 0; x--) {
+      days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
+    }
+  
+    for (let i = 1; i <= lastDate; i++) {
+      //check if event is present on that day
+      let event = false;
+      eventsArr.forEach((eventObj) => {
+        if (
+          eventObj.day === i &&
+          eventObj.month === month &&
+          eventObj.year === year
+        ) {
+          event = true;
+        }
+      });
+      if (
+        i === new Date().getDate() &&
+        year === new Date().getFullYear() &&
+        month === new Date().getMonth()
+      ) {
+        activeDay = i;
+        getActiveDay(i);
+        updateEvents(i);
+        if (event) {
+          days += `<div class="day today active event">${i}</div>`;
+        } else {
+          days += `<div class="day today active">${i}</div>`;
+        }
+      } else {
+        if (event) {
+          days += `<div class="day event">${i}</div>`;
+        } else {
+          days += `<div class="day ">${i}</div>`;
+        }
+      }
+    }
+  
+    for (let j = 1; j <= nextDays; j++) {
+      days += `<div class="day next-date">${j}</div>`;
+    }
+    daysContainer.innerHTML = days;
+    addListner();
+  }
+  
+  //function to add month and year on prev and next button
+  function prevMonth() {
+    month--;
+    if (month < 0) {
+      month = 11;
+      year--;
+    }
+    initCalendar();
+  }
+  
+  function nextMonth() {
+    month++;
+    if (month > 11) {
+      month = 0;
+      year++;
+    }
+    initCalendar();
+  }
+  
+  prev.addEventListener("click", prevMonth);
+  next.addEventListener("click", nextMonth);
+  
+  initCalendar();
+  
+  //function to add active on day
+  function addListner() {
+    const days = document.querySelectorAll(".day");
+    days.forEach((day) => {
+      day.addEventListener("click", (e) => {
+        getActiveDay(e.target.innerHTML);
+        updateEvents(Number(e.target.innerHTML));
+        activeDay = Number(e.target.innerHTML);
+        //remove active
+        days.forEach((day) => {
+          day.classList.remove("active");
+        });
+        //if clicked prev-date or next-date switch to that month
+        if (e.target.classList.contains("prev-date")) {
+          prevMonth();
+          //add active to clicked day afte month is change
+          setTimeout(() => {
+            //add active where no prev-date or next-date
+            const days = document.querySelectorAll(".day");
+            days.forEach((day) => {
+              if (
+                !day.classList.contains("prev-date") &&
+                day.innerHTML === e.target.innerHTML
+              ) {
+                day.classList.add("active");
+              }
+            });
+          }, 100);
+        } else if (e.target.classList.contains("next-date")) {
+          nextMonth();
+          //add active to clicked day afte month is changed
+          setTimeout(() => {
+            const days = document.querySelectorAll(".day");
+            days.forEach((day) => {
+              if (
+                !day.classList.contains("next-date") &&
+                day.innerHTML === e.target.innerHTML
+              ) {
+                day.classList.add("active");
+              }
+            });
+          }, 100);
+        } else {
+          e.target.classList.add("active");
+        }
+      });
+    });
+  }
+  
+  todayBtn.addEventListener("click", () => {
+    today = new Date();
+    month = today.getMonth();
+    year = today.getFullYear();
+    initCalendar();
+  });
+  
+  dateInput.addEventListener("input", (e) => {
+    dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
+    if (dateInput.value.length === 2 || dateInput.value.length === 1 ) {
+      dateInput.value += "/";
+    }
+    if (dateInput.value.length > 7) {
+      dateInput.value = dateInput.value.slice(0, 7);
+    }
+    if (e.inputType === "deleteContentBackward") {
+      if (dateInput.value.length === 3) {
+        dateInput.value = dateInput.value.slice(0, 2);
+      }
+    }
+  });
+  
+  gotoBtn.addEventListener("click", gotoDate);
+  
+  function gotoDate() {
+    console.log("here");
+    const dateArr = dateInput.value.split("/");
+    if (dateArr.length === 2) {
+      if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
+        month = dateArr[0] - 1;
+        year = dateArr[1];
+        initCalendar();
+        return;
+      }
+    }
+    alert("Invalid Date");
+  }
+  
+  //function get active day day name and date and update eventday eventdate
+  function getActiveDay(date) {
+    const day = new Date(year, month, date);
+    const dayName = day.toString().split(" ")[0];
+    eventDay.innerHTML = dayName;
+    eventDate.innerHTML = date + " " + months[month] + " " + year;
+  }
+  
+  //function update events when a day is active
+  function updateEvents(date) {
+    let events = "";
+    eventsArr.forEach((event) => {
+      if (
+        date === event.day &&
+        month === event.month &&
+        year === event.year
+      ) {
+        event.events.forEach((event) => {
+          console.log(event.image)
+          events += `<div class="event">
+            <img class="event-image" src='${event.image}' />
+              <div class="title">
+                <h3 class="event-title">${event.title}</h3>
+              </div>
+              <div class="event-time">
+                <span class="event-time">${event.time}</span>
+              </div>
+          </div>`;
+        });
+      }
+    });
+    if (events === "") {
+      events = `<div class="no-event">
+              <h3>No Events</h3>
+          </div>`;
+    }
+    eventsContainer.innerHTML = events;
+    saveEvents();
+  }
+  
+  //function to save events in local storage
+  function saveEvents() {
+    localStorage.setItem("events", JSON.stringify(eventsArr));
+  }
+  
+  //function to get events from local storage
+  function getEvents() {
+    // Check if events are already saved in local storage
+    const storedEvents = JSON.parse(localStorage.getItem("events"));
+  
+    if (storedEvents) {
+      storedEvents.forEach((storedEvent) => {
+        
+        const eventExists = eventsArr.some((event) =>
+        isthesameevent(event, storedEvent)
+        );
+      });
+    }
+  }
+  
+  // function to compare betweeb two events (the event that i'm adding and the event that is stored in the localstorage) if is is the same then it wouldn't add it multible times
+  function isthesameevent(event1, event2) {
+    return (
+      event1.day === event2.day &&
+      event1.month === event2.month &&
+      event1.year === event2.year &&
+      event1.events.length === event2.events.length &&
+      event1.events.every((e1, i) => {
+        const e2 = event2.events[i];
+        return e1.title === e2.title && e1.time === e2.time;
+      })
+    );
+  }
+})
+          </script>
+</section>
+
+{% endblock %}

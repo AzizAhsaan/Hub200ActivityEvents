@@ -1,0 +1,1244 @@
+{% extends "ActivityEvents/layout.html" %}
+{% load static %}
+{% block body %}
+<style>
+  
+
+
+.vjs-custom-theme .vjs-control-bar {
+  background-color: transparent ;
+}
+
+.vjs-custom-theme .vjs-control-bar {
+  height: 54px;
+  background: none;
+  display: flex;
+  visibility: visible;
+}
+
+.vjs-custom-theme .vjs-volume-panel {
+  order: 4;
+  margin-top: 0.75rem;
+}
+
+.vjs-custom-theme .vjs-fullscreen-control {
+    display: none;
+}
+.vjs-custom-theme .vjs-picture-in-picture-control,
+.vjs-custom-theme .vjs-remaining-time {
+  display: none;
+}
+
+.vjs-custom-theme .vjs-play-control {
+  width: 5em ;
+  margin-top: 0.75rem;
+}
+
+.vjs-custom-theme .vjs-play-control .vjs-icon-placeholder::before {
+  font-size: 13px;
+  letter-spacing: 0.16px;
+  content: "Play" ;
+  font-family: sans-serif;
+  line-height: 30px;
+}
+
+.vjs-custom-theme .vjs-play-control.vjs-playing .vjs-icon-placeholder::before {
+  content: "Pause" ;
+  font-family: sans-serif;
+}
+.slide[data-active] {
+  opacity: 1;
+  z-index: 1;
+  transition-delay: 0ms;
+}
+
+
+.carousel-button:focus {
+  outline: 1px solid black;
+}
+.hoverzoom {
+    transition: transform 0.4s ease-in-out;
+}
+
+.hoverzoom:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+
+
+
+#buttonwrapper {
+
+    width: 100%;
+    height: 100%;
+  font-size:21px;
+  letter-spacing:6px;
+  color:white;
+  overflow: visible;
+  margin-top: 1rem;
+}
+
+.submit, .loader, .loader-wrapper{
+  position:absolute;
+}
+
+.submit {
+  z-index:2;
+
+  background: #66b5ff; 
+  display:block;
+  border-radius: 15rem;
+
+  text-align:center;
+  color:rgba(255,255,255,1);
+  text-decoration:none;
+  transition: all 0.5s ease, line-height 0s ease, color 0.4s ease, filter 0.2s ease;
+}
+
+#buttonwrapper::selection, .submit::selection {
+  background: transparent;
+}
+
+
+
+
+.submit:before {
+  content:"";
+  z-index:-2;
+  width:100%;
+  height:100%;
+  background: #66b5ff; 
+  display:block;
+  border-radius:50%;
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:0.8;
+  transform:scale(0.9) translateY(15px);
+  filter:blur(45px);
+  transition:all 0.2s ease;
+}
+
+.submit:after {
+  content:"";
+  z-index:-4;
+  width:100%;
+  height:100%;
+  background: #66b5ff; 
+  display:block;
+  border-radius:50%;
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:0;
+  transform:scale(1);
+}
+
+.submit:hover:before {
+  transform:scale(0.9) translateY(5px);
+  filter:blur(40px);
+}
+
+.submit:active {
+  line-height:460%;
+  filter:brightness(0.95);
+  transition:all 0s;
+}
+
+.checked .submit:before {
+  top:0px;
+  opacity:0;
+}
+
+.checked .submit:after {
+    animation: submit-after-anim 0.5s 2.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.checked {
+   -webkit-filter: url("#goo");
+   filter: url("#goo");
+}
+
+.white {
+  background-color: #ffffff;
+  box-shadow: 40px 47px 49px 40px rgba(0, 0, 0, 0.1);
+}
+
+.blue {
+  background-color: #0084ff;
+  }
+
+.blue2 {
+  background-color: #7aa5cd;
+  box-shadow: 1px 3px 5px 1px rgba(0, 0, 0, 0.1);
+  transform:scale(0.2) rotate(30deg) translate(0px);
+}
+
+.checked .blue {
+  animation: loader-anim-blue 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.checked .white  {
+  animation: loader-anim-white 2s 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.checked .blue2 {
+   animation: loader-anim-blue2 2s 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.loader {
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  opacity:0;
+  z-index:1;
+}
+
+.checked .loader {
+  opacity:1;
+}
+
+.checked .loader-wrapper {
+  animation: wrapper-loader-anim 2.2s linear;
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  transform:scale(0)
+}
+
+.checked .submit {
+  height:70px;
+  width:70px;
+  border-radius: 50%;
+  color:rgba(255,255,255,0);
+  background: #66b5ff;
+  animation: submit-anim 2s  cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+
+
+.check-wrapper {
+  position:absolute;
+  left:0;
+  right:0;
+  margin:0 auto;
+  width:95px;
+  height:95px;
+  z-index:-1;
+  opacity:1;
+}
+
+.check-wrapper svg {
+  margin-top:20px;
+  margin-left: 24px;
+}
+
+.check{fill:none;
+  stroke:#ffffff;
+  stroke-width:10;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:10;
+ stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  z-index:-1;
+  }
+
+.checked .check-wrapper {
+  z-index:3;
+}
+
+.checked .check {
+  animation: check 2s 2.2s ease forwards;
+}
+
+
+@keyframes loader-anim-blue {
+    0% {transform:scale(0.2) rotate(0deg) translate(220px, 0px); }
+  100% {transform:scale(0.2) rotate(1100deg) translate(300px, 0px);}
+}
+
+@keyframes loader-anim-white {
+     0% {transform:scale(0.2) rotate(0deg) translate(300px, 0px); }
+  100% {transform:scale(0.2) rotate(1100deg) translate(220px, 0px);}
+}
+
+@keyframes loader-anim-blue2 {
+  0%,70% {transform:scale(0.2) rotate(30deg) translate(0px); }
+  85% {transform:scale(0.2) rotate(30deg) translate(-300px);}
+  100% {transform:scale(0.2) rotate(30deg) translate(0px); }
+}
+
+@keyframes wrapper-loader-anim {
+    0% { transform: scale(0) translateY(0px); }
+    10% { transform: scale(1) translateY(20px); }
+    50% { transform: scale(1.2) translateY(10px); }
+    90% { transform: scale(1) translateY(-10px); }
+    100% { transform: scale(0) translateY(0px); }
+}
+
+@keyframes submit-after-anim {
+  0% {transform:scale(1); opacity:0.3 }
+   100% {transform:scale(2); opacity:0 }
+}
+
+@keyframes submit-anim {
+    0% {transform:scale(1) }
+      5%, 95% {transform:scale(0.7) }
+  100% {transform:scale(1)}
+}
+
+@keyframes check {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+
+
+
+@media (max-width: 1600px) {
+  
+  .imgpeoplereview{
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  border: 1px solid #26b123;
+  border-radius: 50%;
+  transform: rotate(calc(360deg/8 *var(--i )));
+  transform-origin: 240px ;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px #222, 0 0 0 6px #fff;
+  z-index: 10;
+  overflow: hidden;
+  transition: 0.3s;
+}
+  }
+  
+  /* Large screens (lg) */
+  @media (max-width: 1025px) {
+  
+    .imgpeoplereview{
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #26b123;
+  border-radius: 50%;
+  transform: rotate(calc(360deg/8 *var(--i )));
+  transform-origin: 233px ;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px #222, 0 0 0 6px #fff;
+  z-index: 10;
+  overflow: hidden;
+  transition: 0.3s;
+}
+  }
+  
+  /* Medium screens (md) */
+  @media (max-width: 790px) {
+    
+    .imgpeoplereview{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #26b123;
+  border-radius: 50%;
+  transform: rotate(calc(360deg/8 *var(--i )));
+  transform-origin: 170px ;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px #222, 0 0 0 6px #fff;
+  z-index: 10;
+  overflow: hidden;
+  transition: 0.3s;
+}
+  }
+
+
+  @media (max-width: 450px) {
+    
+    .imgpeoplereview{
+  position: absolute;
+  width: 19.5px;
+  height: 19.5px;
+  border: 0.7px solid #26b123;
+  border-radius: 50%;
+  transform: rotate(calc(360deg/8 *var(--i )));
+  transform-origin: 79px ;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px #222, 0 0 0 3px #fff;
+  z-index: 10;
+  overflow: hidden;
+  transition: 0.3s;
+}
+  }
+
+
+.imgpeoplereview.active{
+  box-shadow: 0 0 0 2px #71B3F1, 0 0 0 3px #71B3F1;
+
+}
+.imgpeoplereview img{
+  transform: rotate(calc(-360deg/8 *var(--i)));
+  transition: 0.3s;
+  filter: grayscale(1);
+}
+.imgpeoplereview.active img{
+filter: grayscale(0);
+}
+
+@keyframes animationcontent {
+  0%{
+    rotate: 0deg;
+  }
+  100%{
+    rotate: 360deg;
+  }
+}
+
+
+@media (max-width: 1600px) {
+  
+
+  .content{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content::before{
+  content: '';
+  position: absolute;
+  inset: 45px;
+  border: 7px solid transparent;
+  border-left: 7px solid #71B3F1;
+  border-right: 7px solid #e2e2e2;
+  border-radius: 50%;
+  animation: animationcontent 5s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+
+}
+
+.content::after{
+  content: '';
+  position: absolute;
+  inset: 65px;
+  border: 7px solid transparent;
+  border-left: 7px solid #71B3F1;
+  border-right: 7px solid #e2e2e2;
+  border-radius: 50%;
+  animation: animationcontent2 2.5s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+
+}
+  }
+  
+  /* Large screens (lg) */
+  @media (max-width: 1025px) {
+  
+
+    .content{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content::before{
+  content: '';
+  position: absolute;
+  inset: 35px;
+  border: 5.1px solid transparent;
+  border-left: 5.1px solid #71B3F1;
+  border-right: 5.1px solid #e2e2e2;
+  border-radius: 50%;
+  animation: animationcontent 5s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+
+}
+
+.content::after{
+  content: '';
+  position: absolute;
+  inset: 58px;
+  border: 5.1px solid transparent;
+  border-left: 5.1px solid #71B3F1;
+  border-right: 5.1px solid #e2e2e2;
+  border-radius: 50%;
+  animation: animationcontent2 2.5s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+
+}
+  }
+  
+  /* Medium screens (md) */
+  @media (max-width: 790px) {
+    
+
+    .content{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content::before{
+  content: '';
+  position: absolute;
+  inset: 31px;
+  border: 4px solid transparent;
+  border-left: 4px solid #71B3F1;
+  border-right: 4px solid #e2e2e2;
+  border-radius: 50%;
+  animation: animationcontent 5s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+
+}
+
+.content::after{
+  display: none;
+}
+  }
+
+
+  @media (max-width: 450px) {
+    
+
+    .content{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content::before{
+  content: '';
+  position: absolute;
+  inset: 17px;
+  border: 4px solid transparent;
+  border-left: 4px solid #71B3F1;
+  border-right: 4px solid #e2e2e2;
+  border-radius: 50%;
+  animation: animationcontent 5s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+
+}
+
+.content::after{
+  display: none;
+}
+  }
+
+
+
+
+@keyframes animationcontent2 {
+  0%{
+    rotate: 360deg;
+  }
+  100%{
+    rotate: 0deg;
+  }
+}
+
+
+.contentbox{
+  position: absolute;
+  transform: scale(0);
+  transition: 0.3s;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contentbox.active{
+  transform: scale(1);  
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+.contentbox .card{
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.hoverzoom:hover .changebackround{
+  display: block;
+  transition: 0.5s;
+  background-color: #71B3F1;
+}
+
+
+
+
+
+
+
+.positivity__alone {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+}
+
+
+
+.hr-line{
+  width: 41rem;
+  margin: auto;
+  
+}
+/* Style the buttons that are used to open and close the faq-page body */
+
+.active1,
+.faq-page:hover {
+  background-color: #F8FCFF;
+}
+.faq-body {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+.faq-page:after {
+    content: '\02795';
+    /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #85C5FF;
+    float: right;
+    margin-left: 5px;
+}
+.active1:after {
+    content: "\2796";
+    /* Unicode character for "minus" sign (-) */
+}
+
+
+
+
+  /* Large screens (xl) */
+
+@media (max-width: 1600px) {
+  
+  .faq-page {
+  
+  color: #444;
+  cursor: pointer;
+  padding: 30px 20px;
+  width: 51rem;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  margin: auto;
+  border-radius: 1rem;
+
+}
+.faq-body{
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 51rem;
+ padding: auto;
+ 
+}
+
+.faq-page:after {
+    content: '\02795';
+    /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #85C5FF;
+    float: right;
+    margin-left: 5px;
+}
+
+.hr-line{
+  width: 41rem;
+  margin: auto;
+  
+}
+  }
+  
+  /* Large screens (lg) */
+  @media (max-width: 1025px) {
+    .faq-page {
+  
+  color: #444;
+  cursor: pointer;
+  padding: 30px 20px;
+  width: 48rem;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  margin: auto;
+  border-radius: 1rem;
+
+}
+.faq-body{
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 48rem;
+ padding: auto;
+ 
+}
+
+.faq-page:after {
+    content: '\02795';
+    /* Unicode character for "plus" sign (+) */
+    font-size: 12px;
+    color: #85C5FF;
+    float: right;
+    margin-left: 5px;
+}
+
+
+.hr-line{
+  width: 39rem;
+  margin: auto;
+  
+}
+  }
+  
+  /* Medium screens (md) */
+  @media (max-width: 790px) {
+    .faq-page {
+  
+  color: #444;
+  cursor: pointer;
+  padding: 30px 20px;
+  width: 42rem;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  margin: auto;
+  border-radius: 1rem;
+
+}
+.faq-body{
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 42rem;
+ padding: auto;
+ 
+}
+
+.faq-page:after {
+    content: '\02795';
+    /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #85C5FF;
+    float: right;
+    margin-left: 5px;
+}
+
+.hr-line{
+  width: 32rem;
+  margin: auto;
+  
+}
+  }
+
+  /* small screens (2sm) */
+
+  @media (max-width: 450px) {
+    .faq-page {
+  
+  color: #444;
+  cursor: pointer;
+  padding: 30px 20px;
+  width: 20rem;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  margin: auto;
+  border-radius: 1rem;
+
+}
+.faq-body{
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 20rem;
+ padding: auto;
+ 
+}
+
+.faq-page:after {
+    content: '\02795';
+    /* Unicode character for "plus" sign (+) */
+    font-size: 12px;
+    color: #85C5FF;
+    float: right;
+    margin-left: 5px;
+}
+
+.hr-line{
+  width: 16rem;
+  margin: auto;
+  
+}
+  }
+  </style>
+<section  class="h-full w-full flex flex-col items-center justify-center  mb-[2rem]   ">
+
+
+    <section  id="curved" class="relative bg-[#F8FCFF] xl:h-[28rem] lg:h-[28rem] md:h-[25rem] min-[320px]:h-[18rem]  w-[99%] mx-auto flex flex-row justify-center items-center" >
+        <div class="flex flex-col w-6/12  h-full justify-center items-center xl:mt-[2rem] lg:mt-[2rem] md:mt-[1.8rem] min-[320px]:mt-[0rem]  p-[0.5rem]">
+                <h1 class="xl:text-[2.8rem] lg:text-[2rem] md:text-[2.1rem]  min-[320px]:text-[1rem]  font-medium 	 text-[#464747] ">Explore <span class="text-[#50A8F5]">Hub200’s</span> </br> Exciting Event </br> Lineup. </h1>
+                <div class="xl:w-[23rem] xl:h-[5rem]   lg:w-[18.5rem] lg:h-[4rem] md:w-[17rem] md:h-[4rem]  min-[320px]:w-[8.8rem]  min-[320px]:h-[2rem]  mt-[0.8rem] flex justify-first items-first ml-[1rem] ">
+                <div class="text xl:text-[1.2rem] lg:text-[1rem] md:text-[0.9rem]  min-[320px]:text-[0.5rem] font-medium text-[#50A8F5] "></div> 
+                </div>
+
+                <button onclick="scrollfunction('hubevents')" class="xl:w-[10rem] xl:h-[3rem] lg:w-[7rem] lg:h-[2rem] md:w-[10rem] md:h-[2.9rem] min-[320px]:w-[5rem] min-[320px]:h-[1.6rem]  xl:text-[0.86rem] lg:text-[0.6rem] md:text-[0.9rem] min-[320px]:text-[0.44rem] mt-[2.5rem] xl:mr-[13rem] lg:mr-[11rem] md:mr-[7rem] min-[320px]:mr-[3rem] bg-[#85C5FF] rounded-[10rem]   text-white   font-medium px-[0.7rem] hoverzoom ">Discover The Events</button>
+        </div>
+        <div class="flex flex-col w-6/12 h-full justify-center items-center relative xl:mr-[4rem] lg:mr-[4rem] md:mr-[3rem] min-[320px]:mr-[0rem] ">
+            <div class="xl:w-[24.5rem] xl:h-[18rem] min-[320px]:w-[10rem]  min-[320px]:h-[10rem] flex flex-col justify-center items-center lg:w-[20.5rem] lg:h-[14rem] md:w-[20.5rem] md:h-[14rem]  bg-transparent relative rounded-[0.3rem] rounded-tr-[0.8rem]">
+                <img class="xl:h-[27rem] lg:h-[22rem] md:h-[22rem] min-[320px]:h-[9.9rem]  absolute xl:right-[2rem] lg:right-[2rem] md-right-[1.5rem] min-[320px]:right-[0.4rem] xl:top-[-5rem] lg:top-[-5rem] md:top-[-4.8rem] min-[320px]:top-[-1.7rem]  z-10 " src="{% static 'ActivityEvents/Teleworkbro.png' %}" alt="">
+
+            </div>
+        </div>
+    </section>
+
+    <section class="relative w-[94%] mx-auto flex flex-col justify-center items-center mt-[3rem]" >
+        <div class="w-full h-full flex justify-first items-first">
+            <div class="xl:w-[5.5rem] xl:h-[5.5rem] lg:w-[5rem] lg:h-[5rem] md:w-[4.5rem] md:h-[4.5rem] min-[320px]:w-[2.5rem] min-[320px]:h-[2.5rem] bg-[#E8F5FF]  drop-shadow-xl shadow-[#BABDC2] shadow-sm  rounded-[0.3rem]  relative">
+                <div class="xl:w-[5.5rem] xl:h-[5rem] lg:w-[5rem] lg:h-[4.5rem] md:w-[4.5rem] md:h-[4rem] min-[320px]:w-[2.5rem] min-[320px]:h-[2rem] bg-white  absolute xl:mt-[1.5rem] lg:mt-[1.5rem] md:mt-[1.5rem] min-[320px]:mt-[1.2rem]  rounded-[0.3rem] left-[1rem] drop-shadow-md  "></div>
+            </div>
+</div>
+        <h1 class="xl:text-[2.2rem] lg:text-[2rem] min-[320px]:text-[1rem] md:text-[1.5rem] font-medium  text-center text-[#50A8F5] mt-[2rem]	">What Hub200’s Activity Events </br> Provides</h1>
+        <div class="w-full xl:h-[40rem] lg:h-[38rem] md:h-[30rem] min-[320px]:h-[20rem] mt-[1rem] activityeventscontainer ">
+            <div class="w-full xl:h-[18rem] lg:h-[16rem] md:h-[14rem] min-[320px]:h-[8rem] flex flex-row items-center justify-center bg-[#F8FCFF] drop-shadow-xl shadow-[#BABDC2] shadow-sm  rounded-[0.5rem] rounded-b-[1rem] border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom ">
+                <div class="p-[0.3rem] xl:w-[30rem] lg:w-[20rem] md:w-[18rem] min-[320px]:w-[14rem] h-full  flex flex-col justify-center  ">
+                    <h1 class="xl:text-[2.5rem] lg:text-[1.8rem] md:text-[1.6rem] min-[320px]:text-[0.72rem] text-[#464747] text-left">
+                        Networking community
+                    </h1>
+                    <p class="xl:text-[1.1rem] lg:text-[0.9rem] md:text-[0.8rem] min-[320px]:text-[0.43rem] mt-[1rem] text-[#6E8292]">
+                        Create opportunities for you to network with instoctors, mentors, alumni, software companies, you never know which connections will end up being valuable to your career going forward.
+                    </p>
+                    <div class="xl:h-[0.3rem] xl:h-[0.3rem] xl:h-[0.2rem] min-[320px]:h-[0.15rem] mt-[1rem] rounded-[1rem] bg-transparent hidden xl:w-[30rem] lg:w-[28rem] md:w-[25rem] min-[320px]:w-[10rem]  changebackround"></div>
+                </div>
+                <div class="xl:w-[28rem] lg:w-[26rem] md:w-[24rem] min-[320px]:w-[10rem] h-full  flex flex-col justify-center ">
+                    <img class="xl:w-[23rem] xl:h-[23rem] lg:w-[30rem] lg:h-[30rem] md:w-[18rem] md:h-[18rem] min-[320px]:h-[8rem] min-[320px]:w-[8rem] md:h-[28rem] z-10 " src="{% static 'ActivityEvents/Teamspiritcuate.png' %}" alt="">
+                </div>
+            </div>
+
+
+            <div class="w-full xl:h-[18rem] lg:h-[16rem] md:h-[11rem] min-[320px]:h-[5.7rem] flex flex-row xl:mt-[3rem] lg:mt-[1.8rem] md:mt-[2rem] min-[320px]:mt-[1.3rem]  justify-center items-center ">
+                <div class="xl:w-[37rem] lg:w-[29rem] md:w-[22rem] min-[320px]:w-[9rem]	 h-full flex flex-row items-center justify-center bg-[#F8FCFF] drop-shadow-xl shadow-[#BABDC2] shadow-sm  rounded-[0.5rem] rounded-b-[1rem] border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom">
+                    <div class="xl:w-[22rem] lg:w-[20rem] md:w-[15rem] min-[320px]:w-[10rem] h-full  flex flex-col justify-center xl:ml-[2rem] lg:ml-[2rem] md:ml-[1.2rem] min-[320px]:ml-[0.2rem] ">
+                        <h1 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.3rem] min-[320px]:text-[0.4rem]  text-[#464747] text-left">
+                            Gamification of learning
+                        </h1>
+                        <p class="xl:text-[0.8rem] lg:text-[0.6rem] md:text-[0.5rem] min-[320px]:text-[0.3rem] xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.6rem] min-[320px]:mt-[0.3rem] xl:mb-[1rem] lg:mb-[0.9rem] md:mb-[0.6rem] min-[320px]:mb-[0.4rem] text-[#6E8292]">
+                            Maximize your enjoyment and engagement through gamification techniques to motivate you by using game elements in learning environments
+                        </p>
+                        <div class="h-[0.3rem]  rounded-[1rem] hidden bg-transparent w-[14rem] changebackround"></div>
+
+                    </div>
+                    <div class="xl:w-[28rem] lg:w-[26rem] md:w-[15rem] min-[320px]:w-[8rem] h-full  flex flex-col justify-center">
+                        <img class="xl:w-[32rem] xl:h-[32rem] lg:w-[30rem] lg:h-[30rem] md:w-[18rem] md:h-[18rem] min-[320px]:w-[5rem] min-[320px]:h-[5rem] z-10 " src="{% static 'ActivityEvents/Knowledgecuate.png' %}" alt="">
+                    </div>
+                </div>
+
+                <div class="xl:w-[37rem] lg:w-[29rem] md:w-[22rem] min-[320px]:w-[9rem] lg:ml-[1.5rem] min-[320px]:ml-[0.5rem]	 h-full flex flex-row items-center justify-center bg-[#F8FCFF] drop-shadow-xl shadow-[#BABDC2] shadow-sm   rounded-[0.5rem] rounded-b-[1rem] border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom">
+                  <div class="xl:w-[22rem] lg:w-[20rem] md:w-[15rem] min-[320px]:w-[10rem] h-full  flex flex-col justify-center xl:ml-[2rem] lg:ml-[2rem] md:ml-[1.2rem] min-[320px]:ml-[0.2rem] ">
+                      <h1 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.3rem] min-[320px]:text-[0.4rem]  text-[#464747] text-left">
+                          Gamification of learning
+                      </h1>
+                      <p class="xl:text-[0.8rem] lg:text-[0.6rem] md:text-[0.5rem] min-[320px]:text-[0.3rem] xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.6rem] min-[320px]:mt-[0.3rem] xl:mb-[1rem] lg:mb-[0.9rem] md:mb-[0.6rem] min-[320px]:mb-[0.4rem] text-[#6E8292]">
+                          Maximize your enjoyment and engagement through gamification techniques to motivate you by using game elements in learning environments
+                      </p>
+                      <div class="h-[0.3rem]  rounded-[1rem] hidden bg-transparent w-[14rem] changebackround"></div>
+
+                  </div>
+                  <div class="xl:w-[28rem] lg:w-[26rem] md:w-[15rem] min-[320px]:w-[8rem] h-full  flex flex-col justify-center">
+                      <img class="xl:w-[32rem] xl:h-[32rem] lg:w-[30rem] lg:h-[30rem] md:w-[18rem] md:h-[18rem] min-[320px]:w-[5rem] min-[320px]:h-[5rem] xl:w-[32rem] xl:h-[32rem] z-10 " src="{% static 'ActivityEvents/Knowledgecuate.png' %}" alt="">
+                  </div>
+              </div>
+
+                
+
+            </div>
+
+
+        </div>
+    </section>
+    <section class=" w-[94%]  justify-center items-center mb-[10rem]">
+        <div class="w-full flex justify-end items-end">
+            <div class="xl:w-[4.4rem] xl:h-[4.4rem] lg:w-[4.1rem] lg:h-[4.1rem] md:w-[3.5rem] md:h-[3.5rem] min-[320px]:w-[2.5rem] min-[320px]:h-[2.5rem]  bg-white  drop-shadow-xl shadow-[#BABDC2] shadow-sm  rounded-[0.3rem]  relative">
+                <div class="xl:w-[4.4rem] xl:h-[4rem] lg:w-[4.1rem] lg:h-[3.8rem] md:w-[3.5rem] md:h-[3.2rem] min-[320px]:w-[2.5rem] min-[320px]:h-[2.2rem] bg-[#E8F5FF]  absolute mt-[1.3rem]  rounded-[0.3rem] right-[1rem] drop-shadow-md  "></div>
+            </div>
+</div>
+        <h1 class="xl:text-[3.5rem] lg:text-[3.3rem] md:text-[3rem] min-[320px]:text-[1.6rem] font-medium  text-center text-[#50A8F5]	">Hub Thursday</h1>
+        <div class="w-full xl:h-[26rem] lg:h-[22rem] md:h-[20rem] min-[320px]:h-[10rem] mt-[2rem] bg-[#F8FCFF] rounded-[0.3rem] rounded-b-[1.2rem] flex flex-row justify-center items-center relative hubthursdaycontainer ">
+            <div class="xl:w-[37rem] lg:w-[34rem] md:w-[32rem] min-[320px]:w-[25rem] h-full flex items-center justify-center xl:mt-[0rem] lg:mt-[4rem] md:mt-[4rem] min-[320px]:mt-[5rem] ">
+                <img class="xl:h-[40rem] xl:w-[40rem] lg:h-[32rem] lg:w-[32rem] md:h-[28rem] md:w-[28rem] min-[320px]:h-[13rem] min-[320px]:w-[13rem] xl:mb-[15.5rem] lg:mb-[14rem] md:mb-[10.5rem] min-[320px]:mb-[10rem]  " src="{% static 'ActivityEvents/thursdayhub.png' %}" alt="">
+            </div>
+            <div class="xl:w-[28rem] lg:w-[26rem] md:w-[24rem] min-[320px]:w-[18rem] h-full flex flex-col mb-[7rem] justify-center xl:mt-[0rem] lg:mt-[4rem] md:mt-[4rem] min-[320px]:mt-[6rem]  ">
+                <h1 class="xl:text-[3.5rem] lg:text-[3rem] md:text-[2.5rem] min-[320px]:text-[1rem] text-left font-medium text-[#464747]">Hub Thursday</h1>
+                <p class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-[#6E8292] ">It is weekly events for Hub200
+                    that we do every Thursday with different activities and it includes activities such as</p>
+            </div>
+            <div class="flex flex-row w-full h-full justify-center items-center absolute xl:top-[11.8rem] lg:top-[11.8rem] md:top-[9rem] min-[320px]:top-[5rem]">
+                    <div class="xl:w-[16rem] xl:h-[10rem] lg:w-[14rem] lg:h-[9rem] md:w-[12rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[4.4rem] flex flex-col justify-center items-center bg-white rounded-[0.4rem] rounded-b-[1rem] drop-shadow-xl shadow-[#BABDC2] shadow-sm border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom">
+                      <img class="xl:h-[5.5rem] xl:w-[5.5rem] lg:h-[4.5rem] lg:w-[4.5rem] md:h-[3.5rem] md:w-[3.5rem] min-[320px]:h-[2.5rem] min-[320px]:w-[2.5rem]  " src="{% static 'ActivityEvents/movienight.png' %}" alt="">
+                      <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Movie Night</h2>
+                </div>
+                <div class="xl:w-[16rem] xl:h-[10rem] lg:w-[14rem] lg:h-[9rem] md:w-[12rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[4.4rem] xl:ml-[2rem] lg:ml-[1.5rem] md:ml-[1rem] min-[320px]:ml-[0.4rem]  flex flex-col justify-center items-center bg-white rounded-[0.4rem] rounded-b-[1rem] drop-shadow-xl shadow-[#BABDC2] shadow-sm border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom">
+                  <img class="xl:h-[5.5rem] xl:w-[5.5rem] lg:h-[4.5rem] lg:w-[4.5rem] md:h-[3.5rem] md:w-[3.5rem] min-[320px]:h-[2.5rem] min-[320px]:w-[2.5rem]  " src="{% static 'ActivityEvents/movienight.png' %}" alt="">
+                  <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Movie Night</h2>
+            </div>
+            <div class="xl:w-[16rem] xl:h-[10rem] lg:w-[14rem] lg:h-[9rem] md:w-[12rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[4.4rem] xl:ml-[2rem] lg:ml-[1.5rem] md:ml-[1rem] min-[320px]:ml-[0.4rem] flex flex-col justify-center items-center bg-white rounded-[0.4rem] rounded-b-[1rem] drop-shadow-xl shadow-[#BABDC2] shadow-sm border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom">
+              <img class="xl:h-[5.5rem] xl:w-[5.5rem] lg:h-[4.5rem] lg:w-[4.5rem] md:h-[3.5rem] md:w-[3.5rem] min-[320px]:h-[2.5rem] min-[320px]:w-[2.5rem]  " src="{% static 'ActivityEvents/movienight.png' %}" alt="">
+              <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Movie Night</h2>
+        </div>
+                   
+                
+            </div>
+        </div>
+
+    </section>
+
+
+    
+
+    <section id="hubevents" class=" w-[94%] mx-auto flex flex-col justify-center items-center ">
+        
+        <h1 class="xl:text-[3.5rem] lg:text-[3.3rem] md:text-[3rem] min-[320px]:text-[1.6rem] font-medium  text-center text-[#50A8F5]	">Hub200's Events</h1>
+                <div class="carousel xl:w-[60rem] xl:h-[43rem] lg:w-[55rem] lg:h-[40rem] md:w-[47rem] md:h-[36rem] min-[320px]:w-[19rem] min-[320px]:h-[20rem] flex flex-col justify-center items-center  relative" data-carousel>
+
+                  
+                  <ul class="m-0 p-0 w-full h-full"  data-slides>
+                    {% for event in all_events %}
+
+                    <li class="slide w-full h-3/5 absolute flex flex-col justify-center items-center	" data-active>
+                        <div class="w-full absolute flex justify-between items-center z-10" >
+                            <button class="carousel-button prev xl:h-[3.5rem] xl:w-[3.5rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem]  bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="prev"><box-icon size="2rem" color="#ffffff" name='left-arrow-alt'></box-icon></button>
+                            <button class="carousel-button next xl:h-[3.5rem] xl:w-[3.5rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem] bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="next"><box-icon size="2rem" color="#ffffff" name='right-arrow-alt' ></box-icon></button>
+                        </div>
+                      <div class="xl:w-[36rem] xl:h-[24rem] lg:w-[32rem] lg:h-[20rem] md:w-[28rem] md:h-[16rem] min-[320px]:w-[13rem] min-[320px]:h-[9rem] flex flex-col justify-center items-center relative">
+                        <img class="w-full h-full block object-cover object-center rounded-[0.3rem] rounded-b-[1.2rem] drop-shadow-sm " src="https://hub200activityeventsbucket.s3.amazonaws.com/{{ event.image }}">
+                        <div class="xl:w-[27rem] xl:h-[17rem] lg:w-[24rem] lg:h-[14rem] md:w-[22rem] md:h-[13rem] min-[320px]:w-[8.5rem] min-[320px]:h-[6rem] flex flex-col items-center bg-[#fcfcfc] rounded-[0.3rem] rounded-b-[1.2rem] drop-shadow-xl shadow-[#BABDC2] shadow-sm absolute xl:top-[10rem] xl:left-[15rem] lg:top-[7rem] lg:left-[12rem] md:top-[7rem] md:left-[12rem] min-[320px]:top-[4.5rem] min-[320px]:left-[5.5rem]">
+                          <div class="w-full h-3/4 p-[0.1rem]	 flex flex-col items-center">
+                              <h1 class="xl:text-[2rem] lg:text-[1.6rem] md:text-[1.4rem] min-[320px]:text-[0.6rem] text-[#464747] font-medium xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem]">{{event.title}}</h1>
+                              <p class="xl:text-[0.8rem] lg:text-[0.7rem] md:text-[0.5rem] min-[320px]:text-[0.29rem] text-[#6E8292] font-medium xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] text-center"> {{event.description}}</p>
+                          </div>
+                          <div class="w-11/12 h-1/4	 flex justify-between absolute xl:bottom-[1rem] lg:bottom-[0.9rem] md:bottom-[0.7rem] min-[320px]:bottom-[0.5rem]">
+                              <div class="xl:w-[17rem] xl:h-[5rem] lg:w-[15rem] lg:h-[4rem] md:w-[15rem] md:h-[4rem] min-[320px]:w-[10rem] min-[320px]:h-[2rem] flex flex-col justify-center items-center   ">
+                                  <div class="xl:w-[6rem] xl:h-[2.3rem] lg:w-[5rem] lg:h-[2rem] md:w-[4rem] md:h-[1.8rem] min-[320px]:w-[2rem] min-[320px]:h-[0.6rem] rounded-[4rem] bg-[#50A8F5] drop-shadow-xl shadow-[#BABDC2] shadow-sm  flex justify-center items-center text-white font-medium xl:text-[1.15rem] lg:text-[0.9rem] md:text-[0.7rem] min-[320px]:text-[0.4rem]">Location</div>
+                                  <h1 class="xl:mt-[0.5rem] lg:mt-[0.5rem] md:mt-[0.4rem] min-[320px]:mt-[0.3rem]  xl:text-[1.2rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.3rem] font-medium">{{event.location}}</h1>
+                              </div>
+                              <div class="xl:w-[17rem] xl:h-[5rem] lg:w-[15rem] lg:h-[4rem] md:w-[15rem] md:h-[4rem] min-[320px]:w-[10rem] min-[320px]:h-[2rem] flex flex-col justify-center items-center  ">
+                                  <div class="xl:w-[6rem] xl:h-[2.3rem] lg:w-[5rem] lg:h-[2rem] md:w-[4rem] md:h-[1.8rem] min-[320px]:w-[2rem] min-[320px]:h-[0.6rem] rounded-[4rem] bg-[#50A8F5] drop-shadow-xl shadow-[#BABDC2] shadow-sm  flex justify-center items-center text-white font-medium xl:text-[1.15rem] lg:text-[0.9rem] md:text-[0.7rem] min-[320px]:text-[0.4rem]">Date</div>
+                                  <h1 class="xl:mt-[0.5rem] lg:mt-[0.5rem] md:mt-[0.4rem] min-[320px]:mt-[0.3rem] xl:text-[1.2rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.3rem] font-medium">{{event.event_date|date:"M d" }}</h1>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+
+                  </ul>
+
+            <div class="w-full h-2/5 flex flex-col items-center	">
+                <h1 class="text-center xl:text-[2rem] lg:text-[1.7rem] md:text-[1.4rem] min-[320px]:text-[0.9rem] text-[#464747] font-medium">Explore our events at <span class="text-[#61B4FD]">Hub200</span> </h1>
+                 <p class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.9rem] min-[320px]:text-[0.4rem] text-[#38668D] text-center font-medium mt-[0.5rem]"> which provide opportunities to connect with like-minded individuals, create new friendships and parcticipating in activities from which you will learn and make your day better!     </p>
+              <div class="w-full flex flex-row justify-center items-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.6rem]">
+                <a href="{% url 'events' %}" class="xl:w-[8rem] xl:h-[2.5rem] lg:w-[7rem] lg:h-[2.1rem] md:w-[6rem] md:h-[1.9rem] min-[320px]:w-[3rem] min-[320px]:h-[1rem] rounded-[4rem] bg-[#50A8F5] drop-shadow-md  flex justify-center items-center text-white font-medium xl:text-[1.15rem] lg:text-[0.9rem] md:text-[0.85rem] min-[320px]:text-[0.40rem] hoverzoom">All Events</a>
+                <a href="{% url 'calendar' %}" class="xl:w-[8rem] xl:h-[2.5rem] lg:w-[7rem] lg:h-[2.1rem] md:w-[6rem] md:h-[1.9rem]  min-[320px]:w-[3rem] min-[320px]:h-[1rem] rounded-[4rem] bg-[#50A8F5] drop-shadow-md  flex justify-center items-center text-white font-medium xl:text-[1.15rem] lg:text-[0.9rem] md:text-[0.85rem]  min-[320px]:text-[0.40rem] ml-[2rem] hoverzoom">Calendar</a>
+
+              </div>
+            </div>
+        </div>
+
+
+    </section>
+
+    <section class="  w-[94%] mx-auto justify-center items-center mb-[3rem] mt-[3rem] ">
+      <h1 class="xl:text-[3.5rem] lg:text-[3.3rem] md:text-[3rem] min-[320px]:text-[1.6rem] font-medium  text-center text-[#50A8F5]	">Popular Events</h1>
+      <div class="w-full xl:h-[26rem] lg:h-[22rem] md:h-[20rem] min-[320px]:h-[12rem] mt-[2rem] bg-[#F8FCFF] rounded-[0.3rem] rounded-b-[1.2rem] flex flex-row justify-center items-center relative ">
+          <div class="xl:w-[28rem] lg:w-[25rem] md:w-[22rem] min-[320px]:w-[12rem]  p-[0.3rem] h-full flex flex-col xl:mb-[8rem] lg:mb-[7.6rem] md:mb-[7rem] min-[320px]:mb-[4rem] justify-center items-center ">
+              <h1 class="xl:text-[3.5rem] lg:text-[3rem] md:text-[2.5rem] min-[320px]:text-[0.8rem] xl:mt-[5rem] lg:mt-[4.8rem] md:mt-[4rem] min-[320px]:mt-[3rem] text-left font-medium text-[#464747]">Hub Thursday</h1>
+              <p class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.48rem] mt-[1rem] text-[#6E8292] font-medium text-center">It is weekly events for Hub200
+                  that we do every Thursday with different Thursday with different  activities and it includes activities such as</p>
+          </div>
+
+          <div class="xl:w-[37rem] lg:w-[34rem] md:w-[30rem] min-[320px]:w-[20rem] h-full flex items-center justify-center xl:ml-[4rem] lg:ml-[3.8rem] md:ml-[3rem] min-[320px]:ml-[0.1rem] ">
+              <video id="my-video" class="xl:w-[35rem] xl:h-[22rem] lg:w-[30rem] lg:h-[18rem] md:w-[26rem] md:h-[16rem] min-[320px]:w-[10.5rem] min-[320px]:h-[7rem] rounded-[0.3rem] rounded-b-[1rem]  video-js vjs-custom-theme" muted controls autoplay loop data-setup='{}'>
+                  <source src="{% static 'ActivityEvents/hubvideo.mp4' %}" type="video/mp4" />
+               </video>
+          </div>
+      </div>
+
+  </section>
+
+    <section class="w-[94%] mx-auto flex flex-col justify-center items-center mt-[6rem] mb-[2rem]">
+    
+      <div class="xl:w-[70rem] xl:h-[40rem] lg:w-[60rem]  lg:h-[40rem] md:w-[50rem]  md:h-[35rem] min-[320px]:w-[30rem]  min-[320px]:h-[20rem] flex flex-row items-center">
+        <div class="container xl:w-[425px] xl:h-[425px] lg:w-[420px] lg:h-[420px] md:w-[300px] md:h-[300px] min-[320px]:w-[140px] min-[320px]:h-[140px] ml-[5.4rem]  rounded-[50%] relative xl:border-[10px] xl:border-black lg:border-[9px] lg:border-black md:border-[5px] md:border-black min-[320px]:border-[3px] min-[320px]:border-black">
+          <div class="icon relative left-[-50%] w-full h-full flex justify-center items-center cursor-pointer">
+            {% for peoplereview in AllPeopleReview %}
+            <div class="imgpeoplereview"  style="--i: {{ forloop.counter }};" data-id="content{{forloop.counter}}">
+              <img class="absolute top-0 left-0 w-full h-full rounded-full object-cover" src="{{peoplereview.image.url}}" alt="" >
+            </div>
+            {% endfor %}
+  
+          </div>
+          <div class="content ">
+            {% for peoplereview in AllPeopleReview %}
+  
+            <div id="content{{forloop.counter}}" class="contentbox">
+              <div class="card xl:w-[15rem] xl:h-[15rem] lg:w-[13rem] lg:h-[13rem] md:w-[10rem] md:h-[10rem] min-[320px]:w-[3rem] min-[320px]:h-[3rem] flex flex-col xl:mt-[3rem] lg:mb-[2.8rem] md:mb-[2rem] min-[320px]:mb-[1.3rem]  ">
+                <div class="imgbox  rounded-[50%] xl:w-[11rem] xl:h-[11rem] lg:w-[7.5rem] lg:h-[7.5rem] md:w-[7rem] md:h-[4rem]  min-[320px]:w-[2rem] min-[320px]:h-[2rem]">
+                  <img class="xl:w-[7rem] xl:h-[7rem] lg:w-[6rem] lg:h-[6rem] md:w-[4rem] md:h-[4rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] rounded-[50%] object-cover xl:ml-[2rem] lg:ml-[1rem] md:ml-[1.4rem] min-[320px]:ml-[0.1rem] mb-[0.2rem]"  src="{{peoplereview.image.url}}" alt="">
+                  <div class="textbox  w-full h-full">
+                    <p class="text-center xl:text-[0.47rem] lg:text-[0.41rem] md:text-[0.4rem] min-[320px]:text-[0.11rem]">{{peoplereview.description}}</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+  
+            {% endfor %}
+  
+          </div>
+  
+        </div>
+
+        <div class="xl:w-[28rem] lg:w-[24rem] md:w-[20rem] min-[320px]:w-[10rem] h-full flex flex-col mb-[8rem] justify-center items-center xl:ml-[8rem] lg:ml-[6rem] md:ml-[3.5rem] min-[320px]:ml-[1rem] ">
+          <h1 class="xl:text-[3.5rem] lg:text-[3rem] md:text-[2.6rem] min-[320px]:text-[1rem] mt-[5rem] text-left font-medium text-[#464747]">People Review</h1>
+          <p class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.75rem] min-[320px]:text-[0.4rem] mt-[1rem] text-[#6E8292] font-medium text-center">Discover what people are saying about our events, how they've improved their skills, and the beautiful environment they've experienced, all while praising our excellent instructors.!</p>
+      </div>
+      </div>
+    </section>
+
+
+
+
+    <section class=" w-[94%] mx-auto flex flex-col justify-center items-center mt-[2rem] mb-[5rem] relative ">
+
+
+
+
+<div class="carousel xl:w-[55rem] xl:h-[62rem] lg:w-[55rem] lg:h-[60rem] md:w-[50rem] md:h-[47rem] min-[320px]:w-[50rem] min-[320px]:h-[45rem] flex flex-col items-center  relative" data-carousel>
+  <div class="w-full xl:h-[30rem] lg:h-[28rem] md:h-[20rem] min-[320px]:h-[18rem] flex flex-col justify-center items-center  ">
+    <div class="xl:w-[50.5rem] lg:w-[48rem] md:w-[40rem] min-[320px]:w-[19rem] h-full flex flex-col items-center mt-[2rem]">
+      <h1 class="xl:text-[3.5rem] lg:text-[3.1rem] md:text-[2.3rem] min-[320px]:text-[1.6rem] font-medium  text-center	">Our <span class="text-[#50A8F5]">Location</span></h1>
+      <p class="text-center xl:text-[0.9rem] lg:text-[0.8rem] md:text-[0.7rem] min-[320px]:text-[0.5rem] mt-[1rem] xl:ml-[1rem] lg:ml-[0.9rem] md:ml-[0.6rem] min-[320px]:ml-[0.1rem]">You can visit us whenever you'd like and come to enjoy our events every Thursday, including English Meetups and many other amazing activities. We'll be delighted to welcome you!</p>
+    </div>
+    <div id="map" class="xl:h-[40rem] xl:w-[49.2rem] lg:h-[35rem] lg:w-[48rem] md:h-[30rem] md:w-[40rem] min-[320px]:h-[23rem] min-[320px]:w-[19rem]  rounded-[1rem] z-[1]"></div>
+    
+  </div>
+
+  <section class="faq-container flex flex-col justify-center mt-[4rem]">
+    <h1 class="xl:text-[3.5rem] lg:text-[3.1rem] md:text-[2.3rem] min-[320px]:text-[1.2rem] font-medium  text-center	">Frequently Asked <span class="text-[#50A8F5]">Questions</span></h1>
+
+    <div class="faq-one">
+        <!-- faq question -->
+        <h1 class="faq-page xl:text-[1.2rem] lg:text-[1.1rem] md:text-[1rem] min-[320px]:text-[0.9rem]">What is the location of Hub 200, and what are its opening hours?</h1>
+        <!-- faq answer -->
+        <div class="faq-body ">
+            <p class="xl:text-[1rem] lg:text-[0.8rem] md:text-[0.7rem]  min-[320px]:text-[0.6rem]">The location is in Karadah, and the opening hours are from 10 AM to 8 PM.</p>
+        </div>
+    </div>
+    <hr class="hr-line">
+    <div class="faq-two xl:text-[1.2rem] lg:text-[1.1rem] md:text-[1rem] min-[320px]:text-[0.9rem]">
+        <h1 class="faq-page">Can anyone register regardless of their age?</h1>
+        <div class="faq-body">
+            <p class="xl:text-[1rem] lg:text-[0.8rem] md:text-[0.7rem]  min-[320px]:text-[0.6rem]">The events are suitable for people who are aged 10 and older.</p>
+        </div>
+    </div>
+    <hr class="hr-line">
+    <div class="faq-three">
+<h1 class="faq-page xl:text-[1.2rem] lg:text-[1.1rem] md:text-[1rem] min-[320px]:text-[0.9rem]">Lorem</h1>
+        <div class="faq-body">
+            <p class="xl:text-[1rem] lg:text-[0.8rem] md:text-[0.7rem]  min-[320px]:text-[0.6rem]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit saepe sequi, illum facere
+                necessitatibus cum aliquam id illo omnis maxime, totam soluta voluptate amet ut sit ipsum
+                aperiam.
+                Perspiciatis, porro!</p>
+        </div>
+    </div>
+</section>
+
+
+
+</div>
+</div>
+</div>
+
+
+    </section>
+
+    <section class=" w-[94%] mx-auto justify-center items-center mt-[6rem] mb-[5rem] ">
+
+        <h1 class="xl:text-[3.5rem] lg:text-[3.1rem] md:text-[2.5rem] min-[320px]:text-[1.5rem] font-medium  text-center text-[#50A8F5] mb-[1rem]">Ask a question</h1>
+<div class="w-full h-full flex justify-end items-end">
+            <div class="xl:w-[7.5rem] xl:h-[7.5rem] lg:w-[7rem] lg:h-[7rem] md:w-[4.4rem] md:h-[4.4rem] min-[320px]:w-[3.5rem] min-[320px]:h-[3.5rem] bg-white drop-shadow-xl shadow-[#BABDC2] shadow-sm  rounded-[0.3rem]  relative">
+                <div class="xl:w-[7rem] xl:h-[6rem] lg:w-[6rem] lg:h-[5rem] md:w-[4.2rem] md:h-[3.8rem] min-[320px]:w-[3rem] min-[320px]:h-[3rem] bg-[#E8F5FF]  absolute xl:mt-[2.5rem] lg:mt-[2.2rem] md:mt-[1.6rem] min-[320px]:mt-[1rem]  rounded-[0.3rem] xl:right-[2rem] lg:right-[1.8rem] md:right-[1.5rem]  min-[320px]:right-[1rem]  drop-shadow-md  "></div>
+            </div>
+</div>
+        <div class="w-full xl:h-[30rem] lg:h-[28rem] md:h-[40rem] min-[320px]:h-[32rem] mt-[1rem] flex xl:flex-row lg:flex-row md:flex-col min-[320px]:flex-col justify-center items-center relative  ">
+            <div class="xl:w-[36rem] lg:w-[32rem] md:w-[40rem] min-[320px]:w-[20rem] h-full flex flex-col mt-[4rem] justify-center xl:p-[0rem] lg:p-[0rem] md:p-[0.2rem] min-[320px]:p-[0.5rem]">
+                <h1 class="xl:text-[1.8rem] lg:text-[1.6rem] md:text-[1.2rem] min-[320px]:text-[1rem] text-[#464747] font-medium text-left ">If you have anything in mind you would like to share send us a message</h1>
+
+                <form id="formQAs" class="h-full w-full flex flex-col justify-first items-first   ">
+                   <div class="flex flex-row">
+                     <div class="inputdivparent" >
+                         <input id="usernameinputQA" name="usernameinputQA" class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] " type="text" required>
+                         <label class="placeholderlabel xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] "   for="usernameinputQA">Username</label>
+                     </div>
+                     <div class="inputdivparent ml-[2rem]" >
+                         <input id="emailinputQA" name="emailinputQA" class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] " type="email" required>
+                         <label class="placeholderlabel xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] "   for="emailinputQA">Email</label>
+                     </div>
+                   </div>
+
+                    <div class="xl:w-[33.7rem] lg:w-[31rem] md:w-[31rem] min-[320px]:w-[19rem] flex flex-col relative items-center" >
+                        <textarea id="messageinputQA" name="messageinputQA" class="inputsclass w-full h-[15rem] lg:h-[13rem] md:h-[10rem] min-[320px]:h-[8rem] xl:text-[1.6rem] lg:text-[1.5rem] md:text-[1.2rem]  min-[320px]:text-[1rem]" col="50" rows="10" required></textarea>
+                        <label class="placeholderlabel xl:text-[1.6rem] lg:text-[1.5rem] md:text-[1.2rem]  min-[320px]:text-[1rem]  "   for="messageinputQA">Message</label>
+                    </div>
+                    <div id="buttonwrapper">
+                        <button  type="submit" class="submit xl:w-[15rem] xl:h-[3.4rem] lg:w-[13rem] lg:h-[3rem] md:w-[10rem] md:h-[2.8rem] min-[320px]:w-[8rem] min-[320px]:h-[2rem] xl:text-[1rem] lg:text-[0.9rem] md:text-[0.8rem] min-[320px]:text-[0.7rem]" >Send Message</button>
+                           <div class="loader-wrapper">
+                           <span class="loader white"></span>
+                           <span class="loader blue"></span>
+                           </div>
+                          <span class="loader blue2"></span>
+                           
+                       <div class="check-wrapper">
+                      <svg class="xl:mt-[20px] xl:ml-[24px] lg:mt-[16px] lg:ml-[20px] md:mt-[13px] md:ml-[17px]" version="1.1"width="50px" height="26px" viewBox="0 0 64.5 37.4">
+                      <polyline class="check" points="5,13 21.8,32.4 59.5,5 "/>
+                      </svg>
+                       </div>
+                        
+                       </div>
+                </form>
+            </div>
+
+            <div class="xl:w-[35rem] lg:w-[33rem]  md:w-[21rem] min-[320px]:w-[12rem] h-full flex items-center justify-center xl:ml-[4rem] lg:ml-[3.8rem] md:ml-[0rem] min-[320px]:ml-[0rem] xl:mt-[0rem] lg:mt-[0rem] md:mt-[1rem] min-[320px]:mt-[1rem] ">
+                <img class="xl:h-[34rem] lg:h-[23rem] md:h-[20rem] min-[320px]:h-[12rem] mt-[2rem] w-full  " src="{% static 'ActivityEvents/askaquestionhub.png' %}" alt="">
+
+            </div>
+        </div>
+
+    </section>
+
+ </section>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+const buttons = document.querySelectorAll("[data-carousel-button]")
+
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    const offset = button.dataset.carouselButton === "next" ? 1 : -1
+    const slides = button
+      .closest("[data-carousel]")
+      .querySelector("[data-slides]")
+
+    const activeSlide = slides.querySelector("[data-active]")
+    let newIndex = [...slides.children].indexOf(activeSlide) + offset
+    if (newIndex < 0) newIndex = slides.children.length - 1
+    if (newIndex >= slides.children.length) newIndex = 0
+
+    slides.children[newIndex].dataset.active = true
+    delete activeSlide.dataset.active
+  })
+})
+
+// Scroll Reveal 
+
+ScrollReveal({ 
+  reset: true,
+  distance:'80px',
+  duration:1000,
+  delay:100
+});
+ScrollReveal().reveal('.activityeventscontainer', { origin: 'top' });
+ScrollReveal().reveal('.hubthursdaycontainer', { origin: 'bottom' });
+
+
+
+var map = L.map('map').setView([33.31412416262699, 44.42276682842836], 20); 
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+var newLatitude = 33.31412416262699; 
+var newLongitude = 44.42276682842836; 
+var specificLocation = L.marker([newLatitude, newLongitude]).addTo(map);
+specificLocation.bindPopup("Baghdad-Computiq").openPopup();
+
+
+
+var typing=new Typed(".text", {
+       strings: ["", "Where can you place yourself in an environment that will help you develop your skills to new levels!"],
+       typeSpeed: 21,
+       backSpeed: 25,
+       loop: true,
+   });
+
+
+
+   var faq = document.getElementsByClassName("faq-page");
+   for (var i = 0; i < faq.length; i++) {
+    faq[i].addEventListener("click", function () {
+        this.classList.toggle("active1");
+        var body = this.nextElementSibling;
+        if (body.style.display === "block") {
+            body.style.display = "none";
+        } else {
+            body.style.display = "block";
+        }
+    });
+}
+
+})
+
+
+
+
+
+let imgpeoplereview = document.querySelectorAll('.imgpeoplereview')
+let contentbox = document.querySelectorAll('.contentbox')
+for(let i=0; i<imgpeoplereview.length;i++){
+  imgpeoplereview[i].addEventListener('mouseover',function(){
+    for(let i=0; i<contentbox.length; i++){
+      contentbox[i].className = 'contentbox'
+    }
+    document.getElementById(this.dataset.id).className='contentbox active'
+
+    for (let i=0; i<imgpeoplereview.length; i++){
+      imgpeoplereview[i].className='imgpeoplereview'
+    }
+    this.className='imgpeoplereview active'
+  })
+}
+
+
+
+</script>
+
+
+
+{% endblock %}

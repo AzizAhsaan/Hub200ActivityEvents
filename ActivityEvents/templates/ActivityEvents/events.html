@@ -1,0 +1,126 @@
+{% extends "ActivityEvents/layout.html" %}
+{% load static %}
+{% block body %}
+<link href="styless.css" rel="stylesheet">
+
+<section class="w-full h-full flex flex-col justify-center items-center">
+   <section class="intro xl:h-[30rem] lg:h-[30rem] md:h-[20rem] min-[320px]:h-[12rem] w-[99%]">
+          <img class="w-full h-full" src="{% static 'ActivityEvents/HUB200image-main.png'%}" alt="">
+   </section>
+   <section class="events w-[99%] h-full mt-[6rem] flex flex-col  items-center">
+      <h1 class="  text-3xl mb-10 text-[#50A8F5]" id="title"><strong>Upcoming Events</strong></h1>
+      <div class="flex flex-row w-full h-[7rem] xl:ml-[5rem] lg:ml-[5rem] md:ml-[5rem] min-[320px]:ml-[1rem] ">
+         <div class="inputdivparent" >
+            <input onkeyup="myFunction()" id="myInput" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[14.5rem] lg:h-[3.3rem]  md:w-[10rem] md:h-[3.2rem] min-[320px]:w-[6.7rem] min-[320px]:h-[2.5rem] " type="text" required>
+            <label class="placeholderlabel"   for="Search for events..">Event Title</label>
+        </div>
+   
+         <form class="relative flex flex-row w-full h-[10rem] mb-[4rem] xl:mr-[4rem] xl:ml-[4rem] lg:mr-[4rem] lg:ml-[4rem] md:mr-[4rem] md:ml-[4rem] min-[320px]:mr-[1rem] min-[320px]:ml-[1rem] " method="POST" action="{% url 'events'  %}">
+            {% csrf_token %}
+            <div class="inputdivparent" >
+               <select id="LocationRegistration" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[14.5rem] lg:h-[3.3rem]  md:w-[10rem] md:h-[3.2rem] min-[320px]:w-[6.7rem] min-[320px]:h-[2.5rem] " name="filter"  >
+                 <option value="allevents">All Event</option>
+                 <option value="next_week">Next Week</option>
+                 <option value="next_month">Next Month</option>
+               </select>
+                 <label  class="placeholderlabel"   for="Filter">Events Filter</label>
+                 <div class="error"></div>
+             </div>
+
+
+
+             <button class="xl:w-[9rem] xl:h-[2.7rem] lg:w-[10rem] lg:h-[3rem] md:w-[8rem] md:h-[2.4rem]  min-[320px]:w-[4rem] min-[320px]:h-[1.7rem] mt-[1.2rem] mb-[0.5rem] bg-[#71B3F1] xl:text-[1rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] rounded-[10rem] text-white font-semibold text-[1.3rem] drop-shadow-xl xl:ml-[2rem] lg:ml-[2rem] md:ml-[2rem] min-[320px]:ml-[0.5rem]" type="submit">Apply Filter</button>
+   
+        </form>
+      </div>
+      <div class="flex flex-row w-full h-[7rem] xl:ml-[5rem] lg:ml-[5rem] md:ml-[5rem] min-[320px]:ml-[1rem] ">
+
+   <form class="relative flex flex-row w-full h-[10rem] mb-[4rem] mb-[4rem] " method="POST" action="{% url 'eventsRange'  %}">
+    {% csrf_token %}
+
+     <div class="inputdivparent ">
+       <input class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[14.5rem] lg:h-[3.3rem]  md:w-[10rem] md:h-[3.2rem] min-[320px]:w-[6.7rem] min-[320px]:h-[2.5rem]   " type="date" id="startDate" name="startdate">
+       <label class="placeholderlabel" for="DateRange">Date Range</label>
+   </div>
+   <div class="inputdivparent xl:ml-[4rem] lg:ml-[4rem] md:ml-[4rem] min-[320px]:ml-[1rem]">
+    <input class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[14.5rem] lg:h-[3.3rem]  md:w-[10rem] md:h-[3.2rem] min-[320px]:w-[6.7rem] min-[320px]:h-[2.5rem]   " type="date" id="endDate" name="enddate">
+    <label class="placeholderlabel" for="DateRange">to</label>
+</div>
+     <button class="xl:w-[9rem] xl:h-[2.7rem] lg:w-[10rem] lg:h-[3rem] md:w-[8rem] md:h-[2.4rem] min-[320px]:w-[4rem] min-[320px]:h-[1.7rem] mt-[1.2rem] mb-[0.5rem] bg-[#71B3F1] xl:text-[1rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] rounded-[10rem] text-white font-semibold text-[1.3rem] drop-shadow-xl xl:ml-[2rem] lg:ml-[2rem] md:ml-[2rem] min-[320px]:ml-[0.5rem]" type="submit">Apply Range</button>
+
+</form>
+</div>
+
+   
+      <div class="xl:w-[80rem] lg:w-[65rem] md:w-[47rem] min-[320px]:w-[19.1rem] h-full grid grid-cols-3 grid-row-3 xl:gap-[1rem] lg:gap-[0rem] mb-[3rem]">
+   
+         {% for event in all_events %}
+       <div  data-title="{{ event.title }}"  class="event-container   xl:w-[22rem] xl:h-[35rem] lg:w-[19rem] lg:h-[30rem] md:w-[14rem] md:h-[23rem] min-[320px]:w-[6rem] min-[320px]:h-[15rem] max-w-md bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden md:max-h-xl xl:ml-9 lg:ml-6 md:ml-6 shadow-sky-400">
+         <div class="w-full" id="post">
+          <div class="w-full relative p-[0.1rem]">
+             <img class="xl:h-80 lg:h-56 md:h-48 min-[320px]:h-18 w-full object-cover" src="https://hub200activityeventsbucket.s3.amazonaws.com/{{ event.image }}" alt="">
+             <div class="xl:w-[9rem] xl:h-[2.6rem] lg:w-[7.5rem] lg:h-[2.4rem] md:w-[5.5rem] md:h-[2rem] min-[320px]:w-[3rem] min-[320px]:h-[1.3rem] flex justify-center items-center rounded-[3rem] bg-[#71B3F1] absolute top-[1rem] left-[1rem]">
+               {% if event.status %}
+               <h1 class="text-white xl:text-[1rem] lg:text-[0.8rem] md:text-[0.6rem] min-[320px]:text-[0.4rem] ">Event Available</h1>
+               {% else  %}
+               <h1 class="text-white xl:text-[0.75rem] lg:text-[0.65rem] md:text-[0.45rem] min-[320px]:text-[0.3rem]  ">Event Not Available</h1>
+               {% endif %}
+             </div>
+
+          </div>
+         </div>
+       <div class="h-full w-full flex flex-col items-center " >
+           <h1 class="uppercase text-sm text-indigo-500 font-semibold  text-stone-900 mt-[0.5rem]  xl:text-[1.8rem] lg:text-[1.5rem] md:text-[1rem] min-[320px]:text-[0.5rem]  ">{{event.title}}</h1>
+           <p class="xl:text-[0.9rem] lg:text-[0.8rem] md:text-[0.5rem] min-[320px]:text-[0.4rem] xl:mt-[1rem] xl:mb-[1rem]  lg:mt-[1rem] lg:mb-[1rem]  md:mt-[0.9rem] md:mb-[0.9rem]  min-[320px]:mt-[0.4rem] min-[320px]:mb-[0.4rem] text-[#6E8292]">{{event.description}}</p>           
+           <button class="xl:w-[8rem] xl:h-[2.5rem] lg:w-[8rem] lg:h-[2rem] md:w-[8rem] md:h-[2.4rem] min-[320px]:w-[3rem] min-[320px]:h-[1.2rem] xl:mt-[1.5rem] lg:mt-[1.5rem] md:mt-[1.2rem] min-[320px]:mt-[0.2rem] mb-[1rem] bg-[#71B3F1] xl:text-[0.9rem] lg:text-[0.8rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] rounded-[10rem] text-white font-semibold text-[1.3rem] drop-shadow-xl " type="button"><a href="{% url 'display_event' event_id=event.id %}" class="">Read More...</a></button>
+
+           
+          </div>
+       </div>
+   
+       {% endfor %}
+       </div>
+   
+   
+     
+   
+   </div>
+   </section>
+</section>
+
+
+
+<div class="modal" id="details-modal" tabindex="-1" role="dialog" aria-labelledby="details-modal-title" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="details-modal-title"></h5>
+           </div>
+           <div class="modal-body" id="details-modal-body"></div>
+       </div>
+   </div>
+</div>
+
+<script>
+//search bar function
+
+function myFunction() {
+   var input, filter, eventContainers, title, i;
+   input = document.getElementById('myInput');
+   filter = input.value.toUpperCase();
+   eventContainers = document.querySelectorAll(".event-container");
+
+   for (i = 0; i < eventContainers.length; i++) {
+      title = eventContainers[i].getAttribute('data-title');
+      if (title) {
+         if (title.toUpperCase().indexOf(filter) > -1) {
+            eventContainers[i].style.display = ""; 
+         } else {
+            eventContainers[i].style.display = "none";
+         }
+      }
+   }
+}
+</script>
+
+{% endblock %}

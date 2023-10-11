@@ -1,0 +1,503 @@
+{% extends "ActivityEvents/layout.html" %}
+{% load static %}
+{% block body %}
+
+<style>
+
+/* Submit Button Animation */
+
+
+#buttonwrapper {
+    display: none;
+    width: 100%;
+    height: 5rem;
+    font-size:21px;
+  letter-spacing:6px;
+  color:white;
+  overflow: visible;
+}
+
+#buttonwrapper2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 8rem;
+  font-size:21px;
+  letter-spacing:6px;
+  color:white;
+  overflow: visible;
+}
+
+.submit, .loader, .loader-wrapper{
+  position:absolute;
+  left:0;
+  right:0;
+  margin:0 auto;
+
+}
+
+.submit {
+  z-index:2;
+
+  background: #66b5ff; 
+  display:block;
+  border-radius: 15rem;
+  text-align:center;
+  color:rgba(255,255,255,1);
+  text-decoration:none;
+  transition: all 0.5s ease, line-height 0s ease, color 0.4s ease, filter 0.2s ease;
+}
+
+#buttonwrapper::selection, .submit::selection {
+  background: transparent;
+}
+
+#buttonwrapper2::selection, .submit::selection {
+  background: transparent;
+}
+
+
+
+.submit:before {
+  content:"";
+  z-index:-2;
+  width:100%;
+  height:100%;
+  background: #71B3F1; 
+  display:block;
+  border-radius:50%;
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:0.8;
+  transform:scale(0.9) translateY(15px);
+  filter:blur(15px);
+  transition:all 0.2s ease;
+}
+
+.submit:after {
+  content:"";
+  z-index:-4;
+  width:100%;
+  height:100%;
+  background: #71B3F1; 
+  display:block;
+  border-radius:50%;
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:0;
+  transform:scale(1);
+}
+
+.submit:hover:before {
+  transform:scale(0.9) translateY(5px);
+  filter:blur(40px);
+}
+
+.submit:active {
+  line-height:460%;
+  filter:brightness(0.95);
+  transition:all 0s;
+}
+
+.checked .submit:before {
+  top:0px;
+  opacity:0;
+}
+
+.checked .submit:after {
+    animation: submit-after-anim 0.5s 2.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.checked {
+   -webkit-filter: url("#goo");
+   filter: url("#goo");
+}
+
+.white {
+  background-color: #ffffff;
+  box-shadow: 40px 47px 49px 40px rgba(0, 0, 0, 0.1);
+}
+
+.blue {
+  background-color: #0084ff;
+  }
+
+.blue2 {
+  background-color: #7aa5cd;
+  box-shadow: 1px 3px 5px 1px rgba(0, 0, 0, 0.1);
+  transform:scale(0.2) rotate(30deg) translate(0px);
+}
+
+.checked .blue {
+  animation: loader-anim-blue 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.checked .white  {
+  animation: loader-anim-white 2s 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.checked .blue2 {
+   animation: loader-anim-blue2 2s 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.loader {
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  opacity:0;
+  z-index:1;
+}
+
+.checked .loader {
+  opacity:1;
+}
+
+.checked .loader-wrapper {
+  animation: wrapper-loader-anim 2.2s linear;
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  transform:scale(0)
+}
+
+.checked .submit {
+  height:70px;
+  width:70px;
+  border-radius: 50%;
+  color:rgba(255,255,255,0);
+  background: #66b5ff;
+  animation: submit-anim 2s  cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+
+
+.check-wrapper {
+  position:absolute;
+  left:0;
+  right:0;
+  margin:0 auto;
+  width:95px;
+  height:95px;
+  z-index:-1;
+  opacity:1;
+}
+
+
+
+
+.check-wrapper svg {
+  margin-top:20px;
+  margin-left: 24px;
+}
+
+
+
+@media (max-width: 1600px) {
+
+    }
+    
+    /* Large screens (lg) */
+    @media (max-width: 1025px) {
+
+    }
+    
+    /* Medium screens (md) */
+    @media (max-width: 790px) {
+ 
+    }
+  
+  
+    @media (max-width: 450px) {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+.check{fill:none;
+  stroke:#ffffff;
+  stroke-width:10;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:10;
+ stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  z-index:-1;
+  }
+
+.checked .check-wrapper {
+  z-index:3;
+}
+
+.checked .check {
+  animation: check 2s 2.2s ease forwards;
+}
+
+
+@keyframes loader-anim-blue {
+    0% {transform:scale(0.2) rotate(0deg) translate(220px, 0px); }
+  100% {transform:scale(0.2) rotate(1100deg) translate(300px, 0px);}
+}
+
+@keyframes loader-anim-white {
+     0% {transform:scale(0.2) rotate(0deg) translate(300px, 0px); }
+  100% {transform:scale(0.2) rotate(1100deg) translate(220px, 0px);}
+}
+
+@keyframes loader-anim-blue2 {
+  0%,70% {transform:scale(0.2) rotate(30deg) translate(0px); }
+  85% {transform:scale(0.2) rotate(30deg) translate(-300px);}
+  100% {transform:scale(0.2) rotate(30deg) translate(0px); }
+}
+
+@keyframes wrapper-loader-anim {
+    0% { transform: scale(0) translateY(0px); }
+    10% { transform: scale(1) translateY(20px); }
+    50% { transform: scale(1.2) translateY(10px); }
+    90% { transform: scale(1) translateY(-10px); }
+    100% { transform: scale(0) translateY(0px); }
+}
+
+@keyframes submit-after-anim {
+  0% {transform:scale(1); opacity:0.3 }
+   100% {transform:scale(2); opacity:0 }
+}
+
+@keyframes submit-anim {
+    0% {transform:scale(1) }
+      5%, 95% {transform:scale(0.7) }
+  100% {transform:scale(1)}
+}
+
+@keyframes check {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+
+
+
+/*  Gender radio button */
+
+
+  input[type="radio"] {
+        -webkit-appearance: none;
+        -moz-appearance: none; 
+        appearance: none;
+    }
+
+    input[type="radio"][id="male"]:checked + label.male-label {
+    background-color: #2c93f4; 
+    color: #ffffff;
+  }
+
+  input[type="radio"][id="female"]:checked + label.female-label {
+    background-color: #ff69b4; 
+    color: #ffffff;
+  }
+  input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: black !important;
+}
+.required .placeholderlabel:after {
+  content:"  *";
+  color: red;
+}
+</style>
+
+<section class="h-full w-full flex flex-col items-center justify-center  mb-[2rem] mt-[2rem]">
+
+  <div class="flex xl:flex-row lg:flex-row md:flex-col-reverse	 min-[320px]:flex-col-reverse	 xl:h-[37rem] xl:w-[75rem] lg:h-[31rem] lg:w-[62rem] md:h-[30.5rem] md:w-[59.2rem] min-[320px]:h-[38rem] px-[0.5rem] min-[320px]:w-[19rem]  justify-center items-center xl:border-[0.2rem] lg:border-[0.2rem] md:border-[0.0rem] min-[320px]:border-[0.0rem]  border-[#E8F5FF] xl:rounded-[1rem] lg:rounded-[1rem] md:rounded-[2rem] min-[320px]:rounded-[3rem]    ">
+           <!--signin page Form -->
+
+    <div id="signinpage" class="xl:w-11/12 lg:w-11/12 md:w-full min-[320px]:w-full	 xl:h-full lg:h-full md:h-4/5	 min-[320px]:h-4/5	 flex flex-row  justify-center items-center  ">
+        <form id="signinform"  action="{% url 'signin'  %}" method="POST" class="xl:w-1/2 lg:w-1/2 md:w-full min-[320px]:w-full	xl:bg-[#F8FCFF] lg:bg-[#F8FCFF] md:bg-white  min-[320px]:bg-white	 h-full flex items-center justify-center relative">
+            {% csrf_token %}
+            <div class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center  bg-white shadow-md drop-shadow-xl border-[0.1rem]  border-[#50A8F5]  ">
+              <h1 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.4rem] min-[320px]:text-[1.4rem] xl:mt-[3rem] lg:mt-[3rem] md:mt-[0.5rem] min-[320px]:mt-[1rem] xl:mb-[1rem] lg:mb-[1rem] text-[#50A8F5] font-medium">Welcome</h1>
+
+              <h3 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.4rem] min-[320px]:text-[1.4rem] xl:mt-[3rem] lg:mt-[3rem] md:mt-[0.5rem] min-[320px]:mt-[1rem] xl:mb-[1rem] lg:mb-[1rem]">Sign in to Hub200</h3>
+              <div class="inputdivparent h-[3.2rem] mt-[2rem] ">
+                  <input id="inputsigninemail" name="inputsigninemail"  class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="text" name="email" required>
+                  <label class="placeholderlabel" for="email">UserName</label>
+  
+              </div>
+              <div class="inputdivparent h-[3.2rem] mt-[2rem]">
+                  <input  id="inputsigninpassword" name="inputsigninpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="password" name="password" required>
+                  <label class="placeholderlabel"  for="password">Password</label>
+  
+              </div>
+
+              <div id="buttonwrapper2">
+                <button  type="submit" class="submit xl:w-[13rem] xl:h-[3.5rem] lg:w-[10rem] lg:h-[3rem] md:w-[9rem] md:h-[2.7rem] min-[320px]:w-[14rem] min-[320px]:h-[2.7rem]" >Sign In</button>
+                   <div class="loader-wrapper">
+                   <span class="loader white"></span>
+                   <span class="loader blue"></span>
+                   </div>
+                  <span class="loader blue2"></span>
+                   
+               <div class="check-wrapper">
+              <svg class="xl:mt-[20px] xl:ml-[24px] lg:mt-[16px] lg:ml-[20px] md:mt-[13px] md:ml-[17px]" version="1.1"width="50px" height="26px" viewBox="0 0 64.5 37.4">
+              <polyline class="check" points="5,13 21.8,32.4 59.5,5 "/>
+              </svg>
+               </div>
+                
+               </div>
+  
+  
+
+            </div>
+            
+        </form>
+        <div class="bg-[#F8FCFF] xl:w-1/2 lg:w-1/2 md:w-full min-[320px]:w-full			 h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center ">
+              <img class="xl:w-[30rem] xl:h-[30rem] lg:w-[27rem] lg:h-[27rem] md:w-[24rem] md:h-[24rem]" src="{% static 'ActivityEvents/Signinpana.png' %}" alt="">
+
+      </div>
+
+
+    </div>
+
+
+
+   <!--signup page Form -->
+
+   <div id="signuppage" class=" flex xl:flex-row lg:flex-row md:flex-col min-[320px]:flex-col xl:h-[37rem] xl:w-[75rem] lg:h-[31rem] lg:w-[62rem] md:h-[30.5rem] md:w-[59.2rem] min-[320px]:h-[38rem] px-[0.5rem] min-[320px]:w-[19rem]  justify-center items-center xl:border-[0.2rem] lg:border-[0.2rem] md:border-[0.0rem] min-[320px]:border-[0.0rem]  border-[#E8F5FF] xl:rounded-[1rem] lg:rounded-[1rem] md:rounded-[2rem] min-[320px]:rounded-[3rem]  hidden  ">
+
+
+    <form id="signupform" action="{% url 'signup'  %}" method="POST" enctype="multipart/form-data" class="xl:w-11/12 lg:w-11/12 md:w-full min-[320px]:w-full	 xl:h-full lg:h-full md:h-4/5	 min-[320px]:h-4/5	 flex flex-row  justify-center items-center">
+        {% csrf_token %}
+        <div id="formsubmitpart1" class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center  bg-white shadow-md drop-shadow-xl border-[0.1rem]  border-[#50A8F5] ">
+          <h3 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.4rem] mb-[1rem] mt-[1rem]">Sign up to Hub200</h3>
+
+          <div class="avatar-upload">
+            <div class="avatar-edit">
+                <input id="inputphoto" name="inputphoto" type='file'  accept=".png, .jpg, .jpeg" />
+                <div class="xl:w-[2.2rem] xl:h-[2.2rem] lg:w-[2.2rem] lg:h-[2.2rem] md:w-[1.2rem] md:h-[1.2rem] min-[320px]:w-[1.2rem] min-[320px]:h-[1.2rem] bg-[#D2ECFF] rounded-full flex justify-center items-center hover:bg-[#BDBDBD] cursor-pointer">
+                    <label class="mt-[0.4rem]" for="inputphoto"><box-icon size="1rem" color="#464747" name='pencil'></box-icon></label>
+                </div>
+            </div>
+            <div class="avatar-preview xl:w-[8.5rem] xl:h-[8.5rem] lg:w-[7.5rem] lg:h-[7.5rem] md:w-[6.5rem] md:h-[6.5rem] min-[320px]:w-[5.5rem] min-[320px]:h-[5.5rem] ">
+                <div id="imagePreview" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg);">
+                </div>
+            </div>
+        </div>
+
+        <div class="inputdivparent h-[4.2rem] mt-[1rem]" >
+          <input name="inputusernames" id="inputusernames" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="text" required>
+          <label class="placeholderlabel" for="inputusernames">Username</label>
+          <div class="error"></div>
+
+      </div>
+
+      <div class="inputdivparent h-[4.2rem] mt-[1rem]">
+        <input  name="inputphonenumber" id="inputphonenumber" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="tel"  required>
+        <label class="placeholderlabel" for="inputphonenumber">Phone Number</label>
+        <div class="error"></div>
+
+    </div>
+    <button id="buttonsignupnext" class="xl:w-[12rem] xl:h-[3.2rem] lg:w-[10rem] lg:h-[3rem] md:w-[8rem] md:h-[2.4rem] min-[320px]:w-[14rem] min-[320px]:h-[2.4rem] mt-[1rem] mb-[0.5rem] bg-[#71B3F1] text-[1.2rem] rounded-[10rem] text-white font-semibold text-[1.3rem] drop-shadow-xl" type="button">Next</button>
+
+        </div>
+        
+<div id="formsubmitpart2" class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center  bg-white shadow-md drop-shadow-xl border-[0.1rem]  border-[#50A8F5] hidden">
+          <div  class="w-full h-[18rem] mt-[2rem]  flex flex-col items-center">
+  
+            <div class="inputdivparent h-[4.2rem] mt-[1.5rem]">
+              <input id="inputemail" name="inputemail"  class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="email"   required>
+              <label class="placeholderlabel" for="inputemail">E-mail</label>
+              <div class="error"></div>
+          </div>
+  
+          <div class="inputdivparent h-[4.2rem] mt-[1.5rem]">
+            <input id="inputpassword" name="inputpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="password"   required>
+            <label class="placeholderlabel" for="inputpassword">Password</label>
+            <div class="error"></div>
+  
+        </div>
+  
+  
+        <div class="inputdivparent h-[4.2rem] mt-[1.5rem]">
+          <input id="inputconfirmpassword"  name="inputconfirmpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="password"  required>
+          <label class="placeholderlabel" for="inputconfirmpassword">Confirm Password</label>
+          <div class="error"></div>
+  
+      </div>
+  
+          </div>
+  
+          <div id="buttonwrapper">
+            <button  type="submit" class="submit xl:w-[13rem] xl:h-[3.5rem] lg:w-[10rem] lg:h-[3rem] md:w-[9rem] md:h-[2.7rem] min-[320px]:w-[14rem] min-[320px]:h-[2.4rem]" >Sign Up</button>
+               <div class="loader-wrapper">
+               <span class="loader white"></span>
+               <span class="loader blue"></span>
+               </div>
+              <span class="loader blue2"></span>
+               
+           <div class="check-wrapper">
+          <svg class="xl:mt-[20px] xl:ml-[24px] lg:mt-[16px] lg:ml-[20px] md:mt-[13px] md:ml-[17px]" version="1.1"width="50px" height="26px" viewBox="0 0 64.5 37.4">
+          <polyline class="check" points="5,13 21.8,32.4 59.5,5 "/>
+          </svg>
+           </div>
+            
+           </div>
+  
+           <button id="buttonsignupback" class="xl:w-[9rem] xl:h-[3rem] lg:w-[8rem] lg:h-[2.7rem] min-[320px]:w-[8rem] min-[320px]:h-[2.5rem] md:w-[7.5rem] md:h-[3rem] bg-[#71B3F1] mb-[1rem] rounded-lg text-white font-semibold text-[1.3rem] z-10 hidden" type="button">Back</button>
+</div>
+
+    </form>
+
+
+              <div class="w-1/2 bg-[#F8FCFF] h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center  ">
+          <img class="xl:w-[30rem] xl:h-[30rem] lg:w-[27rem] lg:h-[27rem] md:w-[24rem] md:h-[24rem]" src="{% static 'ActivityEvents/Signuprafiki.png' %}" alt="">
+   </div>
+
+</div>
+
+
+      <div class=" xl:w-1/12  lg:w-1/12 md:w-full min-[320px]:w-full md:h-1/5		 min-[320px]:h-1/5			 xl:h-full lg:h-full  flex xl:flex-col lg:flex-col md:flex-row min-[320px]:flex-row  items-end justify-end xl:mb-[1rem] lg:mb-[1rem] md:mb-[0.4rem]  min-[320px]:mb-[0.1rem] ">
+        <div class="flex xl:flex-row lg:flex-row  md:flex-col   min-[320px]:flex-col  w-full h-full justify-center items-center ">
+            <button  type="button" id="showsigninpage" class="w-full h-[5.5rem] xl:text-[1.5rem] lg:text-[1.1rem] md:text-[1rem] flex flex-col justify-center items-center  ">
+                <div ><box-icon size="2.2rem" name='log-in-circle'></box-icon></div>
+                <h4 class="md:text-[0.9rem] min-[320px]:text-[0.8rem]">sign in</h4>
+            </button>
+            <div id="togglesigninbar" class="xl:h-[8.5rem] xl:w-[1.5rem] lg:h-[8.1rem] lg:w-[1.2rem] md:h-[6.9rem] md:w-[1.1rem] min-[320px]:h-[0.8rem] min-[320px]:w-[4rem] bg-[#71B3F1] rounded-[0.9rem] "></div>
+        </div>
+        <div class="flex xl:flex-row lg:flex-row  md:flex-col   min-[320px]:flex-col w-full h-full justify-center items-center xl:mt-[8rem] lg:mt-[8rem] md:mt-[12rem] xl:mt-[8rem]  ">
+            
+            <button  type="button" id="showsignuppage" class="w-full h-[5.5rem] xl:text-[1.5rem] lg:text-[1.1rem] md:text-[1rem] flex flex-col justify-center items-center  ">
+                <div ><box-icon size="2.2rem" name='log-out-circle' ></box-icon></div>
+                <h4 class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.9rem] min-[320px]:text-[0.8rem]">sign up</h4>
+            </button>
+            <div id="togglesignupbar" class="xl:h-[8.5rem] xl:w-[1.5rem] lg:h-[8.1rem] lg:w-[1.2rem] md:h-[6.9rem] md:w-[1.1rem] min-[320px]:h-[0.8rem] min-[320px]:w-[4rem] bg-[#71B3F1] rounded-[0.9rem] hidden "></div>
+
+        </div>
+
+ </div>
+
+      
+   
+   
+
+   </div>     
+
+</section>
+
+
+{% endblock %} 
