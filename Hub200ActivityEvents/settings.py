@@ -58,8 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    
 ]
 
 ROOT_URLCONF = 'Hub200ActivityEvents.urls'
@@ -90,7 +88,6 @@ load_dotenv('database.env')
 
 DATABASES = {
 	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
-
 }
 
 
