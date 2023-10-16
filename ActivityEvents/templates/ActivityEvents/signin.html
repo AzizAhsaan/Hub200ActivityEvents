@@ -327,26 +327,26 @@ input[type=date]:focus::-webkit-datetime-edit {
   <div class="flex xl:flex-row lg:flex-row md:flex-col-reverse	 min-[320px]:flex-col-reverse	 xl:h-[37rem] xl:w-[75rem] lg:h-[31rem] lg:w-[62rem] md:h-[30.5rem] md:w-[59.2rem] min-[320px]:h-[38rem] px-[0.5rem] min-[320px]:w-[19rem]  justify-center items-center xl:border-[0.2rem] lg:border-[0.2rem] md:border-[0.0rem] min-[320px]:border-[0.0rem]  border-[#E8F5FF] xl:rounded-[1rem] lg:rounded-[1rem] md:rounded-[2rem] min-[320px]:rounded-[3rem]    ">
            <!--signin page Form -->
 
-    <div id="signinpage" class="xl:w-11/12 lg:w-11/12 md:w-full min-[320px]:w-full	 xl:h-full lg:h-full md:h-4/5	 min-[320px]:h-4/5	 flex flex-row  justify-center items-center  ">
-        <form id="signinform"  action="{% url 'signin'  %}" method="POST" class="xl:w-1/2 lg:w-1/2 md:w-full min-[320px]:w-full	xl:bg-[#F8FCFF] lg:bg-[#F8FCFF] md:bg-white  min-[320px]:bg-white	 h-full flex items-center justify-center relative">
+    <div id="signinpage" class="flex xl:flex-row lg:flex-row md:flex-col min-[320px]:flex-col xl:h-[37rem] xl:w-[75rem] lg:h-[31rem] lg:w-[62rem] md:h-[30.5rem] md:w-[59.2rem] min-[320px]:h-[38rem] px-[0.5rem] min-[320px]:w-[19rem]  justify-center items-center xl:border-[0.0rem] lg:border-[0.0rem] md:border-[0.0rem] min-[320px]:border-[0.0rem]  border-[#E8F5FF] xl:rounded-[1rem] lg:rounded-[1rem] md:rounded-[2rem] min-[320px]:rounded-[3rem]  ">
+        <form id="signinform"  action="{% url 'signin'  %}" method="POST" class="xl:w-1/2 lg:w-1/2 md:w-full min-[320px]:w-full	xl:bg-[#F8FCFF] lg:bg-[#F8FCFF] md:bg-white  min-[320px]:bg-white	 h-full flex items-center justify-center relative overflow-hidden">
             {% csrf_token %}
             <div class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center  bg-white shadow-md drop-shadow-xl border-[0.1rem]  border-[#50A8F5]  ">
-              <h1 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.4rem] min-[320px]:text-[1.4rem] xl:mt-[3rem] lg:mt-[3rem] md:mt-[0.5rem] min-[320px]:mt-[1rem] xl:mb-[1rem] lg:mb-[1rem] text-[#50A8F5] font-medium">Welcome</h1>
+              <h1 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[2rem] min-[320px]:text-[1.4rem] xl:mt-[3rem] lg:mt-[3rem] md:mt-[1rem] min-[320px]:mt-[1rem] xl:mb-[1rem] lg:mb-[1rem] text-[#50A8F5] font-medium">Welcome</h1>
 
-              <h3 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.4rem] min-[320px]:text-[1.4rem] xl:mt-[3rem] lg:mt-[3rem] md:mt-[0.5rem] min-[320px]:mt-[1rem] xl:mb-[1rem] lg:mb-[1rem]">Sign in to Hub200</h3>
+              <h3 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.5rem] min-[320px]:text-[1.4rem] xl:mt-[3rem] lg:mt-[3rem] md:mt-[0.5rem] min-[320px]:mt-[1rem] xl:mb-[1rem] lg:mb-[1rem]">Sign in to Hub200</h3>
               <div class="inputdivparent h-[3.2rem] mt-[2rem] ">
-                  <input id="inputsigninemail" name="inputsigninemail"  class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="text" name="email" required>
+                  <input id="inputsigninemail" name="inputsigninemail"  class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem]  " type="text" name="email" required>
                   <label class="placeholderlabel" for="email">UserName</label>
   
               </div>
               <div class="inputdivparent h-[3.2rem] mt-[2rem]">
-                  <input  id="inputsigninpassword" name="inputsigninpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="password" name="password" required>
+                  <input  id="inputsigninpassword" name="inputsigninpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="password" name="password" required>
                   <label class="placeholderlabel"  for="password">Password</label>
   
               </div>
 
               <div id="buttonwrapper2">
-                <button  type="submit" class="submit xl:w-[13rem] xl:h-[3.5rem] lg:w-[10rem] lg:h-[3rem] md:w-[9rem] md:h-[2.7rem] min-[320px]:w-[14rem] min-[320px]:h-[2.7rem]" >Sign In</button>
+                <button  type="submit" class="submit xl:w-[13rem] xl:h-[3.5rem] lg:w-[10rem] lg:h-[3rem] md:w-[12rem] md:h-[3.4rem] min-[320px]:w-[14rem] min-[320px]:h-[2.7rem]" >Sign In</button>
                    <div class="loader-wrapper">
                    <span class="loader white"></span>
                    <span class="loader blue"></span>
@@ -366,10 +366,10 @@ input[type=date]:focus::-webkit-datetime-edit {
             </div>
             
         </form>
-        <div class="bg-[#F8FCFF] xl:w-1/2 lg:w-1/2 md:w-full min-[320px]:w-full			 h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center ">
-              <img class="xl:w-[30rem] xl:h-[30rem] lg:w-[27rem] lg:h-[27rem] md:w-[24rem] md:h-[24rem]" src="{% static 'ActivityEvents/Signinpana.png' %}" alt="">
+        <div class="bg-[#F8FCFF] xl:w-1/2 lg:w-1/2 md:w-full min-[320px]:w-full			 h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center overflow-hidden ">
+          <img class="xl:w-[30rem] xl:h-[30rem] lg:w-[27rem] lg:h-[27rem] md:w-[24rem] md:h-[24rem]" src="{% static 'ActivityEvents/tabletloginanimate2.svg' %}" alt="">
 
-      </div>
+</div>
 
 
     </div>
@@ -378,12 +378,12 @@ input[type=date]:focus::-webkit-datetime-edit {
 
    <!--signup page Form -->
 
-   <div id="signuppage" class=" flex xl:flex-row lg:flex-row md:flex-col min-[320px]:flex-col xl:h-[37rem] xl:w-[75rem] lg:h-[31rem] lg:w-[62rem] md:h-[30.5rem] md:w-[59.2rem] min-[320px]:h-[38rem] px-[0.5rem] min-[320px]:w-[19rem]  justify-center items-center xl:border-[0.2rem] lg:border-[0.2rem] md:border-[0.0rem] min-[320px]:border-[0.0rem]  border-[#E8F5FF] xl:rounded-[1rem] lg:rounded-[1rem] md:rounded-[2rem] min-[320px]:rounded-[3rem]  hidden  ">
+   <div id="signuppage" class=" flex xl:flex-row lg:flex-row md:flex-col min-[320px]:flex-col xl:h-[37rem] xl:w-[75rem] lg:h-[31rem] lg:w-[62rem] md:h-[30.5rem] md:w-[59.2rem] min-[320px]:h-[38rem] px-[0.5rem] min-[320px]:w-[19rem]  justify-center items-center xl:border-[0.0rem] lg:border-[0.0rem] md:border-[0.0rem] min-[320px]:border-[0.0rem]  border-[#E8F5FF] xl:rounded-[1rem] lg:rounded-[1rem] md:rounded-[2rem] min-[320px]:rounded-[3rem]  hidden  ">
 
 
-    <form id="signupform" action="{% url 'signup'  %}" method="POST" enctype="multipart/form-data" class="xl:w-11/12 lg:w-11/12 md:w-full min-[320px]:w-full	 xl:h-full lg:h-full md:h-4/5	 min-[320px]:h-4/5	 flex flex-row  justify-center items-center">
+    <form id="signupform" action="{% url 'signup'  %}" method="POST" enctype="multipart/form-data" class="xl:w-1/2 lg:w-1/2 md:w-full min-[320px]:w-full	xl:bg-[#F8FCFF] lg:bg-[#F8FCFF] md:bg-white  min-[320px]:bg-white	 h-full flex items-center justify-center relative overflow-hidden">
         {% csrf_token %}
-        <div id="formsubmitpart1" class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center  bg-white shadow-md drop-shadow-xl border-[0.1rem]  border-[#50A8F5] ">
+        <div id="formsubmitpart1" class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center  bg-white  shadow-md  drop-shadow- min-[320px]  border-[0.1rem]   border-[#50A8F5] ">
           <h3 class="xl:text-[1.6rem] lg:text-[1.4rem] md:text-[1.4rem] mb-[1rem] mt-[1rem]">Sign up to Hub200</h3>
 
           <div class="avatar-upload">
@@ -400,14 +400,14 @@ input[type=date]:focus::-webkit-datetime-edit {
         </div>
 
         <div class="inputdivparent h-[4.2rem] mt-[1rem]" >
-          <input name="inputusernames" id="inputusernames" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="text" required>
+          <input name="inputusernames" id="inputusernames" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="text" required>
           <label class="placeholderlabel" for="inputusernames">Username</label>
           <div class="error"></div>
 
       </div>
 
       <div class="inputdivparent h-[4.2rem] mt-[1rem]">
-        <input  name="inputphonenumber" id="inputphonenumber" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="tel"  required>
+        <input  name="inputphonenumber" id="inputphonenumber" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="tel"  required>
         <label class="placeholderlabel" for="inputphonenumber">Phone Number</label>
         <div class="error"></div>
 
@@ -416,17 +416,17 @@ input[type=date]:focus::-webkit-datetime-edit {
 
         </div>
         
-<div id="formsubmitpart2" class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center  bg-white shadow-md drop-shadow-xl border-[0.1rem]  border-[#50A8F5] hidden">
+<div id="formsubmitpart2" class="xl:w-[25rem] xl:h-[32.5rem] lg:w-[20rem] lg:h-[29rem] md:w-[20rem] md:h-[27.8rem] min-[320px]:w-[20rem] min-[320px]:h-[26rem]  rounded-2xl flex flex-col items-center bg-white  shadow-md  drop-shadow- min-[320px]  border-[0.1rem]   border-[#50A8F5] hidden">
           <div  class="w-full h-[18rem] mt-[2rem]  flex flex-col items-center">
   
             <div class="inputdivparent h-[4.2rem] mt-[1.5rem]">
-              <input id="inputemail" name="inputemail"  class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="email"   required>
+              <input id="inputemail" name="inputemail"  class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="email"   required>
               <label class="placeholderlabel" for="inputemail">E-mail</label>
               <div class="error"></div>
           </div>
   
           <div class="inputdivparent h-[4.2rem] mt-[1.5rem]">
-            <input id="inputpassword" name="inputpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="password"   required>
+            <input id="inputpassword" name="inputpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="password"   required>
             <label class="placeholderlabel" for="inputpassword">Password</label>
             <div class="error"></div>
   
@@ -434,7 +434,7 @@ input[type=date]:focus::-webkit-datetime-edit {
   
   
         <div class="inputdivparent h-[4.2rem] mt-[1.5rem]">
-          <input id="inputconfirmpassword"  name="inputconfirmpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem]" type="password"  required>
+          <input id="inputconfirmpassword"  name="inputconfirmpassword" class="inputsclass xl:w-[16rem] xl:h-[3.5rem] lg:w-[15rem] lg:h-[3.1rem] md:w-[14rem] md:h-[3rem] min-[320px]:w-[14rem] min-[320px]:h-[3rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="password"  required>
           <label class="placeholderlabel" for="inputconfirmpassword">Confirm Password</label>
           <div class="error"></div>
   
@@ -443,7 +443,7 @@ input[type=date]:focus::-webkit-datetime-edit {
           </div>
   
           <div id="buttonwrapper">
-            <button  type="submit" class="submit xl:w-[13rem] xl:h-[3.5rem] lg:w-[10rem] lg:h-[3rem] md:w-[9rem] md:h-[2.7rem] min-[320px]:w-[14rem] min-[320px]:h-[2.4rem]" >Sign Up</button>
+            <button  type="submit" class="submit xl:w-[13rem] xl:h-[3.5rem] lg:w-[10rem] lg:h-[3rem] md:w-[12rem] md:h-[3.4rem] min-[320px]:w-[14rem] min-[320px]:h-[2.4rem]" >Sign Up</button>
                <div class="loader-wrapper">
                <span class="loader white"></span>
                <span class="loader blue"></span>
@@ -464,9 +464,11 @@ input[type=date]:focus::-webkit-datetime-edit {
     </form>
 
 
-              <div class="w-1/2 bg-[#F8FCFF] h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center  ">
-          <img class="xl:w-[30rem] xl:h-[30rem] lg:w-[27rem] lg:h-[27rem] md:w-[24rem] md:h-[24rem]" src="{% static 'ActivityEvents/Signuprafiki.png' %}" alt="">
-   </div>
+              <div class="w-1/2 bg-[#F8FCFF] h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center overflow-hidden">
+                <img class="xl:w-[30rem] xl:h-[30rem] lg:w-[27rem] lg:h-[27rem] md:w-[24rem] md:h-[24rem]" src="{% static 'ActivityEvents/signupanimate2.svg' %}" alt="">
+
+
+              </div>
 
 </div>
 
@@ -477,7 +479,7 @@ input[type=date]:focus::-webkit-datetime-edit {
                 <div ><box-icon size="2.2rem" name='log-in-circle'></box-icon></div>
                 <h4 class="md:text-[0.9rem] min-[320px]:text-[0.8rem]">sign in</h4>
             </button>
-            <div id="togglesigninbar" class="xl:h-[8.5rem] xl:w-[1.5rem] lg:h-[8.1rem] lg:w-[1.2rem] md:h-[6.9rem] md:w-[1.1rem] min-[320px]:h-[0.8rem] min-[320px]:w-[4rem] bg-[#71B3F1] rounded-[0.9rem] "></div>
+            <div id="togglesigninbar" class="xl:h-[8.5rem] xl:w-[1.5rem] lg:h-[8.1rem] lg:w-[1.2rem] md:h-[1rem] md:w-[6rem] min-[320px]:h-[0.8rem] min-[320px]:w-[4rem] bg-[#71B3F1] rounded-[0.9rem] "></div>
         </div>
         <div class="flex xl:flex-row lg:flex-row  md:flex-col   min-[320px]:flex-col w-full h-full justify-center items-center xl:mt-[8rem] lg:mt-[8rem] md:mt-[12rem] xl:mt-[8rem]  ">
             
@@ -485,7 +487,7 @@ input[type=date]:focus::-webkit-datetime-edit {
                 <div ><box-icon size="2.2rem" name='log-out-circle' ></box-icon></div>
                 <h4 class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.9rem] min-[320px]:text-[0.8rem]">sign up</h4>
             </button>
-            <div id="togglesignupbar" class="xl:h-[8.5rem] xl:w-[1.5rem] lg:h-[8.1rem] lg:w-[1.2rem] md:h-[6.9rem] md:w-[1.1rem] min-[320px]:h-[0.8rem] min-[320px]:w-[4rem] bg-[#71B3F1] rounded-[0.9rem] hidden "></div>
+            <div id="togglesignupbar" class="xl:h-[8.5rem] xl:w-[1.5rem] lg:h-[8.1rem] lg:w-[1.2rem] md:h-[1rem] md:w-[6rem] min-[320px]:h-[0.8rem] min-[320px]:w-[4rem] bg-[#71B3F1] rounded-[0.9rem] hidden "></div>
 
         </div>
 

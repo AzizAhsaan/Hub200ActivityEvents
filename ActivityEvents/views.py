@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Events, CustomUser, PeopleReviews, Contact_us
+from .models import Events, CustomUser, PeopleReviews, Contact_us,AskaQuestion
 import datetime
 from django.core import serializers
 from django.http import JsonResponse
@@ -29,12 +29,19 @@ def home(request):
     AllPeopleReview = PeopleReviews.objects.all()
     return render(request,'ActivityEvents/home.html', {"all_events":all_events,"AllPeopleReview":AllPeopleReview})
 
+
 def events(request):
     all_events = Events.objects.all()
     next_month = datetime.date.today() + datetime.timedelta(days=30)
     next_week = datetime.date.today() + datetime.timedelta(days=7)
     next_month_events = Events.objects.filter(event_date__range=[datetime.date.today(), next_month])
     next_week_events = Events.objects.filter(event_date__range=[datetime.date.today(), next_week])
+
+    AllEventsCount=Events.objects.all().count()
+    RegisteredPeopleCount = Event_registration.objects.count()
+    AvailableEventsCount=Events.objects.filter(status=True).count()
+    NotAvailableEventsCount=Events.objects.filter(status=False).count()
+
     filter = request.POST.get('filter')
     if request.method == 'POST':
         if filter == 'allevents':
@@ -44,7 +51,11 @@ def events(request):
         elif filter == 'next_month':
             return render(request, 'ActivityEvents/events.html', {'all_events': next_month_events})
     else:
-        return render(request, 'ActivityEvents/events.html', {'all_events': all_events})
+        return render(request, 'ActivityEvents/events.html', {'all_events': all_events,"AllEventsCount":AllEventsCount,
+                                                              "RegisteredPeopleCount":RegisteredPeopleCount,"AvailableEventsCount":AvailableEventsCount,
+                                                              "NotAvailableEventsCount":NotAvailableEventsCount})
+
+
 
 
 
@@ -169,11 +180,6 @@ def logoutuser(request):
     return HttpResponseRedirect(reverse('home'))
 
 
-def forgotpassword(request):
-    return render(request,'ActivityEvents/forgotpassword.html')
-
-def resetpassword(request):
-    return render(request,'ActivityEvents/resetpassword.html')
 
 def signingupdone(request):
     return render(request,'ActivityEvents/signingupdone.html') #Maybe you will need to render the signingupdone.html in the signup function(after he comepletes the sign up)
@@ -333,6 +339,28 @@ def contactus(request):
         contactusform.save()
         return HttpResponseRedirect(reverse('home'))
     
+
+
+
+
+
+def ASKAQUESTION(request):
+    if request.method == "POST":
+        usernameinputQA = request.POST.get('usernameinputQA')
+        emailinputQA = request.POST.get('emailinputQA')
+        messageinputQA = request.POST.get('messageinputQA')
+        QAform = AskaQuestion(name=usernameinputQA, email=emailinputQA,message=messageinputQA)
+        QAform.save()
+        return HttpResponseRedirect(reverse('home'))
+    
+
+
+
+
+
+
+
+
 
 
 

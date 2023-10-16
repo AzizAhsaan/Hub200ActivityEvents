@@ -621,6 +621,8 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(event.fields.image)
 
       // Create an object with the required structure for eventsArr
+      console.log(event.fields.image)
+
       const eventObj = {
         day,
         month,
@@ -629,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
           {
             title: event.fields.title,
             time: event.fields.event_date,
-            image:'https://hub200activityeventsbucket.s3.amazonaws.com/' +event.fields.image
+            image:'media/'+event.fields.image
           },
           // Add other event properties as needed
         ],

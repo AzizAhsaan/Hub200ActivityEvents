@@ -56,14 +56,6 @@
 .carousel-button:focus {
   outline: 1px solid black;
 }
-.hoverzoom {
-    transition: transform 0.4s ease-in-out;
-}
-
-.hoverzoom:hover {
-    color: white;
-    transform: scale(1.05);
-}
 
 
 
@@ -307,7 +299,7 @@
   position: absolute;
   width: 65px;
   height: 65px;
-  border: 1px solid #26b123;
+  border: 1px solid #308dff;
   border-radius: 50%;
   transform: rotate(calc(360deg/8 *var(--i )));
   transform-origin: 240px ;
@@ -326,7 +318,7 @@
   position: absolute;
   width: 60px;
   height: 60px;
-  border: 1px solid #26b123;
+  border: 1px solid #308dff;
   border-radius: 50%;
   transform: rotate(calc(360deg/8 *var(--i )));
   transform-origin: 233px ;
@@ -345,7 +337,7 @@
   position: absolute;
   width: 40px;
   height: 40px;
-  border: 1px solid #26b123;
+  border: 1px solid #308dff;
   border-radius: 50%;
   transform: rotate(calc(360deg/8 *var(--i )));
   transform-origin: 170px ;
@@ -364,7 +356,7 @@
   position: absolute;
   width: 19.5px;
   height: 19.5px;
-  border: 0.7px solid #26b123;
+  border: 0.7px solid #308dff;
   border-radius: 50%;
   transform: rotate(calc(360deg/8 *var(--i )));
   transform-origin: 79px ;
@@ -378,7 +370,7 @@
 
 
 .imgpeoplereview.active{
-  box-shadow: 0 0 0 2px #71B3F1, 0 0 0 3px #71B3F1;
+  box-shadow: 0 0 0 4px #71B3F1;
 
 }
 .imgpeoplereview img{
@@ -424,19 +416,8 @@ filter: grayscale(0);
   pointer-events: none;
 
 }
-
 .content::after{
-  content: '';
-  position: absolute;
-  inset: 65px;
-  border: 7px solid transparent;
-  border-left: 7px solid #71B3F1;
-  border-right: 7px solid #e2e2e2;
-  border-radius: 50%;
-  animation: animationcontent2 2.5s linear infinite;
-  z-index: 1;
-  pointer-events: none;
-
+  display: none;
 }
   }
   
@@ -465,19 +446,8 @@ filter: grayscale(0);
   pointer-events: none;
 
 }
-
 .content::after{
-  content: '';
-  position: absolute;
-  inset: 58px;
-  border: 5.1px solid transparent;
-  border-left: 5.1px solid #71B3F1;
-  border-right: 5.1px solid #e2e2e2;
-  border-radius: 50%;
-  animation: animationcontent2 2.5s linear infinite;
-  z-index: 1;
-  pointer-events: none;
-
+  display: none;
 }
   }
   
@@ -542,6 +512,7 @@ filter: grayscale(0);
   display: none;
 }
   }
+
 
 
 
@@ -796,6 +767,8 @@ filter: grayscale(0);
   
 }
   }
+
+ 
   </style>
 <section  class="h-full w-full flex flex-col items-center justify-center  mb-[2rem]   ">
 
@@ -903,12 +876,12 @@ filter: grayscale(0);
                       <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Movie Night</h2>
                 </div>
                 <div class="xl:w-[16rem] xl:h-[10rem] lg:w-[14rem] lg:h-[9rem] md:w-[12rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[4.4rem] xl:ml-[2rem] lg:ml-[1.5rem] md:ml-[1rem] min-[320px]:ml-[0.4rem]  flex flex-col justify-center items-center bg-white rounded-[0.4rem] rounded-b-[1rem] drop-shadow-xl shadow-[#BABDC2] shadow-sm border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom">
-                  <img class="xl:h-[5.5rem] xl:w-[5.5rem] lg:h-[4.5rem] lg:w-[4.5rem] md:h-[3.5rem] md:w-[3.5rem] min-[320px]:h-[2.5rem] min-[320px]:w-[2.5rem]  " src="{% static 'ActivityEvents/movienight.png' %}" alt="">
-                  <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Movie Night</h2>
+                  <img class="xl:h-[5.5rem] xl:w-[5.5rem] lg:h-[4.5rem] lg:w-[4.5rem] md:h-[3.5rem] md:w-[3.5rem] min-[320px]:h-[2.5rem] min-[320px]:w-[2.5rem]  " src="{% static 'ActivityEvents/songhub.png' %}" alt="">
+                  <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Hang out & Music</h2>
             </div>
             <div class="xl:w-[16rem] xl:h-[10rem] lg:w-[14rem] lg:h-[9rem] md:w-[12rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[4.4rem] xl:ml-[2rem] lg:ml-[1.5rem] md:ml-[1rem] min-[320px]:ml-[0.4rem] flex flex-col justify-center items-center bg-white rounded-[0.4rem] rounded-b-[1rem] drop-shadow-xl shadow-[#BABDC2] shadow-sm border-[0.1rem] border-[#F8F8F8] hover:border-[0.2rem] hover:border-[#95befe] hoverzoom">
-              <img class="xl:h-[5.5rem] xl:w-[5.5rem] lg:h-[4.5rem] lg:w-[4.5rem] md:h-[3.5rem] md:w-[3.5rem] min-[320px]:h-[2.5rem] min-[320px]:w-[2.5rem]  " src="{% static 'ActivityEvents/movienight.png' %}" alt="">
-              <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Movie Night</h2>
+              <img class="xl:h-[5.5rem] xl:w-[5.5rem] lg:h-[4.5rem] lg:w-[4.5rem] md:h-[3.5rem] md:w-[3.5rem] min-[320px]:h-[2.5rem] min-[320px]:w-[2.5rem]  " src="{% static 'ActivityEvents/keyracing.png' %}" alt="">
+              <h2 class="xl:text-[1.3rem] lg:text-[1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem] text-center xl:mt-[1rem] lg:mt-[0.9rem] md:mt-[0.7rem] min-[320px]:mt-[0.4rem] font-medium text-[#5F5F5F]" >Key Racing</h2>
         </div>
                    
                 
@@ -931,8 +904,8 @@ filter: grayscale(0);
 
                     <li class="slide w-full h-3/5 absolute flex flex-col justify-center items-center	" data-active>
                         <div class="w-full absolute flex justify-between items-center z-10" >
-                            <button class="carousel-button prev xl:h-[3.5rem] xl:w-[3.5rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem]  bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="prev"><box-icon size="2rem" color="#ffffff" name='left-arrow-alt'></box-icon></button>
-                            <button class="carousel-button next xl:h-[3.5rem] xl:w-[3.5rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem] bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="next"><box-icon size="2rem" color="#ffffff" name='right-arrow-alt' ></box-icon></button>
+                            <button class="carousel-button prev xl:h-[3rem] xl:w-[3rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem]  bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="prev"><box-icon size="2rem" color="#ffffff" name='left-arrow-alt'></box-icon></button>
+                            <button class="carousel-button next xl:h-[3rem] xl:w-[3rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem] bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="next"><box-icon size="2rem" color="#ffffff" name='right-arrow-alt' ></box-icon></button>
                         </div>
                       <div class="xl:w-[36rem] xl:h-[24rem] lg:w-[32rem] lg:h-[20rem] md:w-[28rem] md:h-[16rem] min-[320px]:w-[13rem] min-[320px]:h-[9rem] flex flex-col justify-center items-center relative">
                         <img class="w-full h-full block object-cover object-center rounded-[0.3rem] rounded-b-[1.2rem] drop-shadow-sm " src="{{ event.image.url }}">
@@ -990,45 +963,45 @@ filter: grayscale(0);
 
   </section>
 
-    <section class="w-[94%] mx-auto flex flex-col justify-center items-center mt-[6rem] mb-[2rem]">
+  <section class="w-[94%] mx-auto flex flex-col justify-center items-center mt-[6rem] mb-[2rem]">
     
-      <div class="xl:w-[70rem] xl:h-[40rem] lg:w-[60rem]  lg:h-[40rem] md:w-[50rem]  md:h-[35rem] min-[320px]:w-[30rem]  min-[320px]:h-[20rem] flex flex-row items-center">
-        <div class="container xl:w-[425px] xl:h-[425px] lg:w-[420px] lg:h-[420px] md:w-[300px] md:h-[300px] min-[320px]:w-[140px] min-[320px]:h-[140px] ml-[5.4rem]  rounded-[50%] relative xl:border-[10px] xl:border-black lg:border-[9px] lg:border-black md:border-[5px] md:border-black min-[320px]:border-[3px] min-[320px]:border-black">
-          <div class="icon relative left-[-50%] w-full h-full flex justify-center items-center cursor-pointer">
-            {% for peoplereview in AllPeopleReview %}
-            <div class="imgpeoplereview"  style="--i: {{ forloop.counter }};" data-id="content{{forloop.counter}}">
-              <img class="absolute top-0 left-0 w-full h-full rounded-full object-cover" src="{{peoplereview.image.url}}" alt="" >
-            </div>
-            {% endfor %}
-  
+    <div class="xl:w-[70rem] xl:h-[40rem] lg:w-[60rem]  lg:h-[40rem] md:w-[50rem]  md:h-[35rem] min-[320px]:w-[30rem]  min-[320px]:h-[20rem] flex flex-row items-center">
+      <div class="container xl:w-[425px] xl:h-[425px] lg:w-[420px] lg:h-[420px] md:w-[300px] md:h-[300px] min-[320px]:w-[140px] min-[320px]:h-[140px] ml-[5.4rem]  rounded-[50%] relative xl:border-[10px] xl:border-black lg:border-[9px] lg:border-black md:border-[5px] md:border-black min-[320px]:border-[3px] min-[320px]:border-black">
+        <div class="icon relative left-[-50%] w-full h-full flex justify-center items-center cursor-pointer">
+          {% for peoplereview in AllPeopleReview %}
+          <div class="imgpeoplereview"  style="--i: {{ forloop.counter }};" data-id="content{{forloop.counter}}">
+            <img class="absolute top-0 left-0 w-full h-full rounded-full object-cover" src="{{peoplereview.image.url}}" alt="" >
           </div>
-          <div class="content ">
-            {% for peoplereview in AllPeopleReview %}
-  
-            <div id="content{{forloop.counter}}" class="contentbox">
-              <div class="card xl:w-[15rem] xl:h-[15rem] lg:w-[13rem] lg:h-[13rem] md:w-[10rem] md:h-[10rem] min-[320px]:w-[3rem] min-[320px]:h-[3rem] flex flex-col xl:mt-[3rem] lg:mb-[2.8rem] md:mb-[2rem] min-[320px]:mb-[1.3rem]  ">
-                <div class="imgbox  rounded-[50%] xl:w-[11rem] xl:h-[11rem] lg:w-[7.5rem] lg:h-[7.5rem] md:w-[7rem] md:h-[4rem]  min-[320px]:w-[2rem] min-[320px]:h-[2rem]">
-                  <img class="xl:w-[7rem] xl:h-[7rem] lg:w-[6rem] lg:h-[6rem] md:w-[4rem] md:h-[4rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] rounded-[50%] object-cover xl:ml-[2rem] lg:ml-[1rem] md:ml-[1.4rem] min-[320px]:ml-[0.1rem] mb-[0.2rem]"  src="{{peoplereview.image.url}}" alt="">
-                  <div class="textbox  w-full h-full">
-                    <p class="text-center xl:text-[0.47rem] lg:text-[0.41rem] md:text-[0.4rem] min-[320px]:text-[0.11rem]">{{peoplereview.description}}</p>
-                  </div>
-                </div>
+          {% endfor %}
 
+        </div>
+        <div class="content ">
+          {% for peoplereview in AllPeopleReview %}
+
+          <div id="content{{forloop.counter}}" class="contentbox">
+            <div class="card xl:w-[15rem] xl:h-[15rem] lg:w-[13rem] lg:h-[13rem] md:w-[10rem] md:h-[10rem] min-[320px]:w-[3rem] min-[320px]:h-[3rem] flex flex-col xl:mt-[3rem] lg:mb-[2.8rem] md:mb-[2rem] min-[320px]:mb-[1.3rem]  ">
+              <div class="imgbox   xl:w-[16rem]  xl:h-[16rem] lg:w-[15rem] lg:h-[18rem] md:w-[10rem] md:h-[10rem]  min-[320px]:w-[4rem] min-[320px]:h-[6rem] flex flex-col justify-center items-center">
+                <img class="xl:w-[8rem] xl:h-[8rem] lg:w-[7rem] lg:h-[7rem] md:w-[5rem] md:h-[5rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] rounded-[50%] object-cover xl:mr-[0.5rem] lg:mr-[0.5rem] md:mr-[0.1rem] min-[320px]:ml-[0.1rem] mb-[0.2rem]"  src="{{peoplereview.image.url}}" alt="">
+                <div class="textbox  w-full h-full">
+                  <p class="text-center xl:text-[0.8rem] lg:text-[0.8rem] md:text-[0.6rem] min-[320px]:text-[0.22rem]">{{peoplereview.description}}</p>
+                </div>
               </div>
+
             </div>
-  
-            {% endfor %}
-  
           </div>
-  
+
+          {% endfor %}
+
         </div>
 
-        <div class="xl:w-[28rem] lg:w-[24rem] md:w-[20rem] min-[320px]:w-[10rem] h-full flex flex-col mb-[8rem] justify-center items-center xl:ml-[8rem] lg:ml-[6rem] md:ml-[3.5rem] min-[320px]:ml-[1rem] ">
-          <h1 class="xl:text-[3.5rem] lg:text-[3rem] md:text-[2.6rem] min-[320px]:text-[1rem] mt-[5rem] text-left font-medium text-[#464747]">People Review</h1>
-          <p class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.75rem] min-[320px]:text-[0.4rem] mt-[1rem] text-[#6E8292] font-medium text-center">Discover what people are saying about our events, how they've improved their skills, and the beautiful environment they've experienced, all while praising our excellent instructors.!</p>
       </div>
-      </div>
-    </section>
+
+      <div class="xl:w-[28rem] lg:w-[24rem] md:w-[20rem] min-[320px]:w-[10rem] h-full flex flex-col mb-[8rem] justify-center items-center xl:ml-[8rem] lg:ml-[6rem] md:ml-[3.5rem] min-[320px]:ml-[1rem] ">
+        <h1 class="xl:text-[3.5rem] lg:text-[3rem] md:text-[2.6rem] min-[320px]:text-[1rem] mt-[5rem] text-left font-medium text-[#464747]">People Review</h1>
+        <p class="xl:text-[1.2rem] lg:text-[1rem] md:text-[0.75rem] min-[320px]:text-[0.4rem] mt-[1rem] text-[#6E8292] font-medium text-center">Discover what people are saying about our events, how they've improved their skills, and the beautiful environment they've experienced, all while praising our excellent instructors.!</p>
+    </div>
+    </div>
+  </section>
 
 
 
@@ -1099,14 +1072,15 @@ filter: grayscale(0);
             <div class="xl:w-[36rem] lg:w-[32rem] md:w-[40rem] min-[320px]:w-[20rem] h-full flex flex-col mt-[4rem] justify-center xl:p-[0rem] lg:p-[0rem] md:p-[0.2rem] min-[320px]:p-[0.5rem]">
                 <h1 class="xl:text-[1.8rem] lg:text-[1.6rem] md:text-[1.2rem] min-[320px]:text-[1rem] text-[#464747] font-medium text-left ">If you have anything in mind you would like to share send us a message</h1>
 
-                <form id="formQAs" class="h-full w-full flex flex-col justify-first items-first   ">
-                   <div class="flex flex-row">
+                <form id="formQAs" method="POST" action="{% url 'ASKAQUESTION'  %}"   class="h-full w-full flex flex-col justify-first items-first">
+                  {% csrf_token %}
+                  <div class="flex flex-row">
                      <div class="inputdivparent" >
-                         <input id="usernameinputQA" name="usernameinputQA" class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] " type="text" required>
+                         <input value="{{user.username}}" id="usernameinputQA" name="usernameinputQA" class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] " type="text" required>
                          <label class="placeholderlabel xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] "   for="usernameinputQA">Username</label>
                      </div>
                      <div class="inputdivparent ml-[2rem]" >
-                         <input id="emailinputQA" name="emailinputQA" class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] " type="email" required>
+                         <input value="{{user.email}}" id="emailinputQA" name="emailinputQA" class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] " type="email" required>
                          <label class="placeholderlabel xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  min-[320px]:text-[0.7rem] "   for="emailinputQA">Email</label>
                      </div>
                    </div>
@@ -1116,7 +1090,7 @@ filter: grayscale(0);
                         <label class="placeholderlabel xl:text-[1.6rem] lg:text-[1.5rem] md:text-[1.2rem]  min-[320px]:text-[1rem]  "   for="messageinputQA">Message</label>
                     </div>
                     <div id="buttonwrapper">
-                        <button  type="submit" class="submit xl:w-[15rem] xl:h-[3.4rem] lg:w-[13rem] lg:h-[3rem] md:w-[10rem] md:h-[2.8rem] min-[320px]:w-[8rem] min-[320px]:h-[2rem] xl:text-[1rem] lg:text-[0.9rem] md:text-[0.8rem] min-[320px]:text-[0.7rem]" >Send Message</button>
+                        <button  type="submit" class="submit xl:w-[15rem] xl:h-[3.4rem] lg:w-[13rem] lg:h-[3rem] md:w-[10rem] md:h-[2.8rem] min-[320px]:w-[8rem] min-[320px]:h-[2rem] xl:text-[1rem] lg:text-[0.9rem] md:text-[0.8rem] min-[320px]:text-[0.7rem] hoverzoom" >Send Message</button>
                            <div class="loader-wrapper">
                            <span class="loader white"></span>
                            <span class="loader blue"></span>
@@ -1213,6 +1187,15 @@ var typing=new Typed(".text", {
     });
 }
 
+
+
+$(document).ready(function() {
+
+var html = '';
+for (var i = 1; i <= 50; i ++) {
+    html += '<div class="shape-container--'+i+' shape-animation"><div class="random-shape"></div></div>';
+}
+});
 })
 
 

@@ -8,8 +8,6 @@ urlpatterns = [
     path("signup", views.signup, name="signup"),
     path("logoutuser", views.logoutuser, name="logoutuser"),
     path("registrations", views.registrations, name="registrations"),
-    path("forgotpassword", views.forgotpassword, name="forgotpassword"),
-    path("resetpassword", views.resetpassword, name="resetpassword"),
     path("signingupdone", views.signingupdone, name="signingupdone"),
     path("errorpage", views.errorpage, name="errorpage"),
     path("get_events/", views.get_events, name="get_events"),
@@ -20,5 +18,7 @@ urlpatterns = [
     path("attendess/<int:attendess_id>", views.attendessDetails, name="attendessDetails"),
     path("contactus", views.contactus, name="contactus"),
     path("eventsRange", views.eventsRange, name="eventsRange"),
+    path("ASKAQUESTION", views.ASKAQUESTION, name="ASKAQUESTION"),
+
 
 ]
