@@ -53,6 +53,28 @@ The HTML files are the files that are rendered to the client. These files are th
     * signingupdone.html - This file has been created to display a thank you note after succussful signing up.
 
 
++ ./static/ActivityEvents:
+    * askaquestionhub.png 
+    * Contactuscuate.png 
+    * error404photo.png 
+    * Goodteampana.png 
+    * Groupdiscussionamico2.png 
+    * hub200logo.png 
+    * hub200whitelogo.png
+    * hubvideo.mb4 
+    * index.js
+    * keyracing.png 
+    * Knowledgecuate.png 
+    * movienight.png 
+    * signupdone.png 
+    * songhub.png
+    * styless.css
+    * Teleworkbro.png
+    * thursdayhub.png
+    * Unknownperson.jpg
+    * tabletloginanimate2.svg
+    * signupanimate2.svg
+
 ### CSS files:
 
 The CSS files are the files that are responsible for the styling of the web application. These files are present in the static folder of the Django web application.

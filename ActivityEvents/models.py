@@ -74,3 +74,33 @@ class PeopleReviews(models.Model):
     image = models.ImageField(upload_to='images/',null=True)
     def __str__(self):
         return f"{self.UserName}"
+    
+
+
+
+
+
+
+
+
+
+class EventImage(models.Model):
+    event = models.ForeignKey(Events, on_delete=models.CASCADE, related_name='event_images')
+    image = models.ImageField(upload_to='images/', null=True)
+    def __str__(self):
+        return f"Image for {self.event.title}"
+
+
+
+
+
+
+
+class EventOrganizer(models.Model):
+    event = models.ForeignKey(Events, on_delete=models.CASCADE, related_name='event_organizer', default=None)
+    name = models.CharField(max_length=50, null=True, blank=True)
+    photo = models.ImageField(upload_to='images/', null=True)
+    jobTitle = models.CharField(max_length=50, null=True, blank=True, default="")
+
+    def __str__(self):
+        return self.name

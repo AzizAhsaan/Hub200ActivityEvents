@@ -267,144 +267,288 @@ to {
 }
 }
 
+.custom-shape-divider-bottom-1697921712 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom-1697921712 svg {
+    position: relative;
+    display: block;
+    width: calc(158% + 1.3px);
+    height: 145px;
+}
+
+.custom-shape-divider-bottom-1697921712 .shape-fill {
+    fill: #FFFFFF;
+}
 
 
+
+.custom-shape-divider-bottom-1698085594 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom-1698085594 svg {
+    position: relative;
+    display: block;
+    width: calc(116% + 1.3px);
+    height: 45px;
+}
+
+.custom-shape-divider-bottom-1698085594 .shape-fill {
+    fill: #FBFDFF;
+}
+
+.slide[data-active] {
+  opacity: 1;
+  z-index: 1;
+  transition-delay: 0ms;
+}
+
+
+.carousel-button:focus {
+  outline: 1px solid black;
+}
+
+
+
+
+
+
+
+
+.custom-shape-divider-top-1698083208 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-top-1698083208 svg {
+    position: relative;
+    display: block;
+    width: calc(133% + 1.3px);
+    height: 30px;
+}
+
+.custom-shape-divider-top-1698083208 .shape-fill {
+    fill: #FBFDFF;
+}
 </style>
-<section class="relative w-[99%] mx-auto flex flex-col justify-center items-center">
-    
-        <section class="xl:h-[30rem] lg:h-[37rem] md:h-[31rem] min-[320px]:h-[10rem]  w-full">
-           <img class="w-full h-full " src="{% static 'ActivityEvents/details_image_page.jpg'%}" alt="">
-        </section>
+<section class="relative w-full mx-auto flex flex-col justify-center items-center">
 
-    <h1 class="mt-[4rem]  xl:text-5xl lg:text-4xl md:text-3xl min-[320px]:text-2xl font-medium text-[#50A8F5]">{{event.title}}</h1>
-    
-    <section class="pt-3 w-[99%]   xl:h-[28rem] lg:h-[26rem] md:h-[22rem] min-[320px]:h-[12rem]  flex flex-col justify-center items-center">
-        <div class="w-full h-full flex justify-first items-first">
-            <div class="xl:w-[5.5rem] xl:h-[5.5rem] lg:w-[5rem] lg:h-[5rem] md:w-[4.5rem] md:h-[4.5rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] bg-[#E8F5FF]  drop-shadow-xl shadow-[#BABDC2] shadow-sm  rounded-[0.3rem]  relative">
-                <div class="xl:w-[5.5rem] xl:h-[5rem] lg:w-[5rem] lg:h-[5rem] md:w-[4.5rem] md:h-[4.5rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] bg-white  absolute mt-[1.5rem]  rounded-[0.3rem] left-[1rem] drop-shadow-md  "></div>
-            </div>
-</div>
-        <div class="xl:w-[65rem] xl:h-[30rem] lg:w-[60rem] lg:h-[28rem] md:w-[55rem] md:h-[25rem] min-[320px]:w-[25rem] min-[320px]:h-[15rem] flex flex-row justify-center items-center relative ">
-   
+<section class="relative bg-[#F2F9FF] xl:w-[75rem]  lg:w-[62rem] md:w-[47rem] min-[320px]:w-[20rem] xl:h-[21rem]  lg:h-[21rem] md:h-[20rem] min-[320px]:h-[12rem]   w-full mx-auto flex flex-row justify-between items-center xl:pl-[1.2rem] lg:pl-[4rem] md:pl-[0.6rem] min-[320px]:pl-[0rem]" >
+  <div class="flex flex-col h-full  items-first justify-center   p-[0.4rem]">
+          <h1 class="xl:text-[3rem] lg:text-[2.5rem] md:text-[2.1rem]  min-[320px]:text-[1rem]  font-medium 	 text-[#464747] ">{{event.title}}</h1>
+          <div class="w-full h-[4rem] flex flex-row items-center ">
+            <button   class="xl:w-[8.5rem] xl:h-[2.7rem] lg:w-[7rem] lg:h-[2.4rem] md:w-[9rem] md:h-[2.9rem] min-[320px]:w-[4rem] min-[320px]:h-[1.2rem]  xl:mt-[2.5rem] lg:mt-[2.3rem] md:mt-[1.8rem] min-[320px]:mt-[1.1rem] bg-[#71B3F1] rounded-[10rem]   text-white   font-medium px-[0.7rem] flex justify-center items-center hoverzoom " ><a class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.9rem] min-[320px]:text-[0.5rem] "  href="{% url 'registrations' %}">
+               <span class="button-text">Register</span>
+               <div class="fill-container"></div>
+            </a></button>
+          {% if user.is_authenticated and user.is_superuser %}
+            <button  class="xl:w-[8.5rem] xl:h-[2.7rem] lg:w-[7rem] lg:h-[2.4rem] md:w-[9rem] md:h-[2.9rem] min-[320px]:w-[4rem] min-[320px]:h-[1.2rem]  xl:mt-[2.5rem] lg:mt-[2.3rem] md:mt-[1.8rem] min-[320px]:mt-[1.1rem] bg-white drop-shadow-xl ml-[1rem] rounded-[10rem]   text-black   font-medium px-[0.7rem] flex justify-center items-center hover:bg-[#85C5FF] hoverzoom "><a class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.9rem] min-[320px]:text-[0.5rem] "  href="{% url 'attendess' %}">
+              <span class="button-text">Attendees</span>
+              <div class="fill-container"></div>
+           </a></button>
+           {% endif %}
 
-            <div class="content xl:w-[29rem] xl:h-[29rem] lg:w-[27rem] lg:h-[27rem] md:w-[25rem] md:h-[25rem] min-[320px]:w-[13rem] min-[320px]:h-[13rem] xl:ml-[4rem] lg:ml-[4rem] md:ml-[4rem] min-[320px]:ml-[1rem] ">
+
+           </div>
+  </div>
+  <div class="flex flex-col  h-full justify-center items-center relative   ">
+  <img class=" xl:h-[30rem] xl:w-[30rem] lg:h-[28rem] lg:w-[28rem] md:h-[21rem] md:w-[21rem] min-[320px]:h-[10rem] min-[320px]:w-[10rem] z-10 rounded-[2rem]" src="{% static 'ActivityEvents/Groupdiscussionbro.png' %}" alt="">      
+  </svg>
+
+  </div>
+
+</section>
+
+
+
+
+    <section class="w-full relative xl:h-[35rem] lg:h-[34rem] md:h-[41rem] min-[320px]:h-[32.5rem] bg-[#F2F9FF] flex justify-center items-center  ">
+      <div class="xl:w-[80rem]   lg:w-[62rem] md:w-[47rem] min-[320px]:w-[20rem] h-full flex xl:flex-row lg:flex-row md:flex-col min-[320px]:flex-col justify-between xl:mt-[8rem] lg:mt-[7.5rem] md:mt-[1rem] min-[320px]:mt-[1rem] ">
         
-                <div class=" xl:w-[22rem] xl:h-[22rem] lg:w-[20rem] lg:h-[20rem] md:w-[17rem] md:h-[17rem]  min-[320px]:w-[7rem] min-[320px]:h-[7rem] rounded-full  ">
-                    <img class="w-full h-full rounded-full object-cover" src="{% static 'ActivityEvents/details_image_page.jpg'%}" alt="">
-                </div>
-          
-          
-            </div>
+        <div class="carousel xl:w-[38rem]  xl:h-[20rem] lg:w-[36rem] lg:h-[20rem] md:w-[47rem] md:h-full min-[320px]:w-full xl:h-[20rem] lg:h-[19rem] md:h-[12rem]  min-[320px]:h-[10rem] flex flex-col justify-center items-center  relative" data-carousel>
 
-            <div id="post-1" class="xl:w-[19rem] xl:h-[23rem] lg:w-[17rem]  lg:h-[21rem] md:w-[15rem]  md:h-[19rem] min-[320px]:w-[10rem]  min-[320px]:h-[14rem]   bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden xl:mt-[3rem] lg:mt-[3rem] md:mt-[2.5rem]  shadow-sky-200 xl:ml-[25rem] lg:ml-[25rem] md:ml-[25rem] min-[320px]:ml-[8.5rem] ">
-                  <div class="p-[0.3 rem] ml-[0.5rem] h-full w-full xl:mt-[1rem] lg:mt-[1rem] md:mt-[0.7rem] min-[320px]:mt-[0.2rem]">
-                    <h1 class="  text-indigo-500  text-stone-900 text-black-900 italic xl:text-2xl lg:text-xl md:text-lg min-[320px]:text-md  mt-[0.5rem] font-medium">DATE AND TIME</h1>
-                    <p class=" xl:text-xl lg:text-lg md:text-md min-[320px]:text-sm leading-tight text-slate-800 mt-1">{{event.event_date}} </p>
-                    <h1 class=" xl:text-2xl lg:text-xl md:text-lg min-[320px]:text-md   text-indigo-500  text-stone-900 text-black-900 xl:text-2xl lg:text-xl md:text-lg italic  mt-[1rem] font-medium">LOCATION</h1>
-                    <p class=" mt-1 xl:text-xl lg:text-lg md:text-md min-[320px]:text-sm leading-tight text-slate-800 mt-[0.5rem]">{{event.location}}</p>
-                    <h1 class="  text-indigo-500  text-stone-900 text-black-900 xl:text-2xl lg:text-xl md:text-lg min-[320px]:text-md italic  mt-[1rem] font-medium">Speakers</h1>
-                    <p class=" mt-1 xl:text-xl lg:text-lg md:text-md min-[320px]:text-sm leading-tight text-slate-800 mt-[0.5rem]">“names of the speakers”</p>
-            
-                  </div>
                   
-              </div> 
-        </div>
-          <!--
+          <ul class="m-0 p-0 w-full h-full"  data-slides>
+            {% for event in eventimage %}
 
-          <div class="w-[35rem] h-[15rem] max-w-md mx-auto bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden md:max-w-2xl   shadow-sky-400">
-              <div class="p-8">
-                <div class="uppercase tracking-wide text-sm font-semibold text-black-900">type somthing here</div>
-                <p class="mt-2 text-slate-500 text-xl text-left mt-3 italic">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad </p>
+            <li class="slide w-full h-full absolute flex flex-col justify-center items-center	" data-active>
+                <div class="w-full absolute flex justify-between items-center z-10 px-[0.6rem]" >
+                    <button class="carousel-button prev xl:h-[3rem] xl:w-[3rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem]  bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="prev"><box-icon size="2rem" color="#ffffff" name='left-arrow-alt'></box-icon></button>
+                    <button class="carousel-button next xl:h-[3rem] xl:w-[3rem] lg:h-[3rem] lg:w-[3rem] md:h-[2.5rem] md:w-[2.5rem] min-[320px]:h-[1.5rem] min-[320px]:w-[1.5rem] bg-[#50A8F5] flex justify-center items-center z-10 cursor-pointer rounded-[0.25rem] drop-shadow-md" data-carousel-button="next"><box-icon size="2rem" color="#ffffff" name='right-arrow-alt' ></box-icon></button>
+                </div>
+              <div class="xl:w-[26rem] xl:h-[20rem] lg:w-[25rem] lg:h-[16rem] md:w-[28rem] md:h-[16rem] min-[320px]:w-[13rem] min-[320px]:h-[9rem] flex flex-col justify-center items-center relative">
+                <img class="w-full h-full block object-cover object-center rounded-[0.3rem] rounded-b-[1.2rem] drop-shadow-sm " src="{{ event.image.url }}">
+             
               </div>
+            </li>
+            {% endfor %}
+
+          </ul>
           </div>
 
-          -->
-
-        
-    </section>
-    
-    
-    <section class="section-2  pt-3 w-[99%] xl:h-[30rem] lg:h-[28rem] md:h-[25rem] mt-[3rem] flex flex-col justify-center items-center ">
-        <h1 class="mt-[3rem] mb-[1rem] xl:text-5xl lg:text-4xl md:text-3xl min-[320px]:text-2xl  font-medium text-[#50A8F5]">Event Description</h1>
 
 
+        <div class="xl:w-[30rem] lg:w-[28rem] md:w-full min-[320px]:w-full  xl:h-[22rem] lg:h-[21rem] md:h-[19rem] min-[320px]:h-[18rem] flex flex-col items-center justify-center relative xl:pr-[3rem] lg:pr-[1rem] md:pr-[0rem] min-[320px]:pr-[0rem]">
+
+          <h1 class=" xl:text-[3rem] lg:text-[2.8rem] md:text-[2.2rem] min-[320px]:text-[1.5rem] text-black font-semibold text-[#464747]">{{event.title}}</h1>
+          <p class="xl:text-[1.1rem] lg:text-[1rem] md:text-[0.9rem] min-[320px]:text-[0.6rem]  text-center font-normal">{{event.description}}</p>
+          <div class="w-full h-full   grid grid-cols-2 grid-rows-1 gap-[0.1rem] xl:ml-[5rem] lg:ml-[5rem] md:ml-[15rem] min-[320px]:ml-[5rem] mt-[2rem]">
+            <div class="xl:w-[8rem] xl:h-[8rem] lg:w-[7.7rem] lg:h-[7.7rem] md:w-[8rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[6rem] flex flex-col  items-center ">
+              <img class="xl:w-[4rem] xl:h-[4rem] lg:w-[3.8rem] lg:h-[3.8rem]  md:w-[3rem] md:h-[3rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem]" src="{% static 'ActivityEvents/calendar2.png'%}" alt="">
+              <h1 class="xl:text-[1.2rem] lg:text-[1.1rem] md:text-[1rem] min-[320px]:text-[0.8rem] font-medium mt-[0.4rem]">{{event.event_date}}</h1>
+            </div>
+            <div class="xl:w-[8rem] xl:h-[8rem] lg:w-[7.7rem] lg:h-[7.7rem] md:w-[8rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[6rem] flex flex-col  items-center ">
+              <img class="xl:w-[4rem] xl:h-[4rem] lg:w-[3.8rem] lg:h-[3.8rem]  md:w-[3rem] md:h-[3rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem]" src="{% static 'ActivityEvents/securitypin.png'%}" alt="">
+              <h1 class="xl:text-[1.2rem] lg:text-[1.1rem] md:text-[1rem] min-[320px]:text-[0.8rem] font-medium mt-[0.4rem]">{{event.location}}</h1>
+            </div>
 
 
-    
-<div class="xl:w-[65rem] xl:h-[25rem] lg:w-[60rem] lg:h-[23rem] md:w-[30rem] md:h-[12em] min-[320px]:w-[18rem] min-[320px]:h-[25rem] flex xl:flex-row lg:flex-row md:flex-col-reverse min-[320px]:flex-col-reverse justify-end items-center">
-        <div id="post-1" class="xl:w-[40rem] xl:h-[20rem] lg:w-[35rem] lg:h-[18rem] md:w-[33rem] md:h-[17.5rem]  min-[320px]:w-[18rem]  min-[320px]:h-[18rem] max-w-md  flex flex-row justify-center items-center bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden md:max-w-2xl  xl:p-3 lg:p-3 md:p-1 min-[320px]:p-[0.1rem]  shadow-sky-400">
-                  <div class="p-2 w-full h-full">
-                    <h1 class="uppercase tracking-wide text-sm text-indigo-500 text-stone-900 text-black-500 italic xl:text-xl lg:text-lg md:text-lg mb-2 ml-4 underline decoration-solid underline decoration-sky-500">Description</h1>
-                    <p class="block mt-1 leading-tight text-[#6E8292] xl:text-xl lg:text-lg md:text-md  italic">{{event.description}}</p>
-                  </div>   
-    
-              </div>
+          </div>
 
-
-<img class="xl:w-[25rem] xl:h-[25rem] lg:w-[23rem] lg:h-[23rem] md:w-[21rem] md:h-[21rem] min-[320px]:w-[11rem] min-[320px]:h-[11rem]" src="{% static 'ActivityEvents/Readinglistcuate.png' %}" alt="">
-
-</div>
-
-    </section>
-
-    <section class="pt-3 w-[99%] xl:h-[65rem] lg:h-[45rem] md:h-[65rem] min-[320px]:h-[50rem] mt-[7rem] mb-[7rem] flex flex-col justify-center items-center">
-
-        <h1 class="xl:mt-[3rem] lg:mt-[2.7rem] md:mt-[1.2rem] min-[320px]::mt-[0rem] xl:mb-[1rem] lg:mb-[1rem] md:mb-[0.6rem] min-[320px] :mb-[0.6rem] xl:text-5xl lg:text-4xl md:text-3xl min-[320px]:text-2xl font-medium text-[#50A8F5]">What our events provides</h1>
-        <div class="xl:w-[65rem] xl:h-[27.5rem] lg:w-[60rem] lg:h-[25.5rem] md:w-[50rem] md:h-[35rem] min-[320px]:w-[19rem] min-[320px]:h-[35rem] grid xl:grid-cols-2 xl:grid-rows-2 lg:grid-cols-2 lg:grid-rows-2 md:grid-cols-0 md:grid-rows-4 min-[320px]:grid-cols-0 min-[320px]:grid-rows-4 xl:gap-[7rem] lg:gap-[3rem] md:gap-[3rem] min-[320px]:gap-[2rem] xl:mt-[5rem] lg:mt-[4.5rem] md:mt-[2rem] min-[320px]:mt-[1.5rem]">
-                      <div class="xl:w-[30rem] xl:h-[21rem] lg:w-[28rem] lg:h-[20rem] md:w-[39rem] md:h-[12rem] min-[320px]:w-[18.4rem] min-[320px]:h-[10rem] xl:mt-[7rem] lg:mt-[5rem] md:mt-[1rem] min-[320px]:mt-[1rem] mb-[1rem]  max-w-md mx-auto bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden md:max-w-2xl shadow-lg  shadow-sky-400">
-                          <div class="p-2 w-full flex flex-col justify-center items-center">
-                            <h1 class="xl:text-lg lg:text-lg md:text-md font-medium">Networking community</h1>
-                            <p class="mt-2 text-[#6E8292] text-sm text-left italic">Create opportunities for you to network with instoctors, mentors, alumni, software companies, you never know which connections will end up being valuable to your career going forward.</p>
-                            <img class="xl:w-[15rem] xl:h-[15rem] lg:w-[13rem] lg:h-[13rem] md:w-[10rem] md:h-[10rem] min-[320px]:w-[9rem] min-[320px]:h-[15rem] lg:block xl:block
-                             md:hidden min-[320px]:hidden " src="{% static 'ActivityEvents/Teamspiritcuate.png' %}" alt="">
-        
-                          </div>
-                      </div>
-                      <div class="xl:w-[30rem] xl:h-[21rem] lg:w-[28rem] lg:h-[20rem] md:w-[39rem] md:h-[12rem] min-[320px]:w-[18.4rem] min-[320px]:h-[10rem] xl:mt-[7rem] lg:mt-[4rem] md:mt-[6rem] min-[320px]:mt-[3rem] mb-[3rem]  max-w-md mx-auto bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden md:max-w-2xl shadow-lg  shadow-sky-400">
-                        <div class="p-2 w-full flex flex-col justify-center items-center">
-                          <h1 class="xl:text-lg lg:text-lg md:text-md font-medium">Technical mentor support</h1>
-                          <p class="mt-2 text-[#6E8292] text-sm text-left italic">Guide your learning by experinced traniners or 1:1 mentoring to answer your question and keep you on track.</p>
-                          <img class="xl:w-[15rem] xl:h-[15rem] lg:w-[13rem] lg:h-[13rem] md:w-[10rem] md:h-[10rem] min-[320px]:w-[9rem] min-[320px]:h-[15rem] lg:block xl:block  md:hidden min-[320px]:hidden" src="{% static 'ActivityEvents/ActiveSupportrafiki.png' %}" alt="">
-        
-                        </div>
-                    </div>
-                    <div class="xl:w-[30rem] xl:h-[21rem] lg:w-[28rem] lg:h-[20rem] md:w-[39rem] md:h-[12rem] min-[320px]:w-[18.4rem] min-[320px]:h-[10rem] xl:mt-[14rem] lg:mt-[5rem] md:mt-[10rem] min-[320px]:mt-[5rem] mb-[1rem] max-w-md mx-auto bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden md:max-w-2xl shadow-lg  shadow-sky-400">
-                        <div class="p-2 w-full flex flex-col justify-center items-center">
-                          <h1 class="xl:text-lg lg:text-lg md:text-md font-medium">Career services</h1>
-                          <p class="mt-2 text-[#6E8292] text-sm text-left italic">Advance your career by getting internship and job opportunities in the best software Iraqi companies.</p>
-                          <img class="xl:w-[15rem] xl:h-[15rem] lg:w-[13rem] lg:h-[13rem] md:w-[10rem] md:h-[10rem] min-[320px]:w-[9rem] min-[320px]:h-[15rem] lg:block xl:block  md:hidden min-[320px]:hidden" src="{% static 'ActivityEvents/Resumebro.png' %}" alt="">
-        
-                        </div>
-                    </div>
-                    <div class="xl:w-[30rem] xl:h-[21rem] lg:w-[28rem] lg:h-[20rem] md:w-[39rem] md:h-[12rem] min-[320px]:w-[18.4rem] min-[320px]:h-[10rem] xl:mt-[14rem] lg:mt-[5rem] md:mt-[14rem] min-[320px]:mt-[7rem]  max-w-md mx-auto bg-[#E8F5FF] rounded-xl shadow-md overflow-hidden md:max-w-2xl shadow-lg  shadow-sky-400">
-                        <div class="p-2 w-full flex flex-col justify-center items-center">
-                          <h1 class="xl:text-lg lg:text-lg md:text-md font-medium">Gamification of learning</h1>
-                          <p class="mt-2 text-[#6E8292] text-sm text-left italic">Maximize your enjoyment and engagement through gamification techniques to motivate you by using game elements in learning environments</p>
-                          <img class="xl:w-[15rem] xl:h-[15rem] lg:w-[13rem] lg:h-[13rem] md:w-[10rem] md:h-[10rem] min-[320px]:w-[9rem] min-[320px]:h-[15rem] lg:block xl:block  md:hidden min-[320px]:hidden" src="{% static 'ActivityEvents/Knowledgecuate.png' %}" alt="">
-        
-                        </div>
-                    </div>
-        
-        
         </div>
+
+      </div>
+      <div class="xl:flex lg:flex md:hidden min-[320px]:hidden custom-shape-divider-bottom-1698085594">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+        </svg>
+    </div>
     </section>
+    
+    
+
+
+    <section  class="xl:h-[20rem] xl:w-[60rem] lg:h-[20rem] md:h-[22rem] min-[320px]:h-[10rem]  w-full mx-auto flex flex-col justify-center items-center xl:px-[8rem] lg:px-[6rem] md:px-[3rem] min-[320px]:px-[0.5rem] mt-[1rem] ">
+              <h1 class="text-center xl:text-[3.5rem] lg:text-[3.2rem] md:text-[2.5rem] min-[320px]:text-[1.8rem] text-[#61B4FD] font-medium">Event Organizers </h1>
+
+              <!--<p class="xl:text-lg lg:text-lg md:text-md min-[320px]:text-sm  mt-[1rem]"></p>--->
+              
+                <div class="grid grid-rows-2 grid-cols-2 gap-4 w-full h-full mt-[2rem]">
+                  {% for EventOrganizer in eventorganizer %}
+                    <div class="xl:w-[20rem] xl:h-[5rem] lg:w-[18rem] lg:h-[5rem] md:w-[18rem] md:h-[5rem] min-[320px]:w-[9rem] min-[320px]:h-[3.5rem] bg-white-200 xl:p-[2.5rem] lg:p-[2.5rem] min-[320px]:p-[0.6rem] :p-[2.5rem]  bg-[#ffffff] drop-shadow-lg flex flex-row justify-center items-center rounded-full">
+                      <img class="xl:w-[4rem] xl:h-[4rem]  lg:w-[3.8rem] lg:h-[3.8rem] md:w-[3.8rem] md:h-[3.8rem] min-[320px]:w-[2rem] min-[320px]:h-[2rem] rounded-full xl:mr-[2rem] lg:mr-[2rem] md:mr-[1.8rem] min-[320px]:mr-[0.6rem] object-cover"  src="{{ event.image.url }}" alt="">
+                      <div >
+                        <p class='xl:text-[1rem] lg:text-[1rem] md:text-[1rem] min-[320px]:text-[0.6rem]'><strong>{{EventOrganizer.name}}</strong></p>
+                        <p class='xl:text-[1rem] lg:text-[1rem] md:text-[1rem] min-[320px]:text-[0.6rem]'>{{EventOrganizer.jobTitle}}</p>
+                      </div> 
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+</section>
    
-    <section class="pt-3 w-[99%] xl:h-[40rem] lg:h-[35rem] lg:h-[30rem] mt-[5rem] mb-[5rem] flex flex-col justify-center items-center">
-        <h1 class="xl:mt-[3rem] lg:mt-[2.7rem] md:mt-[1.2rem] min-[320px]:mt-[0rem] xl:mb-[1rem] lg:mb-[1rem] md:mb-[0.6rem] min-[320px] :mb-[0.6rem] xl:text-5xl lg:text-4xl md:text-3xl min-[320px]:text-2xl font-medium text-[#50A8F5]">Event Registraiton</h1>
-        <h1 class=" xl:text-2xl lg:text-2xl md:text-xl  mb-7 italic  text-stone-700 mt-[1rem] ">Register for the {{event.title}}</h1>       
-      <div class="xl:w-[65rem] xl:h-[30rem] lg:w-[60rem] lg:h-[27rem] md:w-[47rem] md:h-[24rem]   min-[320px]:w-[19rem] min-[320px]:h-[24rem] flex xl:flex-row lg:flex-row md:flex-col min-[320px]:flex-col justify-center items-center bg-[#E8F5FF] rounded-xl shadow-md mb-3  shadow-sky-400">
-          <div class="p-[0.3rem] xl:w-[30rem] xl:h-[30rem] lg:w-[28rem] md:w-[24rem] md:h-[24rem] min-[320px]:w-[19rem] min-[320px]:h-[12rem]  flex flex-col items-center">
-            <p class="mt-2 text-slate-500 xl:text-xl lg:text-lg md:text-md min-[320px]:text-sm bg text-left xl:mt-3 lg:mt-3 md:mt-3 min-[320px]:mt-0 italic text-center">Join us and register for our events to receive the latest updates!</p>
-            <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-lg xl:px-[3.5rem] xl:py-[1rem] lg:px-[3.2rem] lg:py-[1rem] md:px-[2rem] md:py-[0.9rem] min-[320px]:py-[0.9rem]  text-center  mb-2 mt-2"><a class="text-[1.4rem]" href="{% url 'registrations' %}">Registeraion</a></button>
-          </div>
-          <img class="xl:w-[30rem] lg:w-[26rem] md:w-[19rem] min-[320px]:h-[12rem]  min-[320px]:w-[12rem] h-full" src="{% static 'ActivityEvents/Goodteampana.png' %}" alt="">
+    <section class="relative bg-[#F2F9FF] xl:h-[40rem] lg:h-[38rem] md:h-[30rem] min-[320px]:h-[52rem]  w-full mx-auto flex flex-col justify-center items-center xl:px-[4rem] lg:px-[6rem] md:px-[3rem] min-[320px]:px-[0.5rem] mt-[6rem]">
+      <div class="xl:flex  lg:flex md:hidden min-[320px]:hidden    custom-shape-divider-top-1698083208">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+        </svg>
+    </div>
+    <h1 class="text-center xl:text-[3.5rem] lg:text-[3.2rem] md:text-[2.5rem] min-[320px]:text-[1.4rem] text-[#61B4FD] font-medium mt-[1.2rem]">What Our events Proivdes</h1>
 
-      </div>   
-      
-    
+      <div class="w-full h-full flex xl:flex-row lg:flex-row md:flex-row min-[320px]:flex-col items-center justify-center xl:mt-[0rem] lg:mt-[0rem] md:mt-[0rem] min-[320px]:mt-[1rem] xl:mb-[3rem] lg:mb-[3rem] md:mb-[3rem] min-[320px]:mb-[1rem]">
+        <div class="xl:w-[19rem] xl:h-[24rem] lg:w-[17rem] lg:h-[22rem] md:w-[12rem] md:h-[18rem] min-[320px]:w-[12rem] min-[320px]:h-[15rem] bg-[#FFFFFF] flex flex-col items-center xl:p-[1rem] lg:p-[1rem] md:p-[1rem] min-[320px]:p-[0.8rem] rounded-[0.6rem] drop-shadow-lg">
+          <h1 class="xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.8rem] font-medium">Networking community</h1>
+          <img class="xl:w-[10rem] xl:h-[10rem] lg:w-[9rem] lg:h-[9rem] md:w-[8rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[6rem]  " src="{% static 'ActivityEvents/Teamspiritcuate.png' %}" alt="">
+          <p class=" xl:text-[0.9rem] lg:text-[0.8rem] md:text-[0.6rem] min-[320px]:text-[0.6rem]  text-black text-center font-normal xl:mt-[0.8rem] lg:mt-[0.8rem] md:mt-[0.8rem] min-[320px]:mt-[0.3rem]">Create opportunities for you to network with instoctors, mentors, alumni, software companies, you never know which connections will end up being valuable to your career going forward.</p>
+        </div>
+
+        <div class="xl:w-[19rem] xl:h-[24rem] lg:w-[17rem] lg:h-[22rem] md:w-[12rem] md:h-[18rem] min-[320px]:w-[12rem] min-[320px]:h-[15rem] bg-[#FFFFFF] flex flex-col items-center  xl:p-[1rem] lg:p-[1rem] md:p-[1rem] min-[320px]:p-[0.5rem] rounded-[0.6rem] drop-shadow-lg xl:ml-[2rem] lg:ml-[2rem] md:ml-[2rem]  min-[320px]:ml-[0rem] xl:mt-[0rem] lg:mt-[0rem] md:mt-[0rem]  min-[320px]:mt-[0.8rem]">
+          <h1 class="xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.8rem] font-medium">Career services</h1>
+          <img class="xl:w-[10rem] xl:h-[10rem] lg:w-[9rem] lg:h-[9rem] md:w-[8rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[6rem]   " src="{% static 'ActivityEvents/Resumebro.png' %}" alt="">
+          <p class="  xl:text-[0.9rem] lg:text-[0.8rem] md:text-[0.6rem]  min-[320px]:text-[0.6rem]  text-black text-center font-normal xl:mt-[0.8rem] lg:mt-[0.8rem] md:mt-[0.8rem] min-[320px]:mt-[0.3rem]">Advance your career by getting internship and job opportunities in the best software Iraqi companies.</p>
+        </div>
+
+        <div class="xl:w-[19rem] xl:h-[24rem] lg:w-[17rem] lg:h-[22rem] md:w-[12rem] md:h-[18rem] min-[320px]:w-[12rem] min-[320px]:h-[15rem] bg-[#FFFFFF] flex flex-col items-center  xl:p-[1rem] lg:p-[1rem] md:p-[1rem] min-[320px]:p-[0.5rem] rounded-[0.6rem] drop-shadow-lg xl:ml-[2rem] lg:ml-[2rem] md:ml-[2rem]  min-[320px]:ml-[0rem] xl:mt-[0rem] lg:mt-[0rem] md:mt-[0rem]  min-[320px]:mt-[0.8rem]">
+          <h1 class="xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.8rem] font-medium">Gamification of learning</h1>
+          <img class="xl:w-[10rem] xl:h-[10rem] lg:w-[9rem] lg:h-[9rem] md:w-[8rem] md:h-[8rem] min-[320px]:w-[6rem] min-[320px]:h-[6rem]   " src="{% static 'ActivityEvents/Knowledgecuate.png' %}" alt="">
+          <p class=" xl:text-[0.9rem] lg:text-[0.8rem] md:text-[0.6rem]  min-[320px]:text-[0.6rem]  text-black text-center font-normal xl:mt-[0.8rem] lg:mt-[0.8rem] md:mt-[0.8rem] min-[320px]:mt-[0.3rem]">Maximize your enjoyment and engagement through gamification techniques to motivate you by using game elements in learning environments.</p>
+        </div>
+
+      </div>      
+      <div class="xl:flex lg:flex md:hidden min-[320px]:hidden custom-shape-divider-bottom-1698085594">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+        </svg>
+    </div>
     </section>
 
-    <section class=" w-[94%] mx-auto justify-center items-center mt-[6rem] mb-[5rem] ">
+
+
+
+
+    
+    <section class="relative h-[40rem] lg:h-[38rem] md:h-[30rem] min-[320px]:h-[32rem]  w-[95%] bg-[#F2F9FF] mx-auto flex flex-col items-center mt-[3rem]">
+      <h1 class="text-center xl:text-[3.5rem] lg:text-[3.2rem] md:text-[2.5rem] min-[320px]:text-[1.6rem] text-[#61B4FD] font-medium mt-[1.2rem]">Event Registeration</h1>
+
+
+      <div class="   rounded-[0.6rem] h-[26rem] xl:w-[55rem] lg:w-[54rem] md:w-[44rem] min-[320px]:w-[30rem] flex xl:flex-row lg:flex-row md:flex-row min-[320px]:flex-col items-center justify-between mt-[2rem] ">
+        
+        <img class="xl:w-[25rem] xl:h-[25rem] lg:w-[24rem] lg:h-[24rem] md:w-[20rem] md:h-[20rem] min-[320px]:w-[12rem] min-[320px]:h-[12rem] "  src="{% static 'ActivityEvents/Formsbro.png' %}"  alt="">
+        <div class="xl:w-[25rem] xl:h-[25rem] lg:w-[24rem] lg:h-[24rem] md:w-[20rem] md:h-[20rem] min-[320px]:w-[18rem] min-[320px]:h-[15rem] flex flex-col items-center mt-[4rem] ">
+          <h1 class="xl:text-[2rem] lg:text-[1.8rem] md:text-[1.5rem] min-[320px]:text-[1.2rem]  text-center font-medium">Register for our events to share your information, and you will be warmly welcomed.</h1>
+          <button   class="xl:w-[10rem] xl:h-[3rem] lg:w-[7rem] lg:h-[2.4rem] md:w-[9rem] md:h-[2.9rem] min-[320px]:w-[8rem] min-[320px]:h-[2.5rem]  mt-[2.5rem] bg-[#71B3F1] rounded-[10rem]   text-white   font-medium px-[0.7rem] flex justify-center items-center hoverzoom " ><a class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.9rem] min-[320px]:text-[1rem] "  href="{% url 'registrations' %}">
+            <span class="button-text">Register</span>
+            <div class="fill-container"></div>
+         </a></button>
+
+        </div>
+      </div>  
+      <div class="xl:flex lg:flex md:hidden min-[320px]:hidden custom-shape-divider-bottom-1698085594">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+        </svg>
+    </div>    
+    </section>
+
+
+
+
+
+
+
+    <section class="relative h-[40rem] lg:h-[38rem] md:h-[30rem] min-[320px]:h-[34rem] w-full  mx-auto flex flex-col justify-center items-center mt-[2rem]">
+
+      <h1 class="text-center xl:text-[3.5rem] lg:text-[3.2rem] md:text-[2.5rem] min-[320px]:text-[2.2rem] text-[#61B4FD] font-medium mt-[0.8rem]">Our Location</h1>
+
+      <div class=" w-[95%] bg-[#FBFDFF] drop-shadow-sm  rounded-[0.6rem] h-[26rem]  flex xl:flex-row lg:flex-row md:flex-row min-[320px]:flex-col items-center  justify-center mt-[2rem] ">
+
+        <div class="xl:h-[20rem] xl:w-[30rem] lg:h-[19rem] lg:w-[29rem] md:h-[15rem] md:w-[23rem] min-[320px]:h-[18rem] min-[320px]:w-[19rem] flex flex-col justify-center items-first rounded-[1rem] p-[1rem]">
+          <div class="w-full h-[4rem] flex flex-row ">
+            <box-icon size="2rem" type='solid' name='location-plus'></box-icon>
+            <h1 class="xl:text-[1.5rem] lg:text-[1.4rem] md:text-[1.2rem] min-[320px]:text-[1rem] ml-[1rem]">Baghdad, Al Joumhouria</h1>
+          </div>
+          <div class="w-full h-[4rem] flex flex-row ">
+            <box-icon size="2rem" type='solid' name='phone'></box-icon>
+            <h1 class="xl:text-[1.5rem] lg:text-[1.4rem] md:text-[1.2rem] min-[320px]:text-[1rem] ml-[1rem]">+9647809563573</h1>
+          </div>
+          <div class="w-full h-[4rem] flex flex-row ">
+            <box-icon size="2rem" type='solid' name='envelope'></box-icon>
+            <h1 class="xl:text-[1.5rem] lg:text-[1.4rem] md:text-[1.2rem] min-[320px]:text-[1rem] ml-[1rem]">info@computiq.tech</h1>
+          </div>
+        </div>
+        <div id="map" class="xl:h-[20rem] xl:w-[35rem] lg:h-[19rem] lg:w-[29rem] md:h-[15rem] md:w-[23rem] min-[320px]:h-[22rem] min-[320px]:w-[19rem]  rounded-[1rem] z-[1]"></div>
+
+      </div>      
+    </section>
+
+    <section class=" w-[95%] mx-auto justify-center items-center mt-[1rem] mb-[5rem] ">
 
       <h1 class="xl:text-[3.5rem] lg:text-[3.1rem] md:text-[2.5rem] max-[450px]:text-[1.5rem] font-medium  text-center text-[#50A8F5] mb-[1rem]">Ask a question</h1>
 <div class="w-full h-full flex justify-end items-end">
@@ -416,15 +560,15 @@ to {
           <div class="xl:w-[36rem] lg:w-[32rem] md:w-[40rem] max-[450px]:w-[20rem] h-full flex flex-col mt-[4rem] justify-center xl:p-[0rem] lg:p-[0rem] md:p-[0.2rem] max-[450px]:p-[0.5rem]">
               <h1 class="xl:text-[1.8rem] lg:text-[1.6rem] md:text-[1.2rem] max-[450px]:text-[1rem] text-[#464747] font-medium text-left ">If you have anything in mind you would like to share send us a message</h1>
 
-              <form id="contactusform" action="{% url 'contactus'  %}" method="POST"  class="h-full w-full flex flex-col justify-first items-first   ">
+<form id="contactusform" action="{% url 'contactus'  %}" method="POST"  class="h-full w-full flex flex-col justify-first items-first   ">
                 {% csrf_token %}
                  <div class="flex flex-row">
                    <div class="inputdivparent" >
-                       <input  value="{{user.username}}" id="usernameinputcontactusform" name="usernameinputcontactusform" class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  max-[450px]:text-[0.7rem] " type="text" required>
+                       <input  value="{{user.username}}" id="usernameinputcontactusform" name="usernameinputcontactusform" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem]min-[320px]:h-[2.8rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="text" required>
                        <label class="placeholderlabel xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  max-[450px]:text-[0.7rem] "   for="usernameinputQA">Username</label>
                    </div>
                    <div class="inputdivparent ml-[2rem]" >
-                       <input value="{{user.email}}" id="emailinputcontactusform" name="emailinputcontactusform"  class="inputsclass xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  max-[450px]:text-[0.7rem] " type="email" required>
+                       <input value="{{user.email}}" id="emailinputcontactusform" name="emailinputcontactusform"  class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem]min-[320px]:h-[2.8rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem] " type="email" required>
                        <label class="placeholderlabel xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem]  max-[450px]:text-[0.7rem] "   for="emailinputQA">Email</label>
                    </div>
                  </div>
@@ -461,5 +605,36 @@ to {
       
 </section>
 
+<script>
+  //slider section
+const buttons = document.querySelectorAll("[data-carousel-button]")
 
-{% endblock %}          
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    const offset = button.dataset.carouselButton === "next" ? 1 : -1
+    const slides = button
+      .closest("[data-carousel]")
+      .querySelector("[data-slides]")
+
+    const activeSlide = slides.querySelector("[data-active]")
+    let newIndex = [...slides.children].indexOf(activeSlide) + offset
+    if (newIndex < 0) newIndex = slides.children.length - 1
+    if (newIndex >= slides.children.length) newIndex = 0
+
+    slides.children[newIndex].dataset.active = true
+    delete activeSlide.dataset.active
+  })
+})
+
+
+//map function
+var map = L.map('map').setView([33.31412416262699, 44.42276682842836], 20); 
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+var newLatitude = 33.31412416262699; 
+var newLongitude = 44.42276682842836; 
+var specificLocation = L.marker([newLatitude, newLongitude]).addTo(map);
+specificLocation.bindPopup("Baghdad-Computiq").openPopup();
+</script>
+{% endblock %}

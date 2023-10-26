@@ -276,7 +276,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 <section class="h-full w-full flex flex-col items-center justify-center  mb-[1rem] mt-[1rem]">
   {% if user.is_authenticated %}
 
-    <div class="xl:h-[62rem] lg:h-[62rem] md:h-[62rem] min-[320px]:h-[62rem] xl:w-[80rem] lg:w-[62rem] md:w-[45rem] flex flex-col items-center justify-center  mb-[4rem] mt-[3rem] xl:border-[0.2rem] lg:border-[0.2rem] md:border-[0.0rem] min-[320px]:border-[0.0rem] border-[#E8F5FF]">
+    <div class="xl:h-[62rem] lg:h-[62rem] md:h-[62rem] min-[320px]:h-[62rem] xl:w-[80rem] lg:w-[62rem] md:w-[45rem] flex flex-col items-center justify-center bg-[#FBFDFF]  mb-[4rem] mt-[3rem] xl:border-[0.2rem] lg:border-[0.2rem] md:border-[0.0rem] min-[320px]:border-[0.0rem] border-[#E8F5FF]">
 
       <div  class="w-full  flex flex-row h-full justify-center items-center xl:bg-[#E8F5FF] lg:bg-[#E8F5FF] md:bg-white min-[320px]:bg-white ">
             <div class="w-4/12 h-full  xl:flex lg:flex md:hidden min-[320px]:hidden flex-col items-center justify-center  ">
@@ -290,17 +290,23 @@ input[type=date]:focus::-webkit-datetime-edit {
                 {% csrf_token %}
                 <h1 class="md:text-[2rem] min-[320px]:text-[1.2rem] mb-[1rem] font-medium text-[#5F5F5F] xl:hidden lg:hidden md:block min-[320px]:block">Registration Form</h1>
                 <p class="md:text-[1rem] min-[320px]:text-[0.65rem] ml-[1rem] font-normal text-center text-[#5F5F5F] xl:hidden lg:hidden md:block min-[320px]:block">After completing the registration process, we will be sending a message to your email and we will inform you with date of the event, location and more details!</p>
-                  <div class="xl:w-[45rem] lg:w-[40rem] md:w-[40rem] min-[320px]:w-[19rem] h-full flex flex-col bg-white drop-shadow-lg rounded-xl  mt-[2rem] items-center h-full border-[0.01rem]  border-[#50A8F5]">
+                  <div class="xl:w-[45rem] lg:w-[40rem] md:w-[40rem] min-[320px]:w-[19rem] h-full flex flex-col bg-[#FBFDFF] drop-shadow-lg rounded-xl  mt-[2rem] items-center h-full border-[0.01rem]  border-[#50A8F5]">
                   <div class='xl:w-[40rem] lg:w-[37rem] md:w-[33rem] min-[320px]:w-[18rem]  h-[7rem] mt-[2rem] flex flex-row xl:justify-between lg:justify-between md:justify-between min-[320px]:justify-center '>
                     <div class="inputdivparent required" >
                         <input value="{{user.username}}" name="UsernameRegistration" id="UsernameRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem] min-[320px]:h-[2.8rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem]" type="text" required>
+
                         <label class="placeholderlabel"   for="UsernameRegistration">Username</label>
+                        <box-icon class="absolute top-[1rem] right-[1rem] xl:block lg:block md:block min-[320px]:hidden " name='user'></box-icon>
+
                         <div class="error"></div>
 
                     </div>
                     <div class="inputdivparent required xl:ml-[4rem] lg:ml-[4rem] md:ml-[4rem] min-[320px]:ml-[0.5rem]" >
                       <input value="{{user.phone_number}}" name="PhonenumberRegistration" id="PhonenumberRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem]min-[320px]:h-[2.8rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem]" type="tel" required>
+
                       <label class="placeholderlabel"   for="PhonenumberRegistration">Phone Number</label>
+                      <box-icon class="absolute top-[1rem] right-[1rem] xl:block lg:block md:block min-[320px]:hidden " name='phone'></box-icon>
+
                       <div class="error"></div>
 
                   </div>
@@ -309,7 +315,10 @@ input[type=date]:focus::-webkit-datetime-edit {
                <div class='xl:w-[40rem] lg:w-[37rem] md:w-[33rem] min-[320px]:w-[18rem]  h-[7rem] mt-[2rem] flex flex-row xl:justify-between lg:justify-between md:justify-between min-[320px]:justify-center '>
                   <div class="inputdivparent required " >
                       <input value="{{user.email}}" name="EmailRegistration" id="EmailRegistration" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[8.8rem]min-[320px]:h-[2.8rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem]" type="email" required>
+
                       <label class="placeholderlabel"   for="EmailRegistration">Email</label>
+                      <box-icon class="absolute top-[1rem] right-[1rem] xl:block lg:block md:block min-[320px]:hidden " name='envelope'></box-icon>
+
                       <div class="error"></div>
 
                   </div>
@@ -330,6 +339,7 @@ input[type=date]:focus::-webkit-datetime-edit {
                   <option value="baghdad">Najaf</option>
                 </select>
                   <label class="placeholderlabel"   for="EmailRegistration">Location</label>
+
                   <div class="error"></div>
 
               </div>
@@ -408,7 +418,10 @@ input[type=date]:focus::-webkit-datetime-edit {
         <div class="xl:h-[33rem] lg:h-[30rem] md:h-[29rem] xl:w-[65rem] lg:w-[58rem] md:w-[40rem] min-[320px]:w-[18.5rem] flex flex-col items-center   mb-[4rem] mt-[1rem] border-[0.1rem] border-[#E8F5FF] p-[1rem]">
           <img class="xl:w-[21rem] xl:h-[20rem]  lg:w-[20rem] lg:h-[18rem] md:w-[18rem] md:h-[17rem] min-[320px]:w-[12rem] min-[320px]:h-[11rem] mt-[1rem]" src="{% static 'ActivityEvents/Logincuate.png' %}" alt="">
           <h1 class="mt-[0.6rem] xl:text-[1.4rem] lg:text-[1.2rem] md:text-[1rem] min-[320px]:text-[0.8rem] text-center" >To gain the ability to register for our <span class="text-[#50A8F5] xl:text-[1.5rem] lg:text-[1.4rem] md:text-[1.1rem]">Events</span> <br> you must be logged into the website.</h1>
-          <button class="xl:w-[11rem] xl:h-[3rem] lg:w-[9rem] lg:h-[2.6rem] md:w-[8rem] md:h-[2.6rem] min-[320px]:w-[8rem] min-[320px]:h-[2.6rem] xl:text-[1rem]  lg:text-[0.9rem] md:text-[0.8rem] mt-[1.5rem] text-white bg-[#71B3F1] rounded-[4rem] font-medium"><a href="{% url 'signin' %}">GetStarted Now</a></button>
+          <button class="xl:w-[11rem] xl:h-[3rem] lg:w-[9rem] lg:h-[2.6rem] md:w-[8rem] md:h-[2.6rem] min-[320px]:w-[8rem] min-[320px]:h-[2.6rem] xl:text-[1rem]  lg:text-[0.9rem] md:text-[0.8rem] mt-[1.5rem] text-white bg-[#71B3F1] rounded-[4rem] font-medium hoverzoom"><a href="{% url 'signin' %}">
+            <span class="button-text">Get Started</span>
+            <div class="fill-container"></div>
+          </a></button>
           </h1>
         </div>
 

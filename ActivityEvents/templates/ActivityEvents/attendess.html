@@ -1,0 +1,132 @@
+{% extends "ActivityEvents/layout.html" %}
+{% load static %}
+{% block body %}
+<style>
+
+
+@media (max-width: 1600px) {
+    table, th, td {
+  border:1px solid black;
+  padding: 1rem;
+}
+
+
+    }
+    
+    /* Large screens (lg) */
+    @media (max-width: 1025px) {
+        table, th, td {
+  border:1px solid black;
+  padding: 0.9rem;
+}
+
+
+    }
+    
+    /* Medium screens (md) */
+    @media (max-width: 790px) {
+
+        table, th, td {
+  border:1px solid black;
+  padding: 0.5rem;
+}
+
+
+    }
+  
+  
+    @media (max-width: 450px) {
+        table, th, td {
+  border:0.1px solid black;
+  padding: 0.1rem;
+}
+
+
+    }
+  </style>
+
+<section class="h-full w-full flex flex-col items-center justify-center  mb-[1rem] mt-[1rem]">
+
+        <div class="xl:h-[50rem] lg:h-[48rem] md:h-[29rem] min-[320px]:h-[30rem] xl:w-[75rem] lg:w-[58rem] md:w-[45rem] min-[320px]:w-[19rem] flex flex-col items-center   mb-[4rem] mt-[1rem] border-[0.1rem] border-[#E8F5FF]">
+           <div class="w-full h-full flex flex-row justify-center items-center">
+             <div class="xl:w-[20rem] xl:h-[25rem] lg:w-[19rem] lg:h-[24rem] md:w-[14rem] md:h-[18rem] min-[320px]:w-[16rem] min-[320px]:h-[12rem] mt-[0.9rem]  bg-white drop-shadow-lg rounded-lg flex flex-col justify-center items-center">
+                 <h1 class="mt-[0.2rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-center">UserName: {{attendessdetails.Username}}</h1>
+                 <h1 class="mt-[0.2rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-center mt-[0.8rem]">PhoneNumber: {{attendessdetails.Phonenumber}}</h1>
+                 <h1 class="mt-[0.2rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-center mt-[0.8rem]">Email: {{attendessdetails.Email}}</h1>
+                 <h1 class="mt-[0.2rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-center mt-[0.8rem]">Date_of_birth: {{attendessdetails.date_of_birth}}</h1>
+                 <h1 class="mt-[0.2rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-center mt-[0.8rem]">Location: {{attendessdetails.Location}}</h1>
+                 <h1 class="mt-[0.2rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-center mt-[0.8rem]">Guests: {{attendessdetails.guests}}</h1>
+                 <h1 class="mt-[0.2rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.4rem] text-center mt-[0.8rem]">Comment: {{attendessdetails.comment}}</h1>
+
+
+
+             </div>
+             <img class="xl:w-[20rem] xl:h-[20rem] lg:w-[19rem] lg:h-[19rem] md:w-[14rem] md:h-[14rem] min-[320px]:w-[8rem] min-[320px]:h-[8rem] z-10 xl:ml-[5rem] lg:ml-[4.5rem] md:ml-[3.5rem] min-[320px]:ml-[2rem]   " src="{% static 'ActivityEvents/Selectingteambro.png' %}" alt="">
+           </div>
+            <div class="xl:w-[71rem] xl:h-[25rem] lg:w-[56rem] lg:h-[23rem] md:w-[43rem] md:h-[20rem] min-[320px]:w-[18rem] min-[320px]:h-[15rem] bg-[#F8FCFF] drop-shadow-xl shadow-xl  mt-[2rem] p-[1rem] rounded-[2rem] overflow-y-auto overflow-x-hidden">
+<div class="w-full xl:h-[5rem] lg:h-[4.5rem] md:h-[3.5rem] min-[320px]:h-[3.5rem] flex flex-row justify-center items-center">
+                    <div class="inputdivparent" >
+                        <input onkeyup="myFunction()" id="myInput" name="usernameinputQA" class="inputsclass xl:w-[16rem] xl:h-[4rem] lg:w-[16rem] lg:h-[3.2rem] md:w-[14rem] md:h-[4rem] min-[320px]:w-[7rem] min-[320px]:h-[2rem] xl:rounded-[0.6rem] lg:rounded-[0.6rem] md:rounded-[5rem] min-[320px]:rounded-[5rem]" type="text" required>
+                        <label class="placeholderlabel bg-[#F8FCFF] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.8rem] min-[320px]:text-[0.5rem]"   for="Search for names..">Username</label>
+                    </div>
+                    <h1 class='xl:text-[1.5rem] lg:text-[1.4rem] md:text-[1rem] min-[320px]:text-[0.6rem] ml-[1rem] xl:mb-[1.5rem] lg:mb-[1.2rem] md:mb-[1rem] min-[320px]:mb-[2.5rem] text-center'>Total Registered People <strong>{{RegistrationCount}}</strong> </h1>
+</div>
+                <table id="attendesstable" class="w-full h-full ">
+                    <thead>
+                        <tr> 
+                            <th class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">ID</th>
+                            <th class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">Name</th>
+                            <th class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">Location</th>
+                            <th class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">Date of Birthday</th>
+                            <th class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">Event</th>
+                            <th class="xl:text-[1rem] lg:text-[0.9rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">Details</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        {% for userregister in eventregister %}
+
+                        <tr class="xl:mt-[2.5rem] xl:mb-[2.5rem] lg:mt-[2.4rem] lg:mb-[2.4rem] md:mt-[1.6rem] md:mb-[1.6rem] min-[320px]:mt-[0.4rem] min-[320px]:mb-[0.4rem]">
+                            <td class="text-center xl:mt-[2.5rem] lg:mt-[2.4rem] md:mt-[1.6rem] min-[320px]:mt-[0.8rem] xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">{{userregister.id}}</td>
+                            <td class="text-center xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">{{userregister.Username}}</td>
+                            <td class="text-center xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">{{userregister.Location}}</td>
+                            <td class="text-center xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">{{userregister.date_of_birth}}</td>
+                            <td class="text-center xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]">{{userregister.event}}</td>
+                            <td class="text-center xl:text-[1.2rem] lg:text-[1.1rem] md:text-[0.6rem] min-[320px]:text-[0.3rem]"><button class="xl:w-[7.7rem] xl:h-[2.4rem] lg:w-[7.5rem] lg:h-[2.3rem] md:w-[6rem] md:h-[2rem] min-[320px]:w-[2rem] min-[320px]:h-[0.8rem] mt-[0.3rem]  xl:text-[1rem] lg:text-[0.9rem] md:text-[0.7rem]  min-[320px]:text-[0.4rem] text-white bg-[#71B3F1] rounded-[4rem] font-semibold hover:text-[#50A8F5] hover:bg-white"><a href="{% url 'attendessDetails' userregister.id %}">Details</a></button></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                    
+                
+                </table>
+            </div>
+        </div>
+        <script>
+            function myFunction() {
+              var input, filter, table, tr, td, i, txtValue;
+              input = document.getElementById('myInput');
+              filter = input.value.toUpperCase();
+              table = document.getElementById("attendesstable");
+              tr = table.getElementsByTagName('tr');
+            
+              // Loop through all list items, and hide those who don't match the search query
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if(td){
+                    txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                } else {
+                  tr[i].style.display = "none";
+                }
+
+                }
+
+              }
+            }
+            </script>
+</section>
+
+{% endblock %}

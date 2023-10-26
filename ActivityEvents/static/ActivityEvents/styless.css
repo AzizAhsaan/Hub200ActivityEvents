@@ -3,15 +3,55 @@ body{
     font-family: 'Rubik', sans-serif;
 }
 .hoverzoom {
-    transition: transform 0.5s ease-in-out;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
 }
+.hoverzoom .button-text {
+    position: relative;
+    z-index: 2;
+  }
+.hoverzoom .fill-container {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    padding-bottom: 100%;
+    transform: translateY(-50%) rotate(180deg);
+  }
 
-.hoverzoom:hover {
-    transform: scale(1.05);
-    background-color: #fafdff;
+  .hoverzoom .fill-container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    box-shadow: 5px 07px 09px 5px rgba(0, 0, 0, 0.1);
+
+    border-radius: 50%;
+    transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateY(-100%);
+  }
+  
+  .hoverzoom:hover {
+    border-color: white;
     box-shadow: 5px 07px 09px 5px rgba(0, 0, 0, 0.1);
     color: black;
-}
+
+    transform: translateY(-4px);
+  }
+  
+  .hoverzoom:hover .fill-container {
+    transform: translateY(-50%) rotate(0);
+  }
+  
+  .hoverzoom:hover .fill-container::after {
+    transform: translateY(0);
+  }
+
 
 /* input autofill color sets to white */
 input:-webkit-autofill,
@@ -48,16 +88,24 @@ input:-webkit-autofill:focus {
 
 .inputdivparent.success input {
     border-color: #09c372;
+    box-shadow: 0.5px 0.5px 0.3px 0.3px #09c372;
+
 }
 .inputdivparent.success select {
     border-color: #09c372;
+    box-shadow: 0.5px 0.5px 0.3px 0.3px #09c372;
+
 }
 
 .inputdivparent.error input {
     border-color: #ff3860;
+    box-shadow: 0.5px 0.5px 0.3px 0.3px #ff3860;
+
 }
 .inputdivparent.error select {
     border-color: #ff3860;
+    box-shadow: 0.5px 0.5px 0.3px 0.3px #ff3860;
+
 }
 
 .inputdivparent .error {
@@ -114,6 +162,7 @@ input:-webkit-autofill:focus {
         outline: none;
         border-radius: 6px;
         font-size: 0.9rem;
+        background-color: #FBFDFF;
 
     }
     
@@ -126,7 +175,7 @@ input:-webkit-autofill:focus {
     }
     .placeholderlabel{
         position: absolute;
-        background-color: rgb(255, 255, 255);
+        background-color: #FBFDFF;
         color: gray;
         left: 1rem;
         padding: 0.5rem 1rem 0.5rem 1rem;
@@ -155,6 +204,7 @@ input:-webkit-autofill:focus {
             outline: none;
             border-radius: 6px;
             font-size: 0.9rem;
+            background-color: #FBFDFF;
 
         }
         
@@ -165,7 +215,7 @@ input:-webkit-autofill:focus {
         }
         .placeholderlabel{
             position: absolute;
-            background-color: rgb(255, 255, 255);
+            background-color: #FBFDFF;
             color: gray;
             left: 1rem;
             padding: 0.5rem 1rem 0.5rem 1rem;
@@ -194,6 +244,7 @@ input:-webkit-autofill:focus {
             outline: none;
             border-radius: 6px;
             font-size: 0.8rem;
+            background-color: #FBFDFF;
 
         }
         
@@ -204,7 +255,7 @@ input:-webkit-autofill:focus {
         }
         .placeholderlabel{
             position: absolute;
-            background-color: rgb(255, 255, 255);
+            background-color: #FBFDFF;
             color: gray;
             left: 0.2rem;
             padding: 0.3rem 1rem 0.3rem 1rem;
@@ -231,6 +282,7 @@ input:-webkit-autofill:focus {
             outline: none;
             border-radius: 2px;
             font-size: 0.7rem;
+            background-color: #FBFDFF;
 
         }
         
@@ -241,18 +293,18 @@ input:-webkit-autofill:focus {
         }
         .placeholderlabel{
             position: absolute;
-            background-color: rgb(255, 255, 255);
+            background-color: #FBFDFF;
             color: gray;
             left: 0.2rem;
             padding: 0.3rem 1rem 0.3rem 1rem;
             margin-top: 0.2rem;
             transition: all 0.2s ease-in;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
 
         }
         .inputsclass:is(:focus, :valid) + .placeholderlabel {
-            transform: translatey(calc(-1 * 0.8rem - 4px)) ;
-            font-size: 0.7rem;
+            transform: translatey(calc(-1 * 0.8rem - 2px)) ;
+            font-size: 0.5rem;
             color: #5eb1ff;
             font-weight: 400;
           }
@@ -262,17 +314,7 @@ input:-webkit-autofill:focus {
 
 /* ToastBox notification */
 
-#toastbox{
-    position: absolute;
-    margin-bottom: 5.5rem;
-    right: 30px;
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    overflow: hidden;
-    padding: 15px;
-    z-index: 1000;
-}
+
 
 
 
@@ -286,8 +328,19 @@ input:-webkit-autofill:focus {
 
 
 @media (max-width: 1600px) {
+    #toastbox{
+        position: absolute;
+        margin-bottom: 5.5rem;
+        right: 30px;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 15px;
+        z-index: 1000;
+    }
     .toasts{
-        width: 400px;
+        width: 450px;
         height: 70px;
         background-color: #fff;
         font-weight: 500;
@@ -303,8 +356,19 @@ input:-webkit-autofill:focus {
     
     /* Large screens (lg) */
     @media (max-width: 1025px) {
+        #toastbox{
+            position: absolute;
+            margin-bottom: 5.5rem;
+            right: 30px;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 15px;
+            z-index: 1000;
+        }
         .toasts{
-            width: 380px;
+            width: 450px;
             height: 70px;
             background-color: #fff;
             font-weight: 500;
@@ -320,8 +384,19 @@ input:-webkit-autofill:focus {
     
     /* Medium screens (md) */
     @media (max-width: 790px) {
+        #toastbox{
+            position: absolute;
+            top: 0.5rem;
+            right: -0.2rem;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 15px;
+            z-index: 1000;
+        }
         .toasts{
-            width: 270px;
+            width: 300px;
             height: 55px;
             background-color: #fff;
             font-weight: 500;
@@ -340,12 +415,22 @@ input:-webkit-autofill:focus {
   
   
     @media (max-width: 450px) {
+        #toastbox{
+            position: absolute;
+            top: 0.5rem;
+            right: -0.2rem;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 15px;
+            z-index: 1000;
+        }
         .toasts{
-            width: 250px;
-            height:50px;
+            width: 300px;
+            height:60px;
             background-color: #fff;
             font-weight: 500;
-            margin: 15px 0;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;

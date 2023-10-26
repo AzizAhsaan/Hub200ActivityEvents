@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Events, CustomUser, PeopleReviews, Contact_us,AskaQuestion
+from .models import Events, CustomUser, PeopleReviews, Contact_us,AskaQuestion,EventImage,EventOrganizer
 import datetime
 from django.core import serializers
 from django.http import JsonResponse
@@ -36,24 +36,29 @@ def events(request):
     next_week = datetime.date.today() + datetime.timedelta(days=7)
     next_month_events = Events.objects.filter(event_date__range=[datetime.date.today(), next_month])
     next_week_events = Events.objects.filter(event_date__range=[datetime.date.today(), next_week])
+    NoEventsNextWeek = len(next_week_events) == 0
+    NoEventsNextMonth = len(next_month_events) == 0
 
     AllEventsCount=Events.objects.all().count()
     RegisteredPeopleCount = Event_registration.objects.count()
     AvailableEventsCount=Events.objects.filter(status=True).count()
     NotAvailableEventsCount=Events.objects.filter(status=False).count()
-
+    data = {
+        'AllEventsCount': AllEventsCount,
+        'RegisteredPeopleCount': RegisteredPeopleCount,
+        'AvailableEventsCount': AvailableEventsCount,
+        'NotAvailableEventsCount': NotAvailableEventsCount,
+    }
     filter = request.POST.get('filter')
     if request.method == 'POST':
         if filter == 'allevents':
-            return render(request, 'ActivityEvents/events.html', {'all_events': all_events})
+            return render(request, 'ActivityEvents/events.html', {'all_events': all_events,'data':data})
         elif filter == 'next_week':
-            return render(request, 'ActivityEvents/events.html', {'all_events': next_week_events})
+            return render(request, 'ActivityEvents/events.html', {'all_events': next_week_events,"NoEventsNextWeek":NoEventsNextWeek,'data':data})
         elif filter == 'next_month':
-            return render(request, 'ActivityEvents/events.html', {'all_events': next_month_events})
+            return render(request, 'ActivityEvents/events.html', {'all_events': next_month_events,"NoEventsNextMonth":NoEventsNextMonth,'data':data})
     else:
-        return render(request, 'ActivityEvents/events.html', {'all_events': all_events,"AllEventsCount":AllEventsCount,
-                                                              "RegisteredPeopleCount":RegisteredPeopleCount,"AvailableEventsCount":AvailableEventsCount,
-                                                              "NotAvailableEventsCount":NotAvailableEventsCount})
+        return render(request, 'ActivityEvents/events.html', {'all_events': all_events,'data':data})
 
 
 
@@ -61,7 +66,11 @@ def events(request):
 
 def display_event(request,event_id):
     event = Events.objects.get(id=event_id)
-    return render(request,'ActivityEvents/display_event.html',{'event':event})
+    eventimage = EventImage.objects.get(event=event)
+    print(event)
+    print(eventimage)
+
+    return render(request,'ActivityEvents/display_event.html',{'event':event,"eventimage":eventimage})
     #you can use the events details in the html with event.title event.blah blah
 
 def calendar(request):
@@ -78,15 +87,7 @@ def registrations(request):
         guests = request.POST.get('GuestsRegistration')
         comment = request.POST.get('CommentRegistration')
         gender=request.POST.get('gender')
-        print(Username)
-        print(Phonenumber)
-        print(Email)
-        print(date_of_birth)
-        print(Location)
-        print(guests)
-        print(comment)
-        print(gender)
-        print(EventsRegistration)
+
 
         event = Events.objects.get(pk=EventsRegistration)
         registration = Event_registration(
@@ -161,10 +162,11 @@ def signup(request):
             # user.image = photo
             if user:
                 user = authenticate(email=email, password=password)
+                #send_welcome_email(email, username)
+
                 if user:
                     user.save()
                     login(request, user)
-                    send_welcome_email(email, username)
                     return HttpResponseRedirect(reverse('signingupdone'))
                 else:
                     return render(request, 'ActivityEvents/errorpage.html', {'error': 'Authentication failed'})
@@ -172,7 +174,7 @@ def signup(request):
                 return render(request, 'ActivityEvents/errorpage.html', {'error': 'User creation failed'})
 
 
-    return render(request, 'ActivityEvents/signup.html')
+    return render(request, 'ActivityEvents/signin.html')
     
 
 def logoutuser(request):
@@ -214,7 +216,12 @@ def all_events(request):
 
 def display_event(request,event_id):
     event = Events.objects.get(id=event_id)
-    return render(request,'ActivityEvents/display_event.html',{'event':event})
+    eventimage = EventImage.objects.filter(event=event)
+    eventorganizer = EventOrganizer.objects.filter(event=event)
+
+    print(event)
+    print(eventimage)
+    return render(request,'ActivityEvents/display_event.html',{'event':event,"eventimage":eventimage,"eventorganizer":eventorganizer})
     #you can use the events details in the html with event.title event.blah blah
 
 
@@ -241,17 +248,19 @@ def events_details(request, event_id):
 
 def send_welcome_email(email, username):
     subject = 'Welcome to Hub200 Activity Events'
-    from_email = 'ahmedmahdii2003@gmail.com'
-    to = email
+    from_email = '' #Your Email here
+    to = [email]
     html_template = get_template('ActivityEvents/email.html')
     context = {'username': username}
-    html_content = html_template.render(Context(context))
-
+    html_content = html_template.render(context)
     email_message = EmailMultiAlternatives(subject, 'this is the plain text version of the email', from_email, to)
     email_message.attach_alternative(html_content, 'text/html')
-
+    print(email_message)
     email_message.send()
 
+
+def email(request):
+    return render(request, 'ActivityEvents/email.html')
 def apply_filter(request):
     events = Events.objects.all()
 
@@ -303,13 +312,27 @@ def apply_filter(request):
 
 def eventsRange(request):
     all_events = Events.objects.all()
-    startdate = request.POST.get('startdate')
-    enddate = request.POST.get('enddate')
+    InputStartRange = request.POST.get('InputStartRange')
+    InputEndRange = request.POST.get('InputEndRange')
+    AllEventsCount = Events.objects.all().count()
+    RegisteredPeopleCount = Event_registration.objects.count()
+    AvailableEventsCount = Events.objects.filter(status=True).count()
+    NotAvailableEventsCount = Events.objects.filter(status=False).count()
+    
+    data = {
+        'AllEventsCount': AllEventsCount,
+        'RegisteredPeopleCount': RegisteredPeopleCount,
+        'AvailableEventsCount': AvailableEventsCount,
+        'NotAvailableEventsCount': NotAvailableEventsCount,
+    }
+
     if request.method == 'POST':
-        eventrange = Events.objects.filter(event_date__range=[startdate, enddate])
-        return render(request, 'ActivityEvents/events.html', {'all_events': eventrange})
+        eventrange = Events.objects.filter(event_date__range=[InputStartRange, InputEndRange])
+        NoEventsInRange = len(eventrange) == 0
+
+        return render(request, 'ActivityEvents/events.html', {'all_events': eventrange, "NoEventsInRange": NoEventsInRange, "data": data})
     else:
-        return render(request, 'ActivityEvents/events.html', {'all_events': all_events})
+        return render(request, 'ActivityEvents/events.html', {'all_events': all_events, "data": data})
     
 
 

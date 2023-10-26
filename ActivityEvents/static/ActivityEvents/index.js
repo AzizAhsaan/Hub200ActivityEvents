@@ -92,12 +92,12 @@ if(showsigninbutton){
   })
 }
 // Setting the form into 2 parts
-const buttonwrapper = document.getElementById('buttonwrapper');
-const buttonsignupnext = document.getElementById('buttonsignupnext');
-const formsubmitpart1 = document.getElementById('formsubmitpart1');
-const formsubmitpart2 = document.getElementById('formsubmitpart2');
-const buttonsignupback = document.getElementById('buttonsignupback');
-
+const buttonwrapper = document.getElementById('buttonwrapper')
+const buttonsignupnext = document.getElementById('buttonsignupnext')
+const formsubmitpart1 = document.getElementById('formsubmitpart1')
+const formsubmitpart2 = document.getElementById('formsubmitpart2')
+const buttonsignupback = document.getElementById('buttonsignupback')
+const secondformtoggle = document.querySelectorAll('.secondformtoggle');
 if(buttonsignupnext){
   buttonsignupnext.addEventListener('click', ()=>{
     if(formsubmitpart1.style.display === 'flex' || formsubmitpart1.style.display !== 'none'){
@@ -106,6 +106,10 @@ if(buttonsignupnext){
       buttonsignupnext.style.display = 'none'
       buttonwrapper.style.display = 'block'
       buttonsignupback.style.display = 'block'
+      secondformtoggle.forEach(element => {
+        element.style.background = '#499DEC';
+      });
+
     }
   })
 }
@@ -116,6 +120,9 @@ if(buttonsignupback){
     buttonsignupnext.style.display = 'block'
     buttonwrapper.style.display = 'none'
     buttonsignupback.style.display = 'none'
+    secondformtoggle.forEach(element => {
+      element.style.background = '#D3D3D3';
+    });
   })
 }
 
@@ -311,6 +318,12 @@ if(formQAs){
     formData3.append('messageinputQA', messageinputQA.value)
   
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    if(wrapper.not( ".checked" )) {
+      wrapper.addClass( "checked" );
+      setTimeout(function(){
+        wrapper.removeClass( "checked" );
+      }, 6000);
+    }
     fetch('/ASKAQUESTION', {
         method: 'POST',
         headers: {
@@ -332,21 +345,65 @@ if(formQAs){
 
 
 
+
+
+//EventDateRangeForm
+EventDateRangeForm = document.getElementById('EventDateRangeForm')
+InputStartRange = document.getElementById('InputStartRange')
+InputEndRange = document.getElementById('InputEndRange')
+ButtonEventRangeForm=document.getElementById("ButtonEventRangeForm")
+function updatebuttondisabled() {
+  if (InputStartRange.value === '' ) {
+    ButtonEventRangeForm.disabled = true;
+  }else if(InputEndRange.value === ''){
+    ButtonEventRangeForm.disabled = true;
+
+  }
+   else {
+    ButtonEventRangeForm.disabled = false;
+  }
+}
+
+if(EventDateRangeForm){
+  updatebuttondisabled()
+  InputStartRange.addEventListener('input', updatebuttondisabled);
+  InputEndRange.addEventListener('input', updatebuttondisabled);
+
+}
+  
+  
+  
+
+
+
+
+
+
+
+
+//Event-Contact Form
 formContactUs = document.getElementById('contactusform')
-    usernameinputcontactusform = document.getElementById('usernameinputcontactusform')
-    emailinputcontactusform = document.getElementById('emailinputcontactusform')
-    messageinputcontactusform = document.getElementById('messageinputcontactusform')
-    if(formContactUs){
-        console.log(formContactUs)
+usernameinputcontactusform = document.getElementById('usernameinputcontactusform')
+emailinputcontactusform = document.getElementById('emailinputcontactusform')
+messageinputcontactusform = document.getElementById('messageinputcontactusform')
+
+    if(formContactUs ){
     
       formContactUs.addEventListener('submit',(e)=>{
         e.preventDefault()
+
         const formData2 = new FormData()
         formData2.append('usernameinputcontactusform', usernameinputcontactusform.value)
         formData2.append('emailinputcontactusform', emailinputcontactusform.value)
         formData2.append('messageinputcontactusform', messageinputcontactusform.value)
     
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+        if(wrapper.not( ".checked" )) {
+          wrapper.addClass( "checked" );
+          setTimeout(function(){
+            wrapper.removeClass( "checked" );
+          }, 6000);
+        }
         fetch('/contactus', {
             method: 'POST',
             headers: {
